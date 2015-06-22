@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="device">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+			id,
+			deviceName,
+			deviceVersion,
+			deviceType,
+			deviceCount,
+			ischeckout,
+			manufacturers,
+			manufacturersPhone,
+			productDate,
+			outDate,
+			deviceStatus,
+			remark
+	</sql>
+	<!--resultType="User" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="Device" parameterType="Device">
+		select
+		<include refid="selectId" />
+		from device
+		<where>
+			<if test="t.deviceName != null and t.deviceName != ''">
+				deviceName like '%${t.deviceName}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加设备 -->
+	<insert id="add" parameterType="Device">
+		INSERT INTO device
+        (deviceName,
+         deviceVersion,
+         deviceType,
+         deviceCount,
+         ischeckout,
+         manufacturers,
+         manufacturersPhone,
+         productDate,
+         outDate,
+         deviceStatus,
+         remark)
+		 values (#{deviceName},
+         #{deviceVersion},
+         #{deviceType},
+         #{deviceCount},
+         #{ischeckout},
+         #{manufacturers},
+         #{manufacturersPhone},
+         #{productDate},
+         #{outDate},
+         #{deviceStatus},
+         #{remark})
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from device where
+		id=#{id}
+	</delete>
+</mapper>

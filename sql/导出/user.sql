@@ -1,0 +1,2 @@
+INSERT INTO `user` VALUES (1, 'admin', 'admin', 'admin', 'admin', 10, '男', '枯霜下要孤', '0253526', 'jnfjfjj@163.com', '32432', '2015-6-8 19:21:58', '0000-0-0 00:00:00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user` VALUES (3, 'test', '111111', '7', '7', 7, '男', '7', '7', '7', '7', '2015-6-9 21:40:21', '0000-0-0 00:00:00', 1, '7', '7', '7', NULL, '7', NULL, '7', '7', '企业账号', '是', '7', '待审核', '');

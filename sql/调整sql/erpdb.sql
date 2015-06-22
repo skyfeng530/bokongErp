@@ -1,0 +1,193 @@
+use erpdb;
+DROP TABLE IF EXISTS serverinfo;
+DROP TABLE IF EXISTS resources_role;
+DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS Member_info;
+DROP TABLE IF EXISTS PersonLimitInfo;
+DROP TABLE IF EXISTS resources;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS DepartmentMember;
+DROP TABLE IF EXISTS BasicMaterialInfo;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS DepartmentInfo;
+DROP TABLE IF EXISTS ProcessInfo;
+DROP TABLE IF EXISTS log;
+
+
+CREATE TABLE DepartmentMember (
+	DepartId INTEGER NOT NULL AUTO_INCREMENT,
+	UserNumber VARCHAR ( 30 ) NOT NULL,
+	Position VARCHAR ( 21 ),
+	CONSTRAINT PK_DepartPerson PRIMARY KEY (DepartId, UserNumber)
+	)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+	
+CREATE TABLE role (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 50 ) NOT NULL,
+	roleKey VARCHAR ( 50 ) NOT NULL,
+	description VARCHAR ( 200 ) NOT NULL,
+	enable INTEGER NOT NULL,
+	CONSTRAINT PK_ROLE PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;	
+	
+CREATE TABLE PersonLimitInfo (
+	UserNumber VARCHAR ( 30 ) NOT NULL,
+	password VARCHAR ( 101 ) NOT NULL,
+	Cipher INTEGER NOT NULL,
+	LimitLevel INTEGER NOT NULL,
+	LockState SMALLINT DEFAULT 0 NOT NULL,
+	DueDate DATE NOT NULL,
+	CONSTRAINT PK_MemberLimitInfo PRIMARY KEY (UserNumber)
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+	
+CREATE TABLE `user` (
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(20) DEFAULT NULL,
+  `userPassword` varchar(40) DEFAULT NULL,
+  `userNickname` varchar(20) DEFAULT NULL,
+  `userRealname` varchar(20) DEFAULT NULL,
+  `userAge` int(11) DEFAULT NULL,
+  `userSex` varchar(10) DEFAULT NULL,
+  `userAddress` varchar(100) DEFAULT NULL,
+  `userPhone` varchar(30) DEFAULT NULL,
+  `userMail` varchar(45) DEFAULT NULL,
+  `userQQ` varchar(30) DEFAULT NULL,
+  `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `lastLogintime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `level` int(11) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `bankName` varchar(100) DEFAULT NULL,
+  `branchBank` varchar(100) DEFAULT NULL,
+  `subbranchBank` varchar(100) DEFAULT NULL,
+  `openBankName` varchar(100) DEFAULT NULL,
+  `bankAccountName` varchar(100) DEFAULT NULL,
+  `bankAccount` varchar(100) DEFAULT NULL,
+  `accountType` varchar(20) DEFAULT NULL,
+  `pay` varchar(20) DEFAULT NULL,
+  `mark` varchar(200) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `parentNumber` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE user_role (
+	user_id INTEGER NOT NULL,
+	role_id INTEGER NOT NULL,
+	CONSTRAINT PK_USER_ROLE PRIMARY KEY (role_id, user_id)
+	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+	
+
+CREATE TABLE resources (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 50 ) NOT NULL,
+	parentId INTEGER NOT NULL,
+	resKey VARCHAR ( 50 ) NOT NULL,
+	type VARCHAR ( 10 ) NOT NULL,
+	resUrl VARCHAR ( 200 ) NOT NULL,
+	level INTEGER NOT NULL,
+	description VARCHAR ( 200 ) NOT NULL,
+	CONSTRAINT PK_RESOURCES PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+	
+CREATE TABLE resources_role (
+	resc_id INTEGER NOT NULL,
+	role_id INTEGER NOT NULL,
+	CONSTRAINT PK_RESOURCES_ROLE PRIMARY KEY (role_id, resc_id)
+	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+	
+
+CREATE TABLE serverinfo (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	cpuUsage VARCHAR ( 255 ) NOT NULL,
+	setCpuUsage VARCHAR ( 255 ) NOT NULL,
+	jvmUsage VARCHAR ( 255 ) NOT NULL,
+	setJvmUsage VARCHAR ( 255 ) NOT NULL,
+	ramUsage VARCHAR ( 255 ) NOT NULL,
+	setRamUsage VARCHAR ( 255 ) NOT NULL,
+	email VARCHAR ( 255 ) DEFAULT NULL,
+	operTime TIMESTAMP,
+	mark VARCHAR ( 255 ) DEFAULT NULL,
+	CONSTRAINT PK_SERVER_STATE PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+CREATE TABLE log (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	username VARCHAR ( 30 ) NOT NULL,
+	module VARCHAR ( 30 ) NOT NULL,
+	action VARCHAR ( 30 ) NOT NULL,
+	actionTime VARCHAR ( 30 ) NOT NULL,
+	userIP VARCHAR ( 30 ) NOT NULL,
+	operTime TIMESTAMP NOT NULL,
+	CONSTRAINT PK_LOG PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;	
+
+	
+CREATE TABLE `userloginlist` (
+  `loginId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `loginTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `loginIP` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`loginId`),
+  KEY `FK_userloginlist` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+
+CREATE TABLE Member_info (
+	UserNumber VARCHAR ( 30 ) NOT NULL,
+	Name VARCHAR ( 15 ) NOT NULL,
+	Sex SMALLINT NOT NULL,
+	Nation SMALLINT NOT NULL,
+	Origin VARCHAR ( 21 ),
+	Marry SMALLINT NOT NULL,
+	Phone VARCHAR ( 21 ),
+	Address VARCHAR ( 101 ),
+	Email VARCHAR ( 51 ),
+	Birthday DATE NOT NULL,
+	GraSchool VARCHAR ( 51 ),
+	Professional VARCHAR ( 51 ),
+	Height INTEGER NOT NULL,
+	Identity VARCHAR ( 21 ),
+	Hobby VARCHAR ( 101 ),
+	IdNumber VARCHAR ( 31 ) NOT NULL,
+	GraDate DATE,
+	CONSTRAINT PK_MemberBaseInfo PRIMARY KEY (UserNumber)
+	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+	
+	
+CREATE TABLE BasicMaterialInfo (
+	IdNumber VARCHAR ( 11 ) NOT NULL,
+	name VARCHAR ( 51 ) NOT NULL,
+	AssistantCode VARCHAR ( 11 ),
+	Material VARCHAR ( 21 ),
+	Shape VARCHAR ( 21 ),
+	ObjType VARCHAR ( 21 ),
+	ProType VARCHAR ( 21 ),
+	MsmUnit VARCHAR ( 11 ),
+	MsmUnit2 VARCHAR ( 11 ),
+	SavePeriod INTEGER,
+	SavePeriodUnit SMALLINT NOT NULL,
+	Trusteeship SMALLINT DEFAULT 0 NOT NULL,
+	WIP_Sign SMALLINT DEFAULT 0 NOT NULL,
+	StorageTime DATE,
+	CONSTRAINT PK_BasicMaterialInfo PRIMARY KEY (IdNumber)
+	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;	
+
+CREATE TABLE DepartmentInfo (
+	DepartId INTEGER NOT NULL AUTO_INCREMENT,
+	Name VARCHAR ( 51 ) NOT NULL,
+	Discribe VARCHAR ( 101 ),
+	CONSTRAINT PK_DepartInfo PRIMARY KEY (DepartId)
+	)ENGINE=InnoDB  AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+	
+
+
+ALTER TABLE resources_role ADD CONSTRAINT FK_RES FOREIGN KEY (resc_id) REFERENCES resources (id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE resources_role ADD CONSTRAINT FK_ROLE FOREIGN KEY (role_id) REFERENCES role (id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE user_role ADD CONSTRAINT FK_ROLE_KEY FOREIGN KEY (user_id) REFERENCES user (userId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE user_role ADD CONSTRAINT FK_USER_KEY FOREIGN KEY (role_id) REFERENCES role (id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE PersonLimitInfo ADD CONSTRAINT FK_MemberLimitInfo FOREIGN KEY (UserNumber) REFERENCES Member_info (UserNumber)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE DepartmentMember ADD CONSTRAINT FK_DepartDepart FOREIGN KEY (DepartId) REFERENCES DepartmentInfo (DepartId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE DepartmentMember ADD CONSTRAINT FK_DepartMember FOREIGN KEY (UserNumber) REFERENCES Member_info (UserNumber)  ON DELETE NO ACTION ON UPDATE NO ACTION;
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+	<!-- 给实体Bean一个别名-->
+		<typeAlias type="com.erp.entity.User" alias="User" />
+		<typeAlias type="com.erp.entity.UserLoginList" alias="UserLoginList" />
+		<typeAlias type="com.erp.entity.Resources" alias="Resources"/>
+		<typeAlias type="com.erp.entity.Roles" alias="Roles"/>
+		<typeAlias type="com.erp.entity.ResourceRoles" alias="ResourceRoles"/>
+		<typeAlias type="com.erp.entity.UserRoles" alias="UserRoles"/>
+		<typeAlias type="com.erp.entity.ServerInfo" alias="ServerInfo"/>
+		
+		<typeAlias type="com.erp.entity.Log" alias="Log"/>
+	</typeAliases>
+</configuration>
