@@ -9,6 +9,18 @@
 	href="${pageContext.servletContext.contextPath }/css/fenyecss.css" />
 <link type="text/css" rel="stylesheet" 
 	href="${pageContext.servletContext.contextPath }/style/blue/pageCommon.css" />
+	<script type="text/javascript">
+	     function showProcessImage(taskId){
+	    	 var url = "${pageContext.servletContext.contextPath }/background/workflow/viewCurrentImage.html?taskId="+taskId;
+	    	 var h_sp1 = 600;
+	    	 var w_sp1 = 800;
+	    	//兼容IE，firefox,google.模态窗口居中问题
+	    	 var iTop2 = (window.screen.availHeight - 20 - h_sp1) / 2;
+	    	 var iLeft2 = (window.screen.availWidth - 10 - w_sp1) / 2;
+	    	 var params = 'menubar:no;dialogHeight=' + h_sp1 + 'px;dialogWidth=' + w_sp1 + 'px;dialogLeft=' + iLeft2 + 'px;dialogTop=' + iTop2 + 'px;resizable=yes;scrollbars=0;resizeable=0;center=yes;location:no;status:no;scroll:no'
+	    	 window.showModalDialog(url, window, params);
+	    }
+    </script> 
 </head>
 <body>
 <form id="fenye" name="fenye" action="${pageContext.servletContext.contextPath }/background/workflow/myTaskList.html" method="post">
@@ -38,30 +50,25 @@
         <td width="8" background="${pageContext.servletContext.contextPath }/images/tab_12.gif">&nbsp;</td>
         <td><table class="ttab" width="100%" cellspacing="1" onmouseover="changeto()"  onmouseout="changeback()">
           <tr align="CENTER" valign="MIDDLE" id="TableTitle">
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">标题</td>
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请人</td>
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请日期</td>
-			<td width="30%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">相关操作</td>
+			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">任务ID</td>
+			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">任务当前步骤名称</td>
+			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">创建时间</td>
+			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">办理人</td>
+			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">相关操作</td>
 		</tr>
-		<tr>
-           <td>设备采购单_管理员_2015-06-01</td>
-			<td>管理员</td>
-			<td>2015-06-01 09:30</td>
-			<td><a href="${pageContext.servletContext.contextPath }/background/workflow/showForm.html">查看申请信息</a>
-				<a href="${pageContext.servletContext.contextPath }/background/workflow/approvedHistory.html">查看流转记录</a>
-			</td>
-	  	</tr>
-          <%-- <c:forEach var="key" items="${pageView.records}">
+          <c:forEach var="key" items="${pageView.records}">
           <tr>
-            <td><a href="${pageContext.servletContext.contextPath }/Flow_Formflow/showForm.html">设备采购单_管理员_2015-06-01</a></td>
-			<td>管理员</td>
-			<td>2015-06-01 09:30</td>
-			<td>审批中</td>
-			<td><a href="${pageContext.servletContext.contextPath }/Flow_Formflow/showForm.html">查看申请信息</a>
-				<a href="${pageContext.servletContext.contextPath }/Flow_Formflow/approvedHistory.html">查看流转记录</a>
+            <td><a href="#">${key.id }</a></td>
+			<td>${key.name }</td>
+			<td>
+				<fmt:formatDate value="${key.createTime}" pattern="yyyy-MM-dd HH:mm"/>
+			</td>
+			<td>${key.assignee}</td>
+			<td><a href="${pageContext.servletContext.contextPath }/background/workflow/viewTaskForm.html?taskId=${key.id}">办理任务</a>
+				<a href="javascript:void(0);" onclick="showProcessImage('${key.id}');">查看当前流程图</a>
 			</td>
 		  </tr> 
-          </c:forEach>--%>
+          </c:forEach>
         </table></td>
         <td width="8" background="${pageContext.servletContext.contextPath }/images/tab_15.gif">&nbsp;</td>
       </tr>

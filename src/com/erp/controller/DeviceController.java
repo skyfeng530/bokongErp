@@ -27,7 +27,7 @@ public class DeviceController {
 		}else{
 			pageView = new PageView(Integer.parseInt(pageNow));
 		}
-		deviceService.query(pageView, device);
+		pageView = deviceService.query(pageView, device);
 		model.addAttribute("pageView", pageView);
 		return "/background/device/list";
 	}
@@ -45,7 +45,7 @@ public class DeviceController {
 	}
 	
 	/**
-	 * É¾³ýËùÑ¡µÄ
+	 * åˆ é™¤æ‰€é€‰çš„
 	 * @param model
 	 * @return
 	 */

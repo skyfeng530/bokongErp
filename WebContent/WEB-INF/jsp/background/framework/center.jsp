@@ -62,7 +62,7 @@ id=switchPoint title=关闭/打开左栏><img src="${pageContext.servletContext.
       <tr>
         <td><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;">
           <tr>
-            <td><iframe id="main" name="main" height="100%" width="100%" src="${pageContext.servletContext.contextPath }/background/tab.html" border="0" frameborder="0" scrolling="no"> 浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。</iframe></td>
+            <td><iframe id="main" name="main" height="100%" width="100%" src="${pageContext.servletContext.contextPath }/background/tab.html" border="0" frameborder="0" scrolling="auto"> 浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。</iframe></td>
             <td width="3" style="width:3px; background:#0a5c8e;">&nbsp;</td>
           </tr>
         </table></td>

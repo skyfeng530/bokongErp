@@ -2,7 +2,6 @@
 #用户id为10至99之间的值，禁止登录，因为是部门使用
 #增加用户时，因为是userId为主键，需要人为控制用户名称是否存在（冲突）
 insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values ('admin','admin','admin','admin',10,'男','枯霜下要孤','0253526','jnfjfjj@163.com','32432','2015-06-08 19:21:58','0000-00-00 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('test','111111','7','7',7,'男','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','企业账号','是','7','待审核','');
 
 insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('生产1号','test','7','7',7,'男','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','企业账号','是','7','待审核','');
 insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('生产2号','test','7','7',7,'男','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','企业账号','是','7','待审核','');
@@ -62,8 +61,7 @@ insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `
 insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('75','申请查询','71','task_manager','1','/background/workflow/myApplyList.html','74','归档任务');
 insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('81','统计分析','1010','statistics','0','statistics','80','统计分析');
 insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('82','报表分析','81','statistics_manager','1','/background/noDevelop.html','81','设备列表');
-INSERT INTO `resources` VALUES (83, '待办事项', 1010, 'FLOW_DIR', '0', 'FLOW_DIR', 1, '生成电子流任务');
-INSERT INTO `resources` VALUES (84, '创建电子流', 83, 'FLOW_CRATE', '1', '/background/flow/create.html', 1, '创建电子流');
+
 
 
 #增加角色控制，可以和部门对应
@@ -141,16 +139,14 @@ insert  into `resources_role`(`resc_id`,`role_id`) values (72,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (72,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (73,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (73,5);
+INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (74, 1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (74,5);
+INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (75, 1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (75,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (81,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (81,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (82,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (82,5);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (83, 1);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (84, 1);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (83, 5);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (84, 5);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (74, 1);
-INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (75, 1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,5);
@@ -198,38 +194,18 @@ insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15
 #项目
 insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, '项目经理1号', 'normal', 1);
 insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, '项目经理2号', 'normal', 1);
-#电子流初始化
-insert into FlowTypeInfo (Name) values('入库电子流');
-insert into FlowTypeInfo (Name) values('出库电子流');
-insert into FlowTypeInfo (Name) values('报废电子流');
 
-#入库电子流的id=1
-#############################################################################
-#step 0,部门为13，为采购部
-insert into FlowTemplateInfo(FlowType, nStepIndex, Url, Name, StepList, DepartIdList) values(1, 0, 'storage/step0.html', '零件交接明细','1', "13");
-#############################################################################
-#step 1,部门为11，库管
-#备注，当库管人员发现物料不符时，可以把单子打回0,否则走下一步进行检验
-insert into FlowTemplateInfo(FlowType, nStepIndex, Url, Name, StepList, DepartIdList) values(1, 1, 'storage/step1.html', '外协产品入库清点','0,2', "11");
-#############################################################################
-#step 2,部门为12，检验部
-#备注，当检验人员发现物料不对时，可以把单子打回1,否则走下一步?，允许入库；3，进入不合格产品审理环节
-insert into FlowTemplateInfo(FlowType, nStepIndex, Url, Name, StepList, DepartIdList) values(1, 2, 'storage/step2.html', '外协产品入所检验','1,3,4', "12");
-#############################################################################
-#step 3,部门为审理14，CCB审批
-#备注：审理不成功，走给采购部1,重新提交;成功走到4,入库关单
-insert into FlowTemplateInfo(FlowType, nStepIndex, Url, Name, StepList, DepartIdList) values(1, 3, 'storage/step3.html', '外协产品入所检验','1,3', "14");
-#############################################################################
-#step 4,部门为11，库管
-#备注：入库关单
-insert into FlowTemplateInfo(FlowType, nStepIndex, Url, Name, StepList, DepartIdList) values(1, 4, 'storage/step4.html', '外协产品入所检验','', "11");
 #############################################################################
 insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('4','电阻','v0001','0','300','0','利尔达','13888888888','2015-06-13 16:50:41','2015-06-10 21:57:40','0','用于………………');
 insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('5','显示器','050120001150112','1','23','1','三星','13999999999','2015-03-13 12:57:37','2017-03-13 12:57:37','1','sdvsdvsdvds');
 insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('7','主板','v111110909','1','13','0','技嘉','02988888888','2015-03-13 12:57:37','2017-03-13 12:57:37','0','aaaaaaaaaaaaaaa');
 #############################################################################
 #项目表
-insert into projectinfo(ProjectName,TaskNumber) values('APS星敏感器','RW-G14005');
+insert into projectinfo(ProjectName,TaskNumber, info) values('APS星敏感器','RW-G14005','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('APS星敏感器','RW-G1543','测试验');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划1','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划2','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划3','APS');
 
 insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (1,'9.3','20','64.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>内存当前：75.0%,超出预设值  60%</font>');
 insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (2,'0.8','20','60.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>内存当前：75.0%,超出预设值  60%</font>');

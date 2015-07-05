@@ -14,8 +14,10 @@
 		
 		<typeAlias type="com.erp.entity.Log" alias="Log"/>
 		<typeAlias type="com.erp.entity.Device" alias="Device"/>
-		<typeAlias type="com.erp.entity.FlowTypeInfo" alias="FlowTypeInfo"/>
-		<typeAlias type="com.erp.entity.ElectronFlowInfo" alias="ElectronFlowInfo"/>
-		<typeAlias type="com.erp.entity.FlowTemplateInfo" alias="FlowTemplateInfo"/>
+		<typeAlias type="com.erp.entity.BusLeave" alias="BusLeave"/>
+		<typeAlias type="com.erp.entity.FlowRecordInfo" alias="FlowRecordInfo"/>
+		<typeAlias type="com.erp.entity.StorageFlowResult" alias="StorageFlowResult"/>
+		<typeAlias type="com.erp.entity.ProjectInfo" alias="ProjectInfo"/>
+		<typeAlias type="com.erp.entity.FlowProejctInfo" alias="FlowProejctInfo"/>
 	</typeAliases>
 </configuration>

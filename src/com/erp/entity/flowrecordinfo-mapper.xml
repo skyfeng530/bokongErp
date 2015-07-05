@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flowrecordinfo">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		flowId,
+		proc_def_id,
+		execution_ID,
+		info,
+		className,
+		state,
+		HandlePerson,
+		CopyPersons,
+		createTime,
+		createPerson,
+		closeTime,
+		closePerson,
+		bak
+	</sql>
+	<!--resultType="FlowRecordInfo" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="FlowRecordInfo" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from flowrecordinfo
+		<where>
+			<if test="t.flowId != null and t.flowId != ''">
+				flowId = '${t.flowId}'
+				</if>
+		</where>
+	</select>
+	<!-- 总记录数 -->
+	<select id="count" parameterType="FlowRecordInfo" resultType="int">
+		select count(0) from flowrecordinfo
+	</select>
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="FlowRecordInfo">
+		insert into flowrecordinfo(
+		info, 
+		className,
+		state,
+		HandlePerson, 
+		CopyPersons, 
+		createTime,
+		createPerson,
+		closeTime, 
+		closePerson,
+		bak )
+		values (
+		#{info}, 
+		#{className},
+		#{state},
+		#{HandlePerson},
+		#{CopyPersons},
+		#{createTime}, 
+		#{createPerson}, 
+		#{closeTime},
+		#{closePerson},
+		#{bak})
+	</insert>
+
+	<delete id="deleteById" parameterType="String">
+		delete from flowrecordinfo where
+		flowId=#{flowId}
+	</delete>
+	<select id="getById" parameterType="String" resultType="FlowRecordInfo">
+		select
+		<include refid="selectId" />
+		from flowrecordinfo where flowId=#{flowId}
+	</select>
+	<update id="update" parameterType="FlowRecordInfo">
+		update flowrecordinfo
+		<set>
+			<if test="info != null and info != ''">
+				info=#{info},
+			</if>
+			<if test="state != null and state != ''">
+				state=#{state},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				createTime=#{createTime},
+			</if>
+			<if test="createPerson != null and createPerson != ''">
+				createPerson=#{createPerson},
+			</if>
+			<if test="closeTime != null and closeTime != ''">
+				closeTime=#{closeTime},
+			</if>
+			<if test="closePerson != null and closePerson != ''">
+				closePerson=#{closePerson},
+			</if>
+		className=#{className},
+		HandlePerson=#{HandlePerson},
+		CopyPersons=#{CopyPersons},
+		bak =#{bak}
+		</set>
+		where flowId=#{flowId}
+	</update>
+	
+		<select id="getMaxId" resultType="long">
+		select max(flowid) from flowrecordinfo
+	</select>
+</mapper>

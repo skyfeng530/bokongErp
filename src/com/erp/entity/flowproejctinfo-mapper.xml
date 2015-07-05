@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="flowproejctinfo">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		projectName,
+		taskName,
+		flowId
+	</sql>
+	<!--resultType="FlowProejctInfo" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="FlowProejctInfo" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from flowproejctinfo
+		<where>
+			<if test="t.flowId != null and t.flowId != ''">
+				flowId = '${t.flowId}'
+				</if>
+		</where>
+	</select>
+	<!-- 总记录数 -->
+	<select id="count" parameterType="FlowProejctInfo" resultType="int">
+		select count(0) from flowproejctinfo
+	</select>
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="FlowProejctInfo">
+		insert into flowproejctinfo( projectName,
+		taskName,
+		flowId)
+		values (#{projectName},
+		#{taskName},
+		#{flowId})
+	</insert>
+
+	<delete id="deleteById" parameterType="String">
+		delete from flowproejctinfo where
+		flowId=#{flowId}
+	</delete>
+	<select id="getById" parameterType="String" resultType="ProjectInfo">
+		select
+		<include refid="selectId" />
+		from flowproejctinfo where flowId=#{flowId}
+	</select>
+	<update id="update" parameterType="FlowProejctInfo">
+		update flowproejctinfo
+		<set>
+		projectName=#{projectName},
+		taskName=#{taskName}
+		</set>
+		where flowId=#{flowId} 
+	</update>
+	
+</mapper>

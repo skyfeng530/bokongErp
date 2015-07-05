@@ -5,7 +5,6 @@
 <head>
 <%@include file="../../common/common-css.jsp" %>
 <%@include file="../../common/common-js.jsp" %>
-administrator
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath }/css/fenyecss.css" />
 </head>

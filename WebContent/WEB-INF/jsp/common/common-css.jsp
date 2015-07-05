@@ -2,6 +2,7 @@
 <style type="text/css">
 <!--
 body {
+	background-color: #F3F9FD;
 	margin-left: 0px;
 	margin-top: 0px;
 	margin-right: 0px;

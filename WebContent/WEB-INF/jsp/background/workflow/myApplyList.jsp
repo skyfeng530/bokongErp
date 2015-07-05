@@ -48,9 +48,9 @@
 				</td>
 				<td><select name="status" class="SelectStyle">
 						<option value="">查看全部状态</option>
-						<option value="1">审批中</option>
-						<option value="2">未通过</option>
-						<option value="3">已通过</option>
+						<option value="0">审批中</option>
+						<option value="1">未通过</option>
+						<option value="2">已通过</option>
 					</select>
 				</td>
 				<td><a href=""><input type="IMAGE" src="${pageContext.servletContext.contextPath }/style/blue/images/button/query.PNG"/></a></td>
@@ -65,32 +65,40 @@
         <td width="8" background="${pageContext.servletContext.contextPath }/images/tab_12.gif">&nbsp;</td>
         <td><table class="ttab" width="100%" cellspacing="1" onmouseover="changeto()"  onmouseout="changeback()">
           <tr align="CENTER" valign="MIDDLE" id="TableTitle">
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">标题</td>
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请人</td>
-			<td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请日期</td>
+			<td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">标题</td>
+			<td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请单类型</td>
+			<td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请人</td>
+			<td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">申请日期</td>
 			<td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">当前状态</td>
 			<td width="25%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">相关操作</td>
 		</tr>
-		<tr>
-           <td>设备采购单_管理员_2015-06-01</td>
-			<td>管理员</td>
-			<td>2015-06-01 09:30</td>
-			<td>审批中</td>
-			<td><a href="${pageContext.servletContext.contextPath }/background/workflow/showForm.html">查看申请信息</a>
-				<a href="${pageContext.servletContext.contextPath }/background/workflow/approvedHistory.html">查看流转记录</a>
-			</td>
-	  	</tr>
-          <%-- <c:forEach var="key" items="${pageView.records}">
+        <c:forEach var="key" items="${pageView.records}">
           <tr>
-            <td><a href="${pageContext.servletContext.contextPath }/Flow_Formflow/showForm.html">设备采购单_管理员_2015-06-01</a></td>
-			<td>管理员</td>
-			<td>2015-06-01 09:30</td>
-			<td>审批中</td>
-			<td><a href="${pageContext.servletContext.contextPath }/Flow_Formflow/showForm.html">查看申请信息</a>
-				<a href="${pageContext.servletContext.contextPath }/Flow_Formflow/approvedHistory.html">查看流转记录</a>
+            <td>${key.title}</td>
+			<td>${key.pdname}</td>
+			<td>${key.username}</td>
+			<td>
+				<fmt:formatDate value="${key.applyDate}" pattern="yyyy-MM-dd HH:mm"/>
+			</td>
+			<td>
+				<c:if test="${key.state eq 0}">初始录入</c:if>
+				<c:if test="${key.state eq 1}">审核中</c:if>
+				<c:if test="${key.state eq 2}">审核完成</c:if>
+			</td>
+			<td>
+				<c:if test="${key.state eq 0}">
+	       			<a href="${pageContext.request.contextPath }/background/workflow/input.html?id=${key.id}">修改</a>
+					<a href="${pageContext.servletContext.contextPath }/background/workflow/startProcess.html?id=${key.id}&pdid=${key.pdid}">申请请假</a>
+	       		</c:if>
+				<c:if test="${key.state eq 1}">
+					<a href="${pageContext.request.contextPath }/background/workflow/hisComment.html?id=${key.id}">查看审核记录</a>
+				</c:if>
+				<c:if test="${key.state eq 2}">
+					<a href="${pageContext.request.contextPath }/background/workflow/hisComment.html?id=${key.id}">查看审核记录</a>
+				</c:if>
 			</td>
 		  </tr> 
-          </c:forEach>--%>
+        </c:forEach>
         </table></td>
         <td width="8" background="${pageContext.servletContext.contextPath }/images/tab_15.gif">&nbsp;</td>
       </tr>

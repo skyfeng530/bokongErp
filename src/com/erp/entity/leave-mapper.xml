@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busleave">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+			id,
+			days,
+			content,
+			leaveDate,
+			remark,
+			username,
+			state
+	</sql>
+	<!--resultType="Leave" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="BusLeave" parameterType="BusLeave">
+		select
+		<include refid="selectId" />
+		from busleave
+		<where>
+			<if test="t.username != null and t.username != ''">
+				username like '%${t.username}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加设备 -->
+	<insert id="add" parameterType="BusLeave">
+		INSERT INTO busleave
+	        (days,
+			content,
+			leaveDate,
+			remark,
+			username,
+			state)
+		 values 
+			(#{days},
+			#{content},
+			#{leaveDate},
+			#{remark},
+			#{username},
+			#{state})
+	</insert>
+	
+	<select id="getById" parameterType="String" resultType="BusLeave">
+		select
+		<include refid="selectId" />
+		from busleave where id=#{id}
+	</select>
+	<update id="update" parameterType="BusLeave">
+		update busleave
+		<set>
+			<if test="state != null and state != ''">
+				state=#{state},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from device busleave
+		id=#{id}
+	</delete>
+</mapper>

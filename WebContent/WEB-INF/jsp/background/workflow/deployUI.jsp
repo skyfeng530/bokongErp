@@ -29,7 +29,7 @@
 
 <!--显示表单内容-->
 <div id=MainArea>
-    <form action="list.html">
+    <form action="${pageContext.servletContext.contextPath }/background/workflow/newdeploy.html" enctype="multipart/form-data" method="post">
         <div class="ItemBlock_Title1"><!-- 信息说明<DIV CLASS="ItemBlock_Title1">
         	<IMG BORDER="0" WIDTH="4" HEIGHT="7" SRC="${pageContext.servletContext.contextPath }/style/blue/images/item_point.gif" /> 部署流程定义 </DIV>  -->
         </div>
@@ -39,8 +39,12 @@
             <div class="ItemBlock">
                 <table cellpadding="0" cellspacing="0" class="mainForm">
                     <tr>
+                        <td>流程名称：&nbsp;<input type="text" name="filename" class="InputStyle" style="width:350px;" /></td>
+						<td></td>
+                    </tr>
+                    <tr>
+                        <td>流程文件：&nbsp;<input type="file" name="file" class="InputStyle" style="width:350px;" /> *</td>
 						<td>请选择流程定义文档(zip格式)</td>
-                        <td><input type="file" name="resource" class="InputStyle" style="width:450px;" /> *</td>
                     </tr>
                 </table>
             </div>
