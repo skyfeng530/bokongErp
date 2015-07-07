@@ -21,7 +21,7 @@ public class JsonUtil {
 	 */
 	public static String getJsonStr(Object object) {
 
-		Map<String, Object> jsonMap = new HashMap<>();
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		jsonMap.put("data", object);
 		
 		return JSON.toJSONString(jsonMap);

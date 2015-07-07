@@ -1,5 +1,8 @@
 function topView() {
 
+	//序号
+	var mNumber = 0;
+	
 	// create the Data Store
 	var store = new Ext.data.Store({
 		autoDestroy : true,
@@ -8,44 +11,27 @@ function topView() {
 		reader : new Ext.data.XmlReader({
 			record : 'total',
 			fields : [ {
-				name : 'id',
+				name : 'materialNumber',
 				type : 'string'
 			}, {
-				name : 'picid',
-				type : 'string'
-			}, {
-				name : 'componentName',
-				type : 'string'
-			}, {
-				name : 'componentType',
+				name : 'idNumber',
 				type : 'int'
 			}, {
-				name : 'total',
-				type : 'int'
-			}, {
-				name : 'shelfLife',
-				type : 'int'
-			}, {
-				name : 'productfrom',
+				name : 'name',
 				type : 'string'
 			}, {
-				name : 'materialForm',
-				type : 'string'
-			}, {
-				name : 'workinprocessFlag',
+				name : 'materialType',
 				type : 'int'
 			}, {
-				name : 'measurementUnit',
+				name : 'codeName',
 				type : 'string'
 			}, {
-				name : 'saveTime',
+				name : 'totalNumber',
 				type : 'int'
 			}, {
-				name : 'remark',
+				name : 'bak',
 				type : 'string'
-			}
-
-			]
+			} ]
 		}),
 
 		sortInfo : {
@@ -66,78 +52,45 @@ function topView() {
 			header : "序号",
 			width : 120,
 			sortable : false,
-			dataIndex : 'id',
+			dataIndex : 'materialNumber',
 			menuDisabled : true
 		}, {
 			header : "图号",
 			width : 120,
 			sortable : false,
-			dataIndex : 'picid',
+			dataIndex : 'idNumber',
 			menuDisabled : true
 		}, {
 			header : "零件名称",
 			width : 120,
 			sortable : false,
-			dataIndex : 'componentName',
+			dataIndex : 'name',
 			menuDisabled : true
 		}, {
 			header : "类别",
 			width : 120,
 			sortable : false,
-			dataIndex : 'componentType',
+			dataIndex : 'materialType',
 			menuDisabled : true,
 			renderer : category_rendererFunc
 		}, {
 			header : "零件编号",
 			width : 120,
 			sortable : false,
-			dataIndex : 'workinprocessFlag',
+			dataIndex : 'codeName',
 			menuDisabled : true,
 			renderer : workinprocess_rendererFunc
 		}, {
 			header : "数量",
 			width : 120,
 			sortable : false,
-			dataIndex : 'total',
+			dataIndex : 'totalNumber',
 			menuDisabled : true
-		},
-		// {
-		// header : "计量单位",
-		// width : 80,
-		// sortable : false,
-		// dataIndex : 'measurementUnit',
-		// menuDisabled : true
-		// }, {
-		// header : "保存期",
-		// width : 80,
-		// sortable : false,
-		// dataIndex : 'shelfLife',
-		// menuDisabled : true
-		// }, {
-		// header : "保存期单位",
-		// width : 80,
-		// sortable : false,
-		// dataIndex : 'saveTime',
-		// menuDisabled : true,
-		// renderer : savetime_rendererFunc
-		// }, {
-		// header : "产品来源",
-		// width : 80,
-		// sortable : false,
-		// dataIndex : 'productfrom',
-		// menuDisabled : true
-		// }, {
-		// header : "物料形态",
-		// width : 80,
-		// sortable : false,
-		// dataIndex : 'materialForm',
-		// menuDisabled : true
-		// },
-		{
+		}, {
 			header : "备注",
 			width : 120,
 			sortable : false,
-			dataIndex : 'remark',
+			dataIndex : 'bak',
 			menuDisabled : true
 		}, {
 			header : "操作",
@@ -189,7 +142,8 @@ function topView() {
 			items : [ {
 				fieldLabel : '项目名称',
 				xtype : 'combo',
-				anchor : '85%'
+				anchor : '85%',
+				value : projectName
 			} ]
 		}, {
 			columnWidth : .5,
@@ -201,7 +155,8 @@ function topView() {
 			items : [ {
 				fieldLabel : '任务编号',
 				anchor : '85%',
-				xtype : 'combo'
+				xtype : 'combo',
+				value : taskName
 			} ]
 		}, {
 			clumnWidth : 1,
@@ -256,7 +211,7 @@ function topView() {
 				fieldLabel : '上传图片',
 				anchor : '85%',
 				xtype : 'fileuploadfield',
-				allowBlank : false,
+				allowBlank : true,
 				blankText : '不能为空',
 				emptyText : '请选择要上传的文件...',
 				buttonText : '',
@@ -264,34 +219,14 @@ function topView() {
 					iconCls : 'upload-icon'
 				}
 			}
-			// , {
-			// id : 'Shelf_life',
-			// fieldLabel : '保存期',
-			// anchor : '85%',
-			// xtype : 'textfield',
-			// allowBlank : false,
-			// blankText : '不能为空'
-			// }, {
-			// id : 'productfrom',
-			// fieldLabel : '产品来源',
-			// anchor : '85%',
-			// xtype : 'textfield',
-			// allowBlank : false,
-			// blankText : '不能为空'
-			// }, {
-			// id : 'Material_form',
-			// fieldLabel : '物料形态',
-			// xtype : 'textfield',
-			// anchor : '85%',
-			// allowBlank : false,
-			// blankText : '不能为空'
-			// }
 			, {
 				xtype : 'button',
 				text : '增加',
 				width : '80',
 				style : 'margin-left:104px;',
-				handler : addFormDataToGrid_handler
+				handler : function(){
+					addFormDataToGrid_handler(mNumber);
+				}
 			} ]
 		}, {
 			columnWidth : .5,
@@ -308,7 +243,7 @@ function topView() {
 				allowBlank : false,
 				blankText : '不能为空'
 			}, {
-				id : 'workinprocessFlag',
+				id : 'componentNumber',
 				fieldLabel : '零件编号',
 				anchor : '85%',
 				xtype : 'combo',
@@ -324,30 +259,6 @@ function topView() {
 				allowBlank : false,
 				blankText : '不能为空'
 			}
-			// , {
-			// id : 'Measurement_unit',
-			// fieldLabel : '计量单位',
-			// anchor : '85%',
-			// xtype : 'textfield',
-			// allowBlank : false,
-			// blankText : '不能为空'
-			// }, {
-			// id : 'saveTimeid',
-			// fieldLabel : '保存期单位',
-			// anchor : '85%',
-			// xtype : 'combo',
-			// store : workflow.states.saveTimeStore,
-			// emptyText : '请选择...',
-			// mode : 'local',
-			// valueField : 'value',
-			// displayField : 'text',
-			// selectOnFocus : true,
-			// editable : false,
-			// forceSelection : true,
-			// valueNotFoundText : '',
-			// allowBlank : false,
-			// blankText : '不能为空'
-			// }
 			, {
 				id : 'remark_id',
 				fieldLabel : '备注',
@@ -404,7 +315,7 @@ function mainView() {
 			handler : function() {
 
 				Ext.Ajax.request({
-					url : '../workflow/submitTask.html',
+					url : '../workflow/submitForm_storage.html',
 					params : {
 						taskId : taskId,
 						comment : 'aaa'

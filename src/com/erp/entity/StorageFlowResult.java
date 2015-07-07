@@ -1,10 +1,8 @@
 package com.erp.entity;
 
-import sun.security.util.BigInt;
-
 //入库电子流第一步,清点录入
 public class StorageFlowResult {
-	private BigInt flowId;				//流程ID
+	private long flowId;				//流程ID
 	private String materialNumber;		//物料序号
 	private String projectName;		//工程名称
 	private String taskName;			//任务编号
@@ -44,10 +42,10 @@ public class StorageFlowResult {
 	private String callPerson;			// 召集人
 	private String TrialTime;			// 审理时间
 	private String bak;				//备注
-	public BigInt getFlowId() {
+	public long getFlowId() {
 		return flowId;
 	}
-	public void setFlowId(BigInt flowId) {
+	public void setFlowId(long flowId) {
 		this.flowId = flowId;
 	}
 	public String getMaterialNumber() {

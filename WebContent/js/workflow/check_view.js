@@ -280,7 +280,7 @@ function mainView() {
 
 function forWardToNextPage()
 {
-	window.location.href = "../workflow/viewTaskForm.html?pdid="+pdid;
+	window.location.href = "../workflow/submitTask.html?taskId="+taskId;
 }
 
 function initview() {

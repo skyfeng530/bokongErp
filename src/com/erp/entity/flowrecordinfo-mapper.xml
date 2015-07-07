@@ -26,7 +26,23 @@
 		<where>
 			<if test="t.flowId != null and t.flowId != ''">
 				flowId = '${t.flowId}'
-				</if>
+			</if>
+			<if test="t.proc_def_id != null and t.proc_def_id != ''">
+				proc_def_id = '${t.proc_def_id}'
+			</if>
+			<if test="t.execution_ID != null and t.execution_ID != ''">
+				and execution_ID = '${t.execution_ID}'
+			</if>
+		</where>
+	</select>
+	<select id="queryAll" resultType="FlowRecordInfo" parameterType="FlowRecordInfo">
+		select
+		<include refid="selectId" />
+		from flowrecordinfo
+		<where>
+			<if test="t.flowId != null and t.flowId != ''">
+				flowId = '${t.flowId}'
+			</if>
 		</where>
 	</select>
 	<!-- 总记录数 -->
@@ -36,31 +52,32 @@
 	<!-- 增加用户 -->
 	<insert id="add" parameterType="FlowRecordInfo">
 		insert into flowrecordinfo(
-		info, 
+		info,
 		className,
 		state,
-		HandlePerson, 
-		CopyPersons, 
+		HandlePerson,
+		CopyPersons,
 		createTime,
 		createPerson,
-		closeTime, 
+		closeTime,
 		closePerson,
 		bak )
 		values (
-		#{info}, 
+		#{info},
 		#{className},
 		#{state},
 		#{HandlePerson},
 		#{CopyPersons},
-		#{createTime}, 
-		#{createPerson}, 
+		#{createTime},
+		#{createPerson},
 		#{closeTime},
 		#{closePerson},
 		#{bak})
 	</insert>
 
 	<delete id="deleteById" parameterType="String">
-		delete from flowrecordinfo where
+		delete from flowrecordinfo
+		where
 		flowId=#{flowId}
 	</delete>
 	<select id="getById" parameterType="String" resultType="FlowRecordInfo">
@@ -71,6 +88,12 @@
 	<update id="update" parameterType="FlowRecordInfo">
 		update flowrecordinfo
 		<set>
+			<if test="proc_def_id != null and proc_def_id != ''">
+				proc_def_id=#{proc_def_id},
+			</if>
+			<if test="execution_ID != null and execution_ID != ''">
+				execution_ID=#{execution_ID},
+			</if>
 			<if test="info != null and info != ''">
 				info=#{info},
 			</if>
@@ -89,15 +112,16 @@
 			<if test="closePerson != null and closePerson != ''">
 				closePerson=#{closePerson},
 			</if>
-		className=#{className},
-		HandlePerson=#{HandlePerson},
-		CopyPersons=#{CopyPersons},
-		bak =#{bak}
+			className=#{className},
+			HandlePerson=#{HandlePerson},
+			CopyPersons=#{CopyPersons},
+			bak =#{bak}
 		</set>
 		where flowId=#{flowId}
 	</update>
-	
-		<select id="getMaxId" resultType="long">
-		select max(flowid) from flowrecordinfo
+
+	<select id="getMaxId" resultType="long">
+		select max(flowid) from
+		flowrecordinfo
 	</select>
 </mapper>

@@ -12,3 +12,6 @@
 	href="${pageContext.servletContext.contextPath }/script/ext3/ux/fileuploadfield/css/fileuploadfield.css" />
 <script language="javascript"
 	src="${pageContext.servletContext.contextPath }/script/ext3/ux/fileuploadfield/FileUploadField.js"></script>
+<script type="text/javascript">
+var ctxPath="<%=request.getContextPath()%>";
+</script>

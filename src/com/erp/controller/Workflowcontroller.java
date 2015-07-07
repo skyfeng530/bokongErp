@@ -1,5 +1,6 @@
 package com.erp.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.erp.dao.FlowProejctInfoDao;
 import com.erp.dao.UserDao;
 import com.erp.entity.BusLeave;
 import com.erp.entity.BusStorage;
+import com.erp.entity.FlowProejctInfo;
 import com.erp.entity.FlowRecordInfo;
+import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
 import com.erp.entity.User;
@@ -31,12 +36,16 @@ import com.erp.service.IWorkflowService;
 import com.erp.service.LeaveService;
 import com.erp.util.Common;
 import com.erp.util.JsonUtil;
+import com.erp.util.Log4jUtils;
 import com.erp.util.PageView;
 import com.erp.util.SessionContext;
+import com.erp.util.Log4jUtils.LogLevel;
 
 @Controller
 @RequestMapping(value="/background/workflow/")
 public class Workflowcontroller{
+	
+	Log4jUtils logger = new Log4jUtils(Workflowcontroller.class);
 	
 	@Autowired
 	private IWorkflowService workflowService;
@@ -46,6 +55,9 @@ public class Workflowcontroller{
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private FlowProejctInfoDao flowproejctinfoDao;
 
 	/**
 	 * 部署管理首页显示
@@ -53,6 +65,7 @@ public class Workflowcontroller{
 	 */
 	@RequestMapping(value="deployHome")
 	public String deployHome(Model model){
+		logger.log(LogLevel.INFO, "[Workflowcontroller] deployHome start");
 		//1:查询部署对象信息，对应表（act_re_deployment）
 		List<Deployment> depList = workflowService.findDeploymentList();
 		//2:查询流程定义的信息，对应表（act_re_procdef）
@@ -60,6 +73,7 @@ public class Workflowcontroller{
 		//放置到上下文对象中
 		model.addAttribute("depList", depList);
 		model.addAttribute("pdList", pdList);
+		logger.log(LogLevel.INFO, "[Workflowcontroller] deployHome end");
 		return "/background/workflow/deployHome";
 	}
 	
@@ -69,7 +83,7 @@ public class Workflowcontroller{
 	 */
 	@RequestMapping(value="deployUI")
 	public String deployUI(){
-		
+		logger.log(LogLevel.INFO, "[Workflowcontroller] deployUI start");
 		return "/background/workflow/deployUI";
 	}
 	
@@ -98,7 +112,13 @@ public class Workflowcontroller{
 		//1：获取部署对象ID
 		String deploymentId = workflowBean.getDeploymentId();
 		//2：使用部署对象ID，删除流程定义
-		workflowService.deleteProcessDefinitionByDeploymentId(deploymentId);
+		try
+		{
+			workflowService.deleteProcessDefinitionByDeploymentId(deploymentId);
+		}
+		catch(Exception e)
+		{
+		}
 		return "redirect:deployHome.html";
 	}
 	
@@ -130,10 +150,12 @@ public class Workflowcontroller{
 	 */
 	@RequestMapping(value="formTemplateList")
 	public String formTemplateList(Model model){
+		logger.log(LogLevel.INFO, "[Workflowcontroller] formTemplateList start");
 		//查询流程定义的信息，对应表（act_re_procdef）
 		List<ProcessDefinition> pdList = workflowService.findProcessDefinitionList();
 		//放置到上下文对象中
 		model.addAttribute("pdList", pdList);
+		logger.log(LogLevel.INFO, "[Workflowcontroller] formTemplateList end");
 		return "/background/workflow/formTemplateList";
 	}
 	
@@ -143,6 +165,7 @@ public class Workflowcontroller{
 	 */
 	@RequestMapping(value="applyFormUI")
 	public String applyFormUI(HttpServletRequest request ,Model model){
+		logger.log(LogLevel.INFO, "[Workflowcontroller] applyFormUI start");
 		String pdid = request.getParameter("deploymentId");
 		//查询流程定义的信息，对应表（act_re_procdef）
 		ProcessDefinition pd = workflowService.findProcessDefinitionListByPdId(pdid);
@@ -158,13 +181,8 @@ public class Workflowcontroller{
 			model.addAttribute("url", "storage");
 			return "/background/workflow/taskApplyUI";
 		}
+		logger.log(LogLevel.INFO, "[Workflowcontroller] applyFormUI end");
 		return "/background/workflow/applyFormUI";
-//		return "/background/workflow/applyFormUI";
-//		return "/background/workflow/taskApplyUI";
-//		return "/background/workflow/applyFormUI_bak";
-//		return "/background/workflow/manageApprovalUI";
-//		return "/background/workflow/intakeCheckUI";
-//		return "/background/workflow/UnqualifiedtrialUI";
 	}
 	
 	/**
@@ -180,10 +198,15 @@ public class Workflowcontroller{
 	 * 提交入库任务
 	 */
 	@RequestMapping(value="submitForm_storage")
-	public String submitForm_storage(HttpServletRequest request, BusStorage storage){
+	public void submitForm_storage(HttpServletRequest request, HttpServletResponse response, FlowTaskInfo flowTaskInfo, BusStorage storage){
 //		storage.setUsername(SessionContext.get(request).getUserName());
-//		leaveService.add(busLeave);
-		return "redirect:myApplyList.html";
+		String strUser = SessionContext.get(request).getUserName();
+		workflowService.addStorage(strUser, flowTaskInfo, storage);
+//		return "redirect:myTaskList.html";
+		
+		boolean result = false;
+		
+		JsonUtil.outJson(response, "{success:'"+result+"'}");
 	}
 	
 	/**
@@ -212,25 +235,27 @@ public class Workflowcontroller{
 	 * @return
 	 */
 	@RequestMapping(value="myApplyList")
-	public String myApplyList(HttpServletRequest request,Model model,FlowRecordInfo record, String pageNow){
+	public String myApplyList(HttpServletRequest request,Model model,FlowTaskInfo flowTaskInfo, String pageNow){
+		logger.log(LogLevel.ERROR, "[Workflowcontroller] myApplyList start");
 		PageView pageView = null;
 		if(Common.isEmpty(pageNow)){
 			pageView = new PageView(1);
 		}else{
 			pageView = new PageView(Integer.parseInt(pageNow));
 		}
-		record.setHandlePerson(SessionContext.get(request).getUserName());
-		List<FlowRecordInfo> tasks = workflowService.findApplyFormByName(pageView, record);
+		flowTaskInfo.getFlowRecordInfo().setHandlePerson(SessionContext.get(request).getUserName());
+		List<FlowTaskInfo> tasks = workflowService.findApplyFormByName(pageView, flowTaskInfo);
 		pageView.setRecords(tasks);
 		model.addAttribute("pageView", pageView);
+		logger.log(LogLevel.ERROR, "[Workflowcontroller] myApplyList END");
 		return "/background/workflow/myApplyList";
 	}
 	
 	// 启动流程
 	@RequestMapping(value="startProcess")
-	public String startProcess(FlowRecordInfo record){
+	public String startProcess(FlowTaskInfo flowTaskInfo){
 		//更新请假状态，启动流程实例，让启动的流程实例关联业务
-		workflowService.saveStartProcess(record);
+		workflowService.saveStartProcess(flowTaskInfo);
 		return "redirect:myTaskList.html";
 	}
 	
@@ -238,11 +263,11 @@ public class Workflowcontroller{
 	 * 打开任务表单
 	 */
 	@RequestMapping(value="viewTaskForm")
-	public String viewTaskForm(Model model, FlowRecordInfo record){
+	public String viewTaskForm(Model model, FlowTaskInfo flowTaskInfo){
 		//任务ID
-		String taskId = record.getTaskId();
+		String taskId = flowTaskInfo.getTaskId();
 		model.addAttribute("taskId", taskId);
-		String pdid = record.getPdid();
+		String pdid = flowTaskInfo.getPdid();
 		model.addAttribute("pdid", pdid);
 		//获取任务表单中任务节点的url连接
 		String url = workflowService.findTaskFormKeyByTaskId(taskId);
@@ -280,9 +305,49 @@ public class Workflowcontroller{
 	 * @return
 	 */
 	@RequestMapping(value="storage_input")
-	public String storage_input(HttpServletRequest request, Model model, FlowRecordInfo record){
+	public String storage_input(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo){
 		model.addAttribute("url", "storage");
-		String taskId = record.getTaskId();
+		String taskId = flowTaskInfo.getTaskId();
+		model.addAttribute("taskId", taskId);
+		
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
+		
+		FlowProejctInfo flowProejctInfo = new FlowProejctInfo();
+		
+		flowProejctInfo.setFlowId(flowId);
+		
+		List<FlowProejctInfo> proejctInfos = flowproejctinfoDao.query(new PageView(1), flowProejctInfo);
+		
+		flowProejctInfo = proejctInfos.get(0);
+		
+		
+		//使用任务ID，查找请假单ID，从而获取请假单信息
+		//BusLeave leave = workflowService.findLeaveBillByTaskId(taskId);
+		//model.addAttribute("leave",leave);
+		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
+		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
+		model.addAttribute("outcomeList", outcomeList);
+		//查询所有历史审核人的审核信息
+		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
+		model.addAttribute("commentList", commentList);
+		
+		model.addAttribute("projectName", flowProejctInfo.getProjectName());
+		model.addAttribute("taskName", flowProejctInfo.getTaskName());
+		
+		List<User> users = userDao.query(new PageView(),new User());
+		model.addAttribute("users", users);
+		
+		return "/background/workflow/MaterialtransferUI";
+	}
+	
+	/**
+	 *  准备入库表单数据-----入库检验
+	 * @return
+	 */
+	@RequestMapping(value="storage_check")
+	public String storage_check(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo){
+		model.addAttribute("url", "storage");
+		String taskId = flowTaskInfo.getTaskId();
 		model.addAttribute("taskId", taskId);
 		//使用任务ID，查找请假单ID，从而获取请假单信息
 		//BusLeave leave = workflowService.findLeaveBillByTaskId(taskId);
@@ -295,17 +360,6 @@ public class Workflowcontroller{
 		model.addAttribute("commentList", commentList);
 		List<User> users = userDao.query(new PageView(),new User());
 		model.addAttribute("users", users);
-		
-		return "/background/workflow/MaterialtransferUI";
-	}
-	
-	/**
-	 *  准备入库表单数据-----入库检验
-	 * @return
-	 */
-	@RequestMapping(value="storage_check")
-	public String storage_check(HttpServletRequest request, Model model){
-		model.addAttribute("url", "storage");
 		return "/background/workflow/manageApprovalUI";
 	}
 	
@@ -314,8 +368,21 @@ public class Workflowcontroller{
 	 * @return
 	 */
 	@RequestMapping(value="storage_approval")
-	public String storage_approval(HttpServletRequest request, Model model){
+	public String storage_approval(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo){
 		model.addAttribute("url", "storage");
+		String taskId = flowTaskInfo.getTaskId();
+		model.addAttribute("taskId", taskId);
+		//使用任务ID，查找请假单ID，从而获取请假单信息
+		//BusLeave leave = workflowService.findLeaveBillByTaskId(taskId);
+		//model.addAttribute("leave",leave);
+		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
+		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
+		model.addAttribute("outcomeList", outcomeList);
+		//查询所有历史审核人的审核信息
+		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
+		model.addAttribute("commentList", commentList);
+		List<User> users = userDao.query(new PageView(),new User());
+		model.addAttribute("users", users);
 		return "/background/workflow/intakeCheckUI";
 	}
 	
@@ -324,8 +391,21 @@ public class Workflowcontroller{
 	 * @return
 	 */
 	@RequestMapping(value="storage_approvalresult")
-	public String storage_approvalresult(HttpServletRequest request, Model model){
+	public String storage_approvalresult(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo){
 		model.addAttribute("url", "storage");
+		String taskId = flowTaskInfo.getTaskId();
+		model.addAttribute("taskId", taskId);
+		//使用任务ID，查找请假单ID，从而获取请假单信息
+		//BusLeave leave = workflowService.findLeaveBillByTaskId(taskId);
+		//model.addAttribute("leave",leave);
+		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
+		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
+		model.addAttribute("outcomeList", outcomeList);
+		//查询所有历史审核人的审核信息
+		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
+		model.addAttribute("commentList", commentList);
+		List<User> users = userDao.query(new PageView(),new User());
+		model.addAttribute("users", users);
 		return "/background/workflow/UnqualifiedtrialUI";
 	}
 	
@@ -343,9 +423,10 @@ public class Workflowcontroller{
 	 * 提交任务
 	 */
 	@RequestMapping(value="submitTask")
-	public String submitTask(HttpServletRequest request, FlowRecordInfo recordInfo){
-		recordInfo.setHandlePerson(SessionContext.get(request).getUserName());
-		workflowService.saveSubmitTask(recordInfo);
+	public String submitTask(HttpServletRequest request, FlowTaskInfo flowTaskInfo){
+		flowTaskInfo.setNextName(SessionContext.get(request).getUserName());
+		flowTaskInfo.getFlowRecordInfo().setHandlePerson(SessionContext.get(request).getUserName());
+		workflowService.saveSubmitTask(flowTaskInfo);
 		return "redirect:myTaskList.html";
 	}
 	
@@ -375,19 +456,20 @@ public class Workflowcontroller{
 	public String hisComment(Model model, MyTask task){
 		//获取清单ID
 		String id = task.getId() + "";
-		//使用请假单ID，查询请假单对象
-		BusLeave leave = leaveService.getById(id);
-		model.addAttribute("leave", leave);
+		String className = task.getPdid();
 		//使用请假单ID，查询历史的批注信息
 		List<Comment> commentList = workflowService.findLeaveCommentById(id);
 		model.addAttribute("commentList", commentList);
 		//根据流程定义的key设置url
-		model.addAttribute("url", "leave");
-		/*if ("BusLeave".equals(pd.getKey())) {
+		if ("BusLeave".equals(className)) {
+			//使用请假单ID，查询请假单对象
+			BusLeave leave = leaveService.getById(id);
+			model.addAttribute("leave", leave);
+			model.addAttribute("url", "leave");
 		}
-		if ("BusStorage".equals(pd.getKey())) {
+		if ("BusStorage".equals(className)) {
 			model.addAttribute("url", "storage");
-		}*/
+		}
 		return "/background/workflow/taskFormHis";
 	}
 	
@@ -448,7 +530,9 @@ public class Workflowcontroller{
 		recordInfo.setHandlePerson(SessionContext.get(request).getUserName());
 		recordInfo.setCreatePerson(SessionContext.get(request).getUserName());
 		
-		workflowService.saveStorage(projectInfo, recordInfo);
+		FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
+		flowTaskInfo.setFlowRecordInfo(recordInfo);
+		workflowService.saveStorage(projectInfo, flowTaskInfo);
 		
 		
 		JsonUtil.outJson(response, "{success:'"+result+"'}");

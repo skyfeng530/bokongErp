@@ -33,12 +33,17 @@ import com.erp.dao.FlowProejctInfoDao;
 import com.erp.dao.FlowRecordInfoDao;
 import com.erp.dao.LeaveDao;
 import com.erp.dao.ProjectInfoDao;
+import com.erp.dao.StorageFlowResultDao;
 import com.erp.entity.BusLeave;
+import com.erp.entity.BusStorage;
 import com.erp.entity.FlowProejctInfo;
 import com.erp.entity.FlowRecordInfo;
+import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
+import com.erp.entity.Roles;
 import com.erp.service.IWorkflowService;
+import com.erp.util.Common;
 import com.erp.util.PageView;
 
 
@@ -68,6 +73,9 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	
 	@Autowired
 	private FlowProejctInfoDao flowProejctInfoDao;
+	
+	@Autowired
+	private StorageFlowResultDao storageFlowResultDao;
 	/**
 	 * 部署新流程
 	 */
@@ -122,9 +130,10 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 
 	/**启动流程**/
 	@Override
-	public void saveStartProcess(FlowRecordInfo record) {
+	public void saveStartProcess(FlowTaskInfo flowTaskInfo) {
+		FlowRecordInfo record = flowTaskInfo.getFlowRecordInfo();
 		Long id = record.getFlowId();
-		String pdid = record.getPdid();
+		String pdid = flowTaskInfo.getPdid();
 		String key = pdid;
 		Map<String, Object> variables = new HashMap<String,Object>();
 		if ("BusLeave".equals(pdid)) {
@@ -288,24 +297,29 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	}
 
 	@Override
-	public List<FlowRecordInfo> findApplyFormByName(PageView pageView, FlowRecordInfo record) {
+	public List<FlowTaskInfo> findApplyFormByName(PageView pageView, FlowTaskInfo flowTaskInfo) {
 		//查询所有流程定义
+		FlowRecordInfo record = flowTaskInfo.getFlowRecordInfo();
 		List<ProcessDefinition> pdList = findProcessDefinitionList();
 		List<FlowRecordInfo> reInfos = flowrecordinfoDao.query(pageView, record);
 		if ((null != pdList && pdList.size() > 0) || (null != reInfos && reInfos.size() > 0)) {
 			return null;
 		}
+		List<FlowTaskInfo> reTaskInfos = new ArrayList<FlowTaskInfo>();
 		for (ProcessDefinition pd : pdList) {
 			for (int i = 0; i < reInfos.size() ; i++) {
 				FlowRecordInfo info = reInfos.get(i);
+				FlowTaskInfo tmpTaskInfo =new FlowTaskInfo();
+				tmpTaskInfo = flowTaskInfo;
 				String className = info.getClassName();
 				if (pd.getKey().equals(className)) {
-					info.setPdname(pd.getName());
+					tmpTaskInfo.setPdname(pd.getName());
 				}
 				reInfos.add(i, info);
+				reTaskInfos.add(i, tmpTaskInfo);
 			}
 		}
-		return reInfos;
+		return reTaskInfos;
 	}
 	
 	/**查看请假单审批历史**/
@@ -417,8 +431,9 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	}
 
 	@Override
-	public int saveStorage(ProjectInfo projectInfo, FlowRecordInfo recordInfo) {
+	public int saveStorage(ProjectInfo projectInfo, FlowTaskInfo flowTaskInfo) {
 
+		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
 		recordInfo.setState(1);
 		flowrecordinfoDao.add(recordInfo);
 
@@ -426,9 +441,19 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 		
 		recordInfo.setFlowId((long) maxId);
 		
-		recordInfo.setPdid("BusStorage");
+		flowTaskInfo.setPdid("BusStorage");
 
-		saveStartProcess(recordInfo);
+		saveStartProcess(flowTaskInfo);
+		
+		String key = "BusStorage." + maxId;
+		
+		//ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(key).singleResult();
+		Task task = taskService.createTaskQuery().processInstanceBusinessKey(key).singleResult();
+		flowTaskInfo.setTaskId(task.getId());
+		String excuteId = task.getExecutionId();
+		String proc_def_id = task.getProcessDefinitionId();
+		recordInfo.setExecution_ID(excuteId);
+		recordInfo.setProc_def_id(proc_def_id);
 		
 		flowrecordinfoDao.modify(recordInfo);
 		
@@ -442,54 +467,96 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	}
 
 	@Override
-	public void saveSubmitTask(FlowRecordInfo recordInfo) {
+	public void saveSubmitTask(FlowTaskInfo flowTaskInfo) {
+		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
 		//获取任务ID
-				String taskId = recordInfo.getTaskId();
-				//获取连线的名称
-				String outcome = recordInfo.getOutcome();
-				//批注信息
-				String message = recordInfo.getComment();
-				//获取请假单ID
-				Long id = recordInfo.getFlowId();
-				//下一步处理人
-				String nextName = recordInfo.getNextName();
-				
-				//使用任务ID，查询任务对象，获取流程流程实例ID
-				Task task = taskService.createTaskQuery()//
-								.taskId(taskId)//使用任务ID查询
-								.singleResult();
-				//获取流程实例ID
-				String processInstanceId = task.getProcessInstanceId();
-				ProcessInstance pi1 = runtimeService.createProcessInstanceQuery()//
-						.processInstanceId(processInstanceId)//使用流程实例ID查询
-						.singleResult();
-				String className = pi1.getBusinessKey().split("\\.")[0];
-				Authentication.setAuthenticatedUserId(recordInfo.getHandlePerson());
-				taskService.addComment(taskId, processInstanceId, message);
-				Map<String, Object> variables = new HashMap<String,Object>();
-				if(outcome!=null && !outcome.equals("默认提交")){
-					variables.put("outcome", outcome);
-				}
-				variables.put("nextName", nextName);
-				taskService.complete(taskId, variables);
-				ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
-								.processInstanceId(processInstanceId)//使用流程实例ID查询
-								.singleResult();
-				//流程结束了
-				if(pi==null){
-					//更新请假单表的状态从1变成2（审核中-->审核完成）
-					if ("BusLeave".equals(className)) {
-						BusLeave bill = leaveDao.getById(id + "");
-						bill.setState(2);
-						leaveDao.modify(bill);
-					}
-					if ("BusStorage".equals(className)) {
-						/*BusStorage storage = storageDao.getById(id + "");
-						storage.setState(2);
-						leaveDao.modify(storage);*/
-					}
-				}
+		String taskId = flowTaskInfo.getTaskId();
+		// 获取连线的名称
+		String outcome = flowTaskInfo.getOutcome();
+		outcome = "不合格";
+		// 批注信息
+		String message = flowTaskInfo.getComment();
+		message = "aaa";
+		// 获取请假单ID
+		//Long id = recordInfo.getFlowId();
+		// 下一步处理人
+		String nextName = flowTaskInfo.getNextName();
+
+		// 使用任务ID，查询任务对象，获取流程流程实例ID
+		Task task = taskService.createTaskQuery()//
+				.taskId(taskId)// 使用任务ID查询
+				.singleResult();
+		// 获取流程实例ID
+		String processInstanceId = task.getProcessInstanceId();
+		ProcessInstance pi1 = runtimeService.createProcessInstanceQuery()//
+				.processInstanceId(processInstanceId)// 使用流程实例ID查询
+				.singleResult();
+		String className = pi1.getBusinessKey().split("\\.")[0];
+		Authentication.setAuthenticatedUserId(recordInfo.getHandlePerson());
+		taskService.addComment(taskId, processInstanceId, message);
+		Map<String, Object> variables = new HashMap<String, Object>();
+		if (outcome != null && !outcome.equals("默认提交")) {
+			variables.put("outcome", outcome);
+		}
+		variables.put("nextName", nextName);
+		taskService.complete(taskId, variables);
+		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
+				.processInstanceId(processInstanceId)// 使用流程实例ID查询
+				.singleResult();
+		// 流程结束了
+		if (pi == null) {
+			// 更新请假单表的状态从1变成2（审核中-->审核完成）
+			if ("BusLeave".equals(className)) {
+				/*BusLeave bill = leaveDao.getById(id + "");
+				bill.setState(2);
+				leaveDao.modify(bill);*/
+			}
+			if ("BusStorage".equals(className)) {
+				/*
+				 * BusStorage storage = storageDao.getById(id + "");
+				 * storage.setState(2); leaveDao.modify(storage);
+				 */
+			}
+		}
 		
+	}
+
+	@Override
+	public void addStorage(String strUserName, FlowTaskInfo flowTaskInfo,
+			BusStorage storage) {
+		// TODO Auto-generated method stub
+		Task task = taskService.createTaskQuery()//
+				.taskId(flowTaskInfo.getTaskId())//使用任务ID查询
+				.singleResult();
+		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
+		String excuteId = task.getExecutionId();
+		String proc_def_id = task.getProcessDefinitionId();
+		recordInfo.setExecution_ID(excuteId);
+		recordInfo.setProc_def_id(proc_def_id);
+		PageView pageView = new PageView(1);
+		List<FlowRecordInfo> recordList = 
+		flowrecordinfoDao.queryOne(pageView, recordInfo);
+		if( recordList.size() == 0)
+		{
+			return;
+		}
+		recordInfo = recordList.get(0);
+		String url = findTaskFormKeyByTaskId(flowTaskInfo.getTaskId());
+		if ("storage_input".equals(url)) 
+		{
+			storageFlowResultDao.delete(Long.toString(recordInfo.getFlowId()));
+			//BusStorage storage 逐行插入 
+		}
+		else
+		{
+			//BusStorage storage 逐行update
+		}
+		recordInfo.setHandlePerson(strUserName);
+		flowrecordinfoDao.modify(recordInfo);
+		flowTaskInfo.setFlowRecordInfo(recordInfo);
+		//nextName是页面选择定的,这边测试
+		flowTaskInfo.setNextName(strUserName);
+		saveSubmitTask(flowTaskInfo);
 	}
 	
 	

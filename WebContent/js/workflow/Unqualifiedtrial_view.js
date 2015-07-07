@@ -242,13 +242,40 @@ function mainView() {
 			fieldLabel : "批注"
 		} ],
 		buttons : [ {
-			text : "提交"
+			text : "提交",
+			handler : function(){
+				Ext.Ajax.request({
+					url : '../workflow/submitForm_storage.html',
+					params : {
+						taskId : taskId,
+						comment : 'aaa'
+					},
+					method : 'POST',
+					success : function(response) {
+						var result = Ext.decode(response.responseText);
+
+						if (result.success) {
+							Ext.Msg.alert("提示", "提交成功", forWardToNextPage);
+						} else {
+							Ext.Msg.alert("提示", "提交失败");
+						}
+					},
+					failure : function() {
+						Ext.Msg.alert("提示", "提交失败");
+					}
+				});
+			}
 		}, {
 			text : "取消"
 		} ]
 	});
 
 	mainPanel.render("main_id");
+}
+
+function forWardToNextPage()
+{
+	window.location.href = ctxPath + "/background/workflow/submitTask.html?taskId="+taskId;
 }
 
 function initview() {

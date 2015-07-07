@@ -11,7 +11,9 @@ import org.activiti.engine.task.Task;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.erp.entity.BusLeave;
+import com.erp.entity.BusStorage;
 import com.erp.entity.FlowRecordInfo;
+import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
 import com.erp.util.PageView;
@@ -32,7 +34,7 @@ public interface IWorkflowService {
 	public ProcessDefinition findProcessDefinitionListByPdId(String pdid);
 
 	/**启动流程**/
-	public void saveStartProcess(FlowRecordInfo record);
+	public void saveStartProcess(FlowTaskInfo flowTaskInfo);
 	
 	/**启动流程**/
 	public void saveStartProcess(String pdid);
@@ -55,9 +57,9 @@ public interface IWorkflowService {
 
 	public void saveSubmitTask(MyTask task);
 	
-	public void saveSubmitTask(FlowRecordInfo recordInfo);
+	public void saveSubmitTask(FlowTaskInfo flowTaskInfo);
 
-	public List<FlowRecordInfo> findApplyFormByName(PageView pageView, FlowRecordInfo record);
+	public List<FlowTaskInfo> findApplyFormByName(PageView pageView, FlowTaskInfo flowTaskInfo);
 
 	/**查看请假单审批历史**/
 	public List<Comment> findLeaveCommentById(String id);
@@ -71,5 +73,7 @@ public interface IWorkflowService {
 	
 	public List<ProjectInfo> findTaskNumber(PageView pageView, ProjectInfo projectInfo);
 	
-	public int saveStorage(ProjectInfo projectInfo, FlowRecordInfo recordInfo);
+	public int saveStorage(ProjectInfo projectInfo, FlowTaskInfo flowTaskInfo);
+	
+	public void addStorage(String strUserName, FlowTaskInfo flowTaskInfo, BusStorage storage);
 }

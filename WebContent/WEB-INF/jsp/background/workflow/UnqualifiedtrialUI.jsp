@@ -11,7 +11,8 @@
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/eventFunction.js"></script>
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/Unqualifiedtrial_view.js"></script>
     <script type="text/javascript">
-     var pdid = ${pdid};
+    var pdid = '${pdid}';
+    var taskId = '${taskId}';
     </script>
 </head>
 <body>

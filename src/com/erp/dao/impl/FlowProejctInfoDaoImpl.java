@@ -9,4 +9,11 @@ import com.erp.entity.FlowProejctInfo;
 @Repository("flowproejctinfoDao")
 public class FlowProejctInfoDaoImpl extends BaseDaoImpl<FlowProejctInfo> implements FlowProejctInfoDao
 {
+
+	@Override
+	public int getFlowIdByTask(int taskId) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne(this.getClassName()+".getFlowIdByTask", taskId);
+	}
+	
 }

@@ -1,35 +1,31 @@
-function addFormDataToGrid_handler() {
+function addFormDataToGrid_handler(mNumber) {
 
+	//图号
 	var _girdForm_picid = Ext.getCmp("picid").getValue();
+	//零件名称
 	var _girdForm_ComponentName = Ext.getCmp("componentName").getValue();
+	//类别
 	var _girdForm_componentType = Ext.getCmp("componentType").getValue();
+	//数量
 	var _girdForm_Total = Ext.getCmp("total").getValue();
-	var _girdForm_ShelfLife = Ext.getCmp("Shelf_life").getValue();
-	var _girdForm_productfrom = Ext.getCmp("productfrom").getValue();
-	var _girdForm_MaterialForm = Ext.getCmp("Material_form").getValue();
-	var _girdForm_workinprocessFlag = Ext.getCmp("workinprocessFlag")
-			.getValue();
-	var _girdForm_Measurement_unit = Ext.getCmp("Measurement_unit").getValue();
-	var _girdForm_saveTime = Ext.getCmp("saveTimeid").getValue();
+	//零件编号
+	var _girdForm_componentNumber = Ext.getCmp("componentNumber").getValue();
+	//备注
 	var _girdForm_remark = Ext.getCmp("remark_id").getValue();
 
 	var _gridStore = Ext.getCmp("_gridPanel_id").getStore();
 
 	var component = _gridStore.recordType;
 
+	mNumber++;
 	_gridStore.insert(0, new component({
-		id : "1",
-		picid : _girdForm_picid,
-		componentName : _girdForm_ComponentName,
-		componentType : _girdForm_componentType,
-		total : _girdForm_Total,
-		shelfLife : _girdForm_ShelfLife,
-		productfrom : _girdForm_productfrom,
-		materialForm : _girdForm_MaterialForm,
-		workinprocessFlag : _girdForm_workinprocessFlag,
-		measurementUnit : _girdForm_Measurement_unit,
-		saveTime : _girdForm_saveTime,
-		remark : _girdForm_remark,
+		materialNumber : mNumber,
+		idNumber : _girdForm_picid,
+		name : _girdForm_ComponentName,
+		materialType : _girdForm_componentType,
+		codeName : _girdForm_componentNumber,
+		totalNumber : _girdForm_Total,
+		bak : _girdForm_remark
 	}));
 
 };

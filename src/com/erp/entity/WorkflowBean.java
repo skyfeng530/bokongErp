@@ -1,7 +1,5 @@
 package com.erp.entity;
 
-import java.io.File;
-
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class WorkflowBean {

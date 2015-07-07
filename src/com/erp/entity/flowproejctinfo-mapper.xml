@@ -51,4 +51,8 @@
 		where flowId=#{flowId} 
 	</update>
 	
+	<select id="getFlowIdByTask" parameterType="int" resultType="int">
+		select flowid from flowrecordinfo f, act_ru_task t where t.EXECUTION_ID_ = f.execution_ID and t.ID_=#{taskId};
+	</select>
+	
 </mapper>

@@ -1,8 +1,5 @@
 package com.erp.entity;
 
-import sun.security.util.BigInt;
-
-
 /**
  * 项目工程信息
  */

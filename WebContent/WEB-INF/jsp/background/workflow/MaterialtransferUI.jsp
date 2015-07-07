@@ -12,6 +12,8 @@
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/Materialtransfer_view.js"></script>
     <script type="text/javascript">
      var taskId = ${taskId};
+     var projectName = '${projectName}';
+     var taskName = '${taskName}';
     </script>
 </head>
 <body>

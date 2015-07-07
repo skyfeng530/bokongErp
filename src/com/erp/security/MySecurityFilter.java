@@ -56,6 +56,8 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements Fil
 
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
 	}
