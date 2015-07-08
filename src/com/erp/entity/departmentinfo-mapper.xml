@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="department">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		DepartId,
+  		dName,
+  		DepartType,
+  		Discribe
+	</sql>
+	<!--resultType="User" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="DepartmentInfo" parameterType="java.util.HashMap">
+		select
+		<include refid="selectId" />
+		from departmentinfo
+		<where>
+			<if test="t.dName != null and t.dName != ''">
+				dName like '%${t.dName}%'
+			</if>
+		</where>
+	</select>
+	<!-- 总记录数 -->
+	<select id="count" parameterType="DepartmentInfo" resultType="int">
+		select count(0) from departmentinfo
+		<where>
+			<if test="dName != null and dName != ''">
+				dName like '%${dName}%'
+			</if>
+		</where>
+	</select>
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="DepartmentInfo">
+		insert into user( 
+		DepartId,
+  		dName,
+  		DepartType,
+  		Discribe )
+		values (
+		#{DepartId},
+		#{dName},
+		#{DepartType}, 
+		#{Discribe})
+	</insert>
+
+	<delete id="deleteByUsername" parameterType="String">
+		delete from departmentinfo where
+		userName=#{userName}
+	</delete>
+	<update id="update" parameterType="DepartmentInfo">
+		update departmentinfo
+		<set>
+			<if test="DepartId != null and DepartId != ''">
+				DepartId=#{DepartId},
+			</if>
+			<if test="DepartType != null and DepartType != ''">
+				DepartType=#{DepartType},
+			</if>
+			<if test="Discribe != null and Discribe != ''">
+				Discribe=#{Discribe},
+			</if>
+			<if test="dName != null and dName != ''">
+				dName=#{dName},
+			</if>
+		</set>
+		where dName=#{dName}
+	</update>
+	
+	<!-- 根据用户名查出userId -->
+	<select id="queryUserName" parameterType="String" resultType="DepartmentInfo">
+	  select
+	  <include refid="selectId"/>
+	  from departmentinfo where dName=#{dName}
+	</select>
+</mapper>

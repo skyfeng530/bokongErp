@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import com.erp.entity.UserLoginList;
 import com.erp.service.ResourcesService;
 import com.erp.service.UserLoginListService;
 import com.erp.util.Common;
+import com.erp.util.Log4jUtils;
+import com.erp.util.Log4jUtils.LogLevel;
 
 /**
  * 进行管理后台框架界面的类
@@ -31,6 +34,8 @@ import com.erp.util.Common;
 @RequestMapping ("/background/")
 public class BackgroundController
 {
+	Log4jUtils logger = new Log4jUtils(BackgroundController.class);
+	
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -79,6 +84,7 @@ public class BackgroundController
 			request.getSession().setAttribute("userSession", users);
 			// 记录登录信息
 			UserLoginList userLoginList = new UserLoginList();
+			userLoginList.setUserName(users.getUserName());
 			userLoginList.setLoginIp(Common.toIpAddr(request));
 			userLoginListService.add(userLoginList);
 		} catch (AuthenticationException ae) {  
@@ -107,9 +113,8 @@ public class BackgroundController
 	public String left(Model model,HttpServletRequest request)
 	{
 		try {
-			//UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			//String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = request.getUserPrincipal().getName();
+			logger.log(LogLevel.ERROR, "*****loginUsername="+username);
 			List<Resources> resources = resourcesService.getResourcesByUserName(username);
 			model.addAttribute("resources", resources);
 		} catch (Exception e) {

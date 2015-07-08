@@ -19,5 +19,6 @@
 		<typeAlias type="com.erp.entity.StorageFlowResult" alias="StorageFlowResult"/>
 		<typeAlias type="com.erp.entity.ProjectInfo" alias="ProjectInfo"/>
 		<typeAlias type="com.erp.entity.FlowProejctInfo" alias="FlowProejctInfo"/>
+		<typeAlias type="com.erp.entity.DepartmentInfo" alias="DepartmentInfo"/>
 	</typeAliases>
 </configuration>
