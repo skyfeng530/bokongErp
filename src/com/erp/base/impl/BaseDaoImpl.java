@@ -44,7 +44,9 @@ public class BaseDaoImpl<T> extends SqlSessionDaoSupport{
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
-		return getSqlSession().selectList(this.getClassName()+".query",map);
+		String className = this.getClassName();
+		List<T> list = getSqlSession().selectList(className+".query",map);
+		return list;
 	}
 	public List<T> queryAll(T t) {
 		return getSqlSession().selectList(this.getClassName()+".queryAll",t);

@@ -10,8 +10,8 @@
        $.ajax({
       		async:false, //请勿改成异步，下面有些程序依赖此请数据
       		type : "POST",
-      		data:{userId:"${user.userId}",roleId:$('input[name="roleId"]:checked').val()},
-      		url: "${pageContext.servletContext.contextPath }/background/user/allocation.html",
+      		data:{DepartId:"${department.departId}",roleId:$('input[name="roleId"]:checked').val()},
+      		url: "${pageContext.servletContext.contextPath }/background/department/allocation.html",
       		dataType:'json',
       		success: function(json){
       			if(json == "1000"){
@@ -44,12 +44,12 @@
 			<tr>	
 					<td height="30"width="20%" >
 						<div align="right" class="STYLE1" >
-								用户名：
+								部门：
 						</div>
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-						${user.userName}
+						${department.dName}
 						</div>
 					</td>
 				</tr>
@@ -61,11 +61,11 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-						<c:if test="${empty user.roleName}">
+						<c:if test="${empty department.dName}">
 						<font color="red">没有分配角色</font>
 						</c:if>
-						<c:if test="${not empty user.roleName}">
-						<font color="blue">${user.roleName}</font>
+						<c:if test="${not empty department.dName}">
+						<font color="blue">${department.dName}</font>
 						</c:if>
 						</div>
 					</td>

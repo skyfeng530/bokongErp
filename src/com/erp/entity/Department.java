@@ -3,12 +3,12 @@ package com.erp.entity;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class DepartmentInfo implements Serializable{
+public class Department implements Serializable{
 	private int DepartId;
 	private String dName;
 	private int DepartType;
 	private String Discribe;
-	public DepartmentInfo() {
+	public Department() {
 		super();
 	}
 	public int getDepartId() {

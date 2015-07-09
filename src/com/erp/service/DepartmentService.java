@@ -1,20 +1,20 @@
 package com.erp.service;
 
 
-import com.erp.entity.DepartmentInfo;
+import com.erp.entity.Department;
 import com.erp.entity.Roles;
 import com.erp.util.PageView;
 
 public interface DepartmentService{
-	public PageView query(PageView pageView,DepartmentInfo department);
+	public PageView query(PageView pageView,Department department);
 	
-	public void add(DepartmentInfo department);
+	public void add(Department department);
 	
 	public void deleteByDepartmentname(String dName);
 	
-	public void modify(DepartmentInfo department);
+	public void modify(Department department);
 	
-	public DepartmentInfo getByDepartmentrname(String userName);
+	public Department getByDepartmentName(String userName);
 	
 	public Roles findbyDepartmentRole(String dId);
 }

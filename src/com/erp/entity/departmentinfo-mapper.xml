@@ -9,8 +9,8 @@
   		DepartType,
   		Discribe
 	</sql>
-	<!--resultType="User" 每返回一条结果封装到User里 -->
-	<select id="query" resultType="DepartmentInfo" parameterType="java.util.HashMap">
+	<!--resultType="Department" 每返回一条结果封装到Department里 -->
+	<select id="query" resultType="Department" parameterType="java.util.HashMap">
 		select
 		<include refid="selectId" />
 		from departmentinfo
@@ -21,7 +21,7 @@
 		</where>
 	</select>
 	<!-- 总记录数 -->
-	<select id="count" parameterType="DepartmentInfo" resultType="int">
+	<select id="count" parameterType="Department" resultType="int">
 		select count(0) from departmentinfo
 		<where>
 			<if test="dName != null and dName != ''">
@@ -30,7 +30,7 @@
 		</where>
 	</select>
 	<!-- 增加用户 -->
-	<insert id="add" parameterType="DepartmentInfo">
+	<insert id="add" parameterType="Department">
 		insert into user( 
 		DepartId,
   		dName,
@@ -47,7 +47,7 @@
 		delete from departmentinfo where
 		userName=#{userName}
 	</delete>
-	<update id="update" parameterType="DepartmentInfo">
+	<update id="update" parameterType="Department">
 		update departmentinfo
 		<set>
 			<if test="DepartId != null and DepartId != ''">
@@ -67,7 +67,7 @@
 	</update>
 	
 	<!-- 根据用户名查出userId -->
-	<select id="queryUserName" parameterType="String" resultType="DepartmentInfo">
+	<select id="queryDepartmentName" parameterType="String" resultType="Department">
 	  select
 	  <include refid="selectId"/>
 	  from departmentinfo where dName=#{dName}

@@ -77,14 +77,14 @@
 	
 	<!-- 增加角色和用户 -->
 	<insert id="saveUserRole" parameterType="UserRoles">
-	insert into user_role(user_id,role_id) values (#{userId},#{roleId})
+	insert into user_role(departId,role_id) values (#{departId},#{roleId})
 	</insert>
 	
 	<delete id="deleteUserRole" parameterType="String">
-	delete from user_role where user_id=#{userId}
+	delete from user_role where departId=#{departId}
 	</delete>
 	
 	<update id="updateUserRole" parameterType="String">
-	update user_role set user_id=#{userId}
+	update user_role set departId=#{departId}
 	</update>
 </mapper>

@@ -1,6 +1,9 @@
 package com.erp.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.erp.entity.DepartmentInfo;
+import com.erp.entity.Department;
 import com.erp.entity.Roles;
 import com.erp.entity.UserRoles;
 import com.erp.service.DepartmentService;
@@ -32,7 +35,7 @@ public class DepartmentController {
 	 * @return
 	 */
 	@RequestMapping("query")
-	public String query(Model model, DepartmentInfo department, String pageNow) {
+	public String query(Model model, Department department, String pageNow) {
 		PageView pageView = null;
 		if (Common.isEmpty(pageNow)) {
 			pageView = new PageView(1);
@@ -52,7 +55,7 @@ public class DepartmentController {
 	 * @return
 	 */
 	@RequestMapping("add")
-	public String add(Model model, DepartmentInfo department) {
+	public String add(Model model, Department department) {
 		departmentService.add(department);
 		return "redirect:query.html";
 	}
@@ -90,7 +93,7 @@ public class DepartmentController {
 	 */
 	@RequestMapping("getById")
 	public String getById(Model model, String dName, int type) {
-		DepartmentInfo department = departmentService.getByDepartmentrname(dName);
+		Department department = departmentService.getByDepartmentName(dName);
 		model.addAttribute("department", department);
 		 List<Roles> roles=rolesService.findAll();
 		 model.addAttribute("roles", roles);
@@ -108,7 +111,7 @@ public class DepartmentController {
 	 * @return
 	 */
 	@RequestMapping("update")
-	public String update(Model model, DepartmentInfo department,UserRoles userRoles) {
+	public String update(Model model, Department department,UserRoles userRoles) {
 		departmentService.modify(department);
 		if(userRoles.getRoleId()!=null)
 		rolesService.saveUserRole(userRoles);
@@ -132,10 +135,14 @@ public class DepartmentController {
 	/**
 	 * 给用户分配角色界面
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
-	@RequestMapping("userRole")
-	public String userRole(Model model,String dName){
-		DepartmentInfo department = departmentService.getByDepartmentrname(dName);
+	@RequestMapping("departmentRole")
+	public String departmentRole(HttpServletRequest request, Model model) throws UnsupportedEncodingException{
+		String dName =request.getParameter("dName");  
+		byte b[] =dName.getBytes("ISO-8859-1");  
+		dName = new String(b, "utf-8");  
+		Department department = departmentService.getByDepartmentName(dName);
 		model.addAttribute("department", department);
 		List<Roles> roles = rolesService.findAll();
 		model.addAttribute("roles", roles);

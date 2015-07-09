@@ -5,18 +5,18 @@ package com.erp.entity;
 public class UserRoles implements java.io.Serializable {
 
 	private Integer roleId;
-	private Integer userId;
+	private Integer DepartId;
 	public Integer getRoleId() {
 		return roleId;
 	}
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-	public Integer getUserId() {
-		return userId;
+	public Integer getDepartId() {
+		return DepartId;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setDepartId(Integer departId) {
+		DepartId = departId;
 	}
 
 }
