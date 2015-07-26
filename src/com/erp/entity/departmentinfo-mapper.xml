@@ -4,21 +4,26 @@
 <mapper namespace="department">
 	<!-- 以下与实体类的中字段一致 -->
 	<sql id="selectId">
-		DepartId,
+		departId,
   		dName,
   		DepartType,
   		Discribe
 	</sql>
 	<!--resultType="Department" 每返回一条结果封装到Department里 -->
 	<select id="query" resultType="Department" parameterType="java.util.HashMap">
-		select
-		<include refid="selectId" />
-		from departmentinfo
-		<where>
-			<if test="t.dName != null and t.dName != ''">
-				dName like '%${t.dName}%'
-			</if>
-		</where>
+		SELECT 
+		d.departId, 
+		d.dName , 
+		r.name roleName, 
+		d.DepartType, 
+		d.Discribe 
+		FROM departmentinfo d LEFT JOIN role r
+		ON r.id = 
+		(SELECT ur.role_id FROM user_role ur WHERE ur.departId=d.departId) 
+		WHERE d.DepartType != 2 
+		<if test="dName != null and dName != ''">
+			dName = #{dName}
+		</if>
 	</select>
 	<!-- 总记录数 -->
 	<select id="count" parameterType="Department" resultType="int">
@@ -31,21 +36,20 @@
 	</select>
 	<!-- 增加用户 -->
 	<insert id="add" parameterType="Department">
-		insert into user( 
-		DepartId,
+		insert into departmentinfo( 
   		dName,
   		DepartType,
   		Discribe )
 		values (
-		#{DepartId},
 		#{dName},
 		#{DepartType}, 
 		#{Discribe})
 	</insert>
 
 	<delete id="deleteByUsername" parameterType="String">
-		delete from departmentinfo where
-		userName=#{userName}
+		UPDATE departmentinfo
+		SET DepartType = 2 
+		where dName = #{dName}
 	</delete>
 	<update id="update" parameterType="Department">
 		update departmentinfo
@@ -66,10 +70,25 @@
 		where dName=#{dName}
 	</update>
 	
+	<select id="findAll" resultType="Department">
+		select
+		<include refid="selectId" />
+		from departmentinfo
+	</select>
+	
 	<!-- 根据用户名查出userId -->
 	<select id="queryDepartmentName" parameterType="String" resultType="Department">
 	  select
 	  <include refid="selectId"/>
 	  from departmentinfo where dName=#{dName}
+	</select>
+	
+	<select id="getDepartmentByUserName" parameterType="String" resultType="java.util.HashMap">
+		SELECT 
+		<include refid="selectId" />
+		FROM departmentinfo d  
+		WHERE d.departId IN 
+		(SELECT dm.departid FROM departmentmember dm 
+		WHERE dm.username = #{uname})
 	</select>
 </mapper>

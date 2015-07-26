@@ -11,8 +11,9 @@ import org.activiti.engine.task.Task;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.erp.entity.BusLeave;
+import com.erp.entity.BusProject;
+import com.erp.entity.BusProjectFigure;
 import com.erp.entity.BusStorage;
-import com.erp.entity.FlowRecordInfo;
 import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
@@ -73,7 +74,11 @@ public interface IWorkflowService {
 	
 	public List<ProjectInfo> findTaskNumber(PageView pageView, ProjectInfo projectInfo);
 	
-	public int saveStorage(ProjectInfo projectInfo, FlowTaskInfo flowTaskInfo);
-	
 	public void addStorage(String strUserName, FlowTaskInfo flowTaskInfo, BusStorage storage);
+
+	BusProject findProjectBillByTaskId(String taskId);
+
+	BusProjectFigure findProjectFigureByTaskId(String taskId);
+	
+	public int saveFlow(FlowTaskInfo flowTaskInfo, String flowPrefix);
 }

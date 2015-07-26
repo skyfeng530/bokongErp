@@ -26,7 +26,7 @@ public class FlowRecordInfoDaoImpl extends BaseDaoImpl<FlowRecordInfo> implement
 	@Override
 	public long getMaxId() {
 		FlowRecordInfo flowRecordInfo = new FlowRecordInfo();
-		return getSqlSession().selectOne(this.getClassName()+".getMaxId",flowRecordInfo);
+		return (long)getSqlSession().selectOne(this.getClassName()+".getMaxId",flowRecordInfo);
 	}
 
 	@Override

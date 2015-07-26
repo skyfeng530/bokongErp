@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busproject">
+    <sql id="selectId">
+        pid,
+        projectName,
+        projectDescribe
+    </sql>
+
+    <select id="query" resultType="BusProject" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProject
+        <where>
+            <if test="t.pid != null and t.pid != ''">
+                pid=#{pid}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProject" resultType="int">
+        select count(0) from BusProject
+        <where>
+            <if test="t.pid != null and t.pid != ''">
+                pid=#{pid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProject">
+        select * from BusProject where pid=#{pid}
+    </select>
+    <insert id="add" parameterType="BusProject">
+        insert into BusProject(
+        pid,
+        projectName,
+        projectDescribe )
+        values (
+        #{pid},
+        #{projectName},
+        #{projectDescribe})
+    </insert>
+    <update id="update" parameterType="BusProject">
+        update BusProject
+        <set>
+            projectName=#{projectName},
+            projectDescribe=#{projectDescribe}
+        </set>
+        <where>
+            <if test="t.pid != null and t.pid != ''">
+                pid=#{pid}
+            </if>
+        </where>
+    </update>
+</mapper>

@@ -27,8 +27,10 @@ public class BaseDaoImpl<T> extends SqlSessionDaoSupport{
 		//clazz.getSimpleName().toString().toLowerCase(); 这里是获取实体类的简单名称，再把类名转为小写
 		return clazz.getSimpleName().toString().toLowerCase();
 	}
-	public void add(T t) {
-		getSqlSession().insert(this.getClassName()+".add",t);
+	public int add(T t) {
+		String className = this.getClassName();
+		int result = getSqlSession().insert(className+".add",t);
+		return result;
 	}
 	public void delete(String id) {
 		getSqlSession().delete(this.getClassName()+".deleteById",id);
@@ -44,9 +46,7 @@ public class BaseDaoImpl<T> extends SqlSessionDaoSupport{
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		map.put("paging", pageView);
 		map.put("t", t);
-		String className = this.getClassName();
-		List<T> list = getSqlSession().selectList(className+".query",map);
-		return list;
+		return getSqlSession().selectList(this.getClassName()+".query",map);
 	}
 	public List<T> queryAll(T t) {
 		return getSqlSession().selectList(this.getClassName()+".queryAll",t);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectfigureflow">
+    <sql id="selectId">
+        flowId,
+        ppid,
+        figureLibName,
+        figureID,
+        figureName,
+        figureRequest,
+        type,
+        batchNum,
+        describe
+    </sql>
+
+    <select id="query" resultType="BusProjectFigureFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProjectFigureFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProjectFigureFlow" resultType="int">
+        select count(0) from BusProjectFigureFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProjectFigureFlow">
+        select * from BusProjectFigureFlow where flowId=#{id}
+    </select>
+    <insert id="add" parameterType="BusProjectFigureFlow">
+        insert into BusProjectFigureFlow(
+        flowId,
+        ppid,
+        figureLibName,
+        figureID,
+        figureName,
+        figureRequest,
+        type,
+        batchNum,
+        describe )
+        values (
+        #{flowId},
+        #{ppid},
+        #{figureLibName},
+        #{figureID},
+        #{figureName},
+        #{figureRequest},
+        #{type},
+        #{batchNum},
+        #{describe})
+    </insert>
+    <update id="update" parameterType="BusProjectFigureFlow">
+        update BusProjectFigureFlow
+        <set>
+            flowId=#{flowId},
+            ppid=#{ppid},
+            figureLibName=#{figureLibName},
+            figureID=#{figureID},
+            figureName=#{figureName},
+            figureRequest=#{figureRequest},
+            type=#{type},
+            batchNum=#{batchNum},
+            describe=#{describe}
+        </set>
+    </update>
+</mapper>

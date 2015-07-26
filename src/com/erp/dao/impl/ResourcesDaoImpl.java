@@ -20,7 +20,12 @@ public class ResourcesDaoImpl extends BaseDaoImpl<Resources> implements Resource
 		return getSqlSession().selectList("resources.findAll");
 	}
 	//<!-- 根据用户Id获取该用户的权限-->
-	public List<Resources> getUserResources(String userId){
+	public List<Resources> getDepartmentResources(String dName){
+		return getSqlSession().selectList("resources.getDepartmentResources",dName);
+	}
+	
+	@Override
+	public List<Resources> getUserResources(String userId) {
 		return getSqlSession().selectList("resources.getUserResources",userId);
 	}
 	//<!-- 根据用户名获取该用户的权限-->

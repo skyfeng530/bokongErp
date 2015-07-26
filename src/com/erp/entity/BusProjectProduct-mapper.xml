@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectproduct">
+    <sql id="selectId">
+        ppid,
+        projectId,
+        productNo,
+        productName,
+        status,
+        bak
+    </sql>
+
+    <select id="query" resultType="BusProjectProduct" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProjectProduct
+        <where>
+            <if test="t.ppid != null and t.ppid != ''">
+                ppid=#{ppid}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProjectProduct" resultType="int">
+        select count(0) from BusProjectProduct
+        <where>
+            <if test="t.ppid != null and t.ppid != ''">
+                ppid=#{ppid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProjectProduct">
+        select * from BusProjectProduct where ppid=#{id}
+    </select>
+    <insert id="add" parameterType="BusProjectProduct">
+        insert into BusProjectProduct(
+        ppid,
+        projectId,
+        productNo,
+        productName,
+        status,
+        bak )
+        values (
+        #{ppid},
+        #{projectId},
+        #{productNo},
+        #{productName},
+        #{status},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="BusProjectProduct">
+        update BusProjectProduct
+        <set>
+            projectId=#{projectId},
+            productNo=#{productNo},
+            productName=#{productName},
+            status=#{status},
+            bak=#{bak}
+        </set>
+        <where>
+            <if test="t.ppid != null and t.ppid != ''">
+                ppid=#{ppid}
+            </if>
+        </where>
+    </update>
+</mapper>

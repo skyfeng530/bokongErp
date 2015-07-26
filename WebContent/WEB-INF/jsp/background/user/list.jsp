@@ -19,8 +19,8 @@ function permissio(userName){
 	 window.showModalDialog(url, window, params);
 	 //location.href=url;
 }
-function userRole(userName){
-	 var url = "${pageContext.servletContext.contextPath }/background/user/userRole.html?userName="+userName;
+function userDepartment(userName){
+	 var url = "${pageContext.servletContext.contextPath }/background/user/userDepartment.html?userName="+userName;
 	 var h_sp1 = 420;
 	 var w_sp1 = 600;
 	//兼容IE，firefox,google.模态窗口居中问题
@@ -89,7 +89,6 @@ function userRole(userName){
 			<legend><img src="${pageContext.servletContext.contextPath }/images/search_btn.gif" align="middle"/>&nbsp;<span class="STYLE1" style="color: blue;">高级查找</span></legend>
 			<div class="search_content">
 				用户名：<input type="text" name="userName" value="${param.userName}" style="height: 20px"/>　　
-				昵称：<input type="text" name="userNickname" value="${param.userNickname}" style="height: 20px"/>　
 				<input type="submit" value="开始查询" class="input_btn_style1"/>&nbsp;&nbsp;
 				<input type="reset" value="重置" class="input_btn_style1"/>
 			</div>
@@ -107,13 +106,13 @@ function userRole(userName){
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属角色</span></td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">昵称</td>
-            <td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">注册时间</td>
-            <td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">最后一次登录时间</td>
-            <td width="3%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">等级</td>
-            <td width="30%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">工号</span></td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属部门</span></td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">姓名</td>
+            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">性别</td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">生日</td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">联系方式</td>
+            <td width="35%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
           <c:forEach var="key" items="${pageView.records}">
@@ -122,28 +121,25 @@ function userRole(userName){
               <input type="checkbox" name="check" value="${key.userName}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userName=${key.userName}&&type=0">${key.userName}</a></span></td>
-            <td height="20" ><span class="STYLE1" style="color: blue;">${key.roleName}</span></td>
-            <td height="20" ><span class="STYLE1">${key.userNickname}</span></td>
-            <td height="20" ><span class="STYLE1">
-            <fmt:parseDate value="${key.regTime}" var="date" pattern="yyyy-MM-dd HH:mm:ss" />
-			<fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm:ss" />
+            <td height="20" ><span class="STYLE1">${key.userName}</span></td>
+            <td height="20" ><span class="STYLE1" style="color: blue;">
+            <c:forEach var="de" items="${key.departments}">
+              	${de.dName };
+              </c:forEach>
             </span></td>
+            <td height="20" ><span class="STYLE1">${key.userRealname}</span></td>
+            <td height="20" ><span class="STYLE1">${key.userSex}</span></td>
             <td height="20" ><span class="STYLE1">
-            <fmt:parseDate value="${key.lastLogintime}" var="date" pattern="yyyy-MM-dd HH:mm:ss" />
-			<fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm:ss" />
+            <fmt:parseDate value="${key.userBirthday}" var="date" pattern="yyyy-MM-dd" />
+			<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
             </span></td>
-            <td height="20" ><span class="STYLE1">${key.level}</span></td>
+            <td height="20" ><span class="STYLE1">${key.userPhone}</span></td>
             
             <td height="20" ><span class="STYLE4">
              <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
              <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="userRole('${key.userName}')">
-            	分配角色</a>
-            </sec:authorize>
-            <sec:authorize ifAnyGranted="ROLE_sys_user_permissions">
-            <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="permissio('${key.userName}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            	<a href="javascript:void(0);" onclick="userDepartment('${key.userName}')">
+            	分配部门</a>
             </sec:authorize>
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />

@@ -60,6 +60,10 @@ public class LogAopAction {
 			name = "请假单管理";
 		} else if (className.indexOf("Device") > -1) {
 			name = "设备管理";
+		} else if (className.indexOf("BusStorageOut") > -1) {
+			name = "出库单管理";
+		} else{
+			name = "ERP管理";
 		}
 		// 操作类型
 		String opertype = "";

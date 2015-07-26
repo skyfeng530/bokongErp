@@ -20,5 +20,15 @@
 		<typeAlias type="com.erp.entity.ProjectInfo" alias="ProjectInfo"/>
 		<typeAlias type="com.erp.entity.FlowProejctInfo" alias="FlowProejctInfo"/>
 		<typeAlias type="com.erp.entity.Department" alias="Department"/>
+		<typeAlias type="com.erp.entity.DepartmentMember" alias="DepartmentMember"/>
+		<typeAlias type="com.erp.entity.BusProject" alias="BusProject"/>
+		<typeAlias type="com.erp.entity.BusProjectFigure" alias="BusProjectFigure"/>
+		<typeAlias type="com.erp.entity.InstrumentDevice" alias="InstrumentDevice"/>
+		<typeAlias type="com.erp.entity.FixedAsset" alias="FixedAsset"/>
+		<typeAlias type="com.erp.entity.BusStorageOut" alias="BusStorageOut"/>
+		<typeAlias type="com.erp.entity.BusProjectProduct" alias="BusProjectProduct"/>
+		<typeAlias type="com.erp.entity.BusTask" alias="BusTask"/>
+		<typeAlias type="com.erp.entity.BusTaskFlow" alias="BusTaskFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectFigureFlow" alias="BusProjectFigureFlow"/>
 	</typeAliases>
 </configuration>

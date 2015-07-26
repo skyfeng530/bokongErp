@@ -77,9 +77,13 @@ public class DepartmentController {
 	 * @param model
 	 * @param videoTypeId
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("deleteById")
-	public String deleteById(Model model, String dName) {
+	public String deleteById(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+		String dName =request.getParameter("dName");  
+		byte b[] =dName.getBytes("ISO-8859-1");  
+		dName = new String(b, "utf-8");
 		departmentService.deleteByDepartmentname(dName);
 		return "redirect:query.html";
 	}
@@ -90,9 +94,13 @@ public class DepartmentController {
 	 * @param model
 	 * @param videoTypeIds
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("getById")
-	public String getById(Model model, String dName, int type) {
+	public String getById(Model model, HttpServletRequest request, int type) throws UnsupportedEncodingException {
+		String dName =request.getParameter("dName");  
+		byte b[] =dName.getBytes("ISO-8859-1");  
+		dName = new String(b, "utf-8");  
 		Department department = departmentService.getByDepartmentName(dName);
 		model.addAttribute("department", department);
 		 List<Roles> roles=rolesService.findAll();
@@ -111,10 +119,8 @@ public class DepartmentController {
 	 * @return
 	 */
 	@RequestMapping("update")
-	public String update(Model model, Department department,UserRoles userRoles) {
+	public String update(Model model, Department department) {
 		departmentService.modify(department);
-		if(userRoles.getRoleId()!=null)
-		rolesService.saveUserRole(userRoles);
 		return "redirect:query.html";
 	}
 

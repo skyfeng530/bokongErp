@@ -1,91 +1,99 @@
-#ÎªÁË°Ñ²¿ÃÅÄÉÈë½ÇÉ«£¬ÕâÀïÉè¼Æ°Ñ10µ½99Ö®¼äµÄÓÃ»§IdÁô¸ø²¿ÃÅid,Ò²¾ÍÊÇËµ£¬10ÖÁ99Ö®¼äµÄidÖµ£¬ĞèÒªÔÚ²¿ÃÅ±íÖĞÍ¬ÓĞ
-#ÓÃ»§idÎª10ÖÁ99Ö®¼äµÄÖµ£¬½ûÖ¹µÇÂ¼£¬ÒòÎªÊÇ²¿ÃÅÊ¹ÓÃ
-#Ôö¼ÓÓÃ»§Ê±£¬ÒòÎªÊÇuserIdÎªÖ÷¼ü£¬ĞèÒªÈËÎª¿ØÖÆÓÃ»§Ãû³ÆÊÇ·ñ´æÔÚ£¨³åÍ»£©
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values ('admin','admin','admin','admin',10,'ÄĞ','¿İËªÏÂÒª¹Â','0253526','jnfjfjj@163.com','32432','2015-06-08 19:21:58','0000-00-00 00:00:00',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#ä¸ºäº†æŠŠéƒ¨é—¨çº³å…¥è§’è‰²ï¼Œè¿™é‡Œè®¾è®¡æŠŠ10åˆ°99ä¹‹é—´çš„ç”¨æˆ·Idç•™ç»™éƒ¨é—¨id,ä¹Ÿå°±æ˜¯è¯´ï¼Œ10è‡³99ä¹‹é—´çš„idå€¼ï¼Œéœ€è¦åœ¨éƒ¨é—¨è¡¨ä¸­åŒæœ‰
+#ç”¨æˆ·idä¸º10è‡³99ä¹‹é—´çš„å€¼ï¼Œç¦æ­¢ç™»å½•ï¼Œå› ä¸ºæ˜¯éƒ¨é—¨ä½¿ç”¨
+#å¢åŠ ç”¨æˆ·æ—¶ï¼Œå› ä¸ºæ˜¯userIdä¸ºä¸»é”®ï¼Œéœ€è¦äººä¸ºæ§åˆ¶ç”¨æˆ·åç§°æ˜¯å¦å­˜åœ¨ï¼ˆå†²çªï¼‰
+insert  into `user`(`userName`,`userPassword`,`userRealname`,`userBirthday`,`userSex`,`idCard`,`userPhone`) values 
+('admin','admin','admin','1999-01-01','ç”·','6111111111111111111','0253526'),
+('test','111111','å¼ ä¸‰æ€','1989-09-19','ç”·','999999999999999999','15098888888'),
+('åº“ç®¡1å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('åº“ç®¡2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('æ£€éªŒ1å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('æ£€éªŒ2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('æ£€éªŒ3å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('æ£€éªŒ4å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§10å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§1å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§3å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§4å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('ç”Ÿäº§5å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('ç”Ÿäº§6å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§7å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('ç”Ÿäº§8å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('ç”Ÿäº§9å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('è®¾è®¡1å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('è®¾è®¡2å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('è®¾è®¡3å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('é‡‡è´­1å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('é‡‡è´­2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('é¡¹ç›®ç»ç†1å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('é¡¹ç›®ç»ç†2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7'),
+('é¢†å¯¼1å·','test','å¼ ä¸‰','1999-01-01','ç”·','7','7'),
+('é¢†å¯¼2å·','test','å¼ ä¸‰','1999-01-01','ç”·','6111111111111111111','7');
 
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú3ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú4ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú5ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú6ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú7ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú8ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú9ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éú²ú10ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¿â¹Ü1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¿â¹Ü2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¼ìÑé1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¼ìÑé2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¼ìÑé3ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('¼ìÑé4ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('²É¹º1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('²É¹º2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Áìµ¼1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Áìµ¼2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éè¼Æ1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éè¼Æ2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('Éè¼Æ3ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('ÏîÄ¿¾­Àí1ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-insert  into `user`(`userName`,`userPassword`,`userNickname`,`userRealname`,`userAge`,`userSex`,`userAddress`,`userPhone`,`userMail`,`userQQ`,`regTime`,`lastLogintime`,`level`,`province`,`city`,`bankName`,`branchBank`,`subbranchBank`,`openBankName`,`bankAccountName`,`bankAccount`,`accountType`,`pay`,`mark`,`status`,`parentNumber`) values('ÏîÄ¿¾­Àí2ºÅ','test','7','7',7,'ÄĞ','7','7','7','7','2015-06-09 21:40:21','0000-00-00 00:00:00',1,'7','7','7',NULL,'7',NULL,'7','7','ÆóÒµÕËºÅ','ÊÇ','7','´ıÉóºË','');
-
-
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('1','°²È«¹ÜÀí','1010','sys_user','0','user','1','ÓÃ»§¡¢È¨ÏŞ¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('2','ÓÃ»§¹ÜÀí','1','sys_user_find','1','/background/user/query.html','2','ÓÃ»§Ôö¼Ó¡¢È¨ÏŞ¡­¡­²Ù×÷');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('3','ĞÂÔöÓÃ»§','2','sys_user_addUI','2','/background/user/addUI.html','3','ĞÂÔöÓÃ»§');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('5','½ÇÉ«¹ÜÀí','1','sys_role_find','1','/background/role/query.html','5','½ÇÉ«ÔöÉ¾¸Ä¡¢È¨ÏŞÉèÖÃ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('7','×ÊÔ´¹ÜÀí','1','sys_resc_find','1','/background/resources/query.html','7','×ÊÔ´ÁĞ±í');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('8','Ìí¼Ó×ÊÔ´','7','sys_resc_addUI','2','/background/resources/addUI.html','8','Ìí¼Ó×ÊÔ´');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('11','ĞÂÔö½ÇÉ«','5','sys_role_add','2','/background/role/addUI.html','5','ĞÂÔö½ÇÉ«');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('22','µÇÂ½ĞÅÏ¢¹ÜÀí','1010','login','0','login','20','µÇÂ½ĞÅÏ¢¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('23','ÓÃ»§µÇÂ¼¼ÇÂ¼','22','log_list','1','/background/userLoginList/query.html','21','ÓÃ»§µÇÂ¼¼ÇÂ¼');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('39','ÈÕÖ¾¹ÜÀí','1010','log','0','log','30','ÈÕÖ¾¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('40','²Ù×÷ÈÕÖ¾¹ÜÀí','39','log_find','1','/background/log/query.html','31','²Ù×÷ÈÕÖ¾¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('41','·ÖÅä½ÇÉ«','2','sys_user_fenpeirole','2','sys_user_fenpeirole','32','·ÖÅä½ÇÉ«');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('42','·ÖÅäÈ¨ÏŞ','2','sys_user_permissions','2','sys_user_permissions','33','·ÖÅäÈ¨ÏŞ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('43','±à¼­ÓÃ»§','2','sys_user_edit','2','/background/user/getById.html','34','±à¼­');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('44','É¾³ıÓÃ»§','2','sys_user_delete','2','/background/user/deleteById.html','36','É¾³ıÓÃ»§');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('45','·ÖÅäÈ¨ÏŞ','2','sys_role_permissions','2','sys_role_permissions','37','·ÖÅäÈ¨ÏŞ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('46','ÏÔÊ¾ÏêÏ¸ĞÅÏ¢','5','sys_role_show','2','sys_role_show','39','ÏÔÊ¾ÏêÏ¸ĞÅÏ¢');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('47','±à¼­½ÇÉ«','5','sys_role_edit','2','/background/role/getById.html','40','±à¼­½ÇÉ«');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('48','É¾³ı½ÇÉ«','5','sys_role_delete','2','/background/role/deleteById.html','41','É¾³ı½ÇÉ«');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('49','ÏÔÊ¾ÏêÏ¸ĞÅÏ¢','7','sys_res_show','2','sys_res_show','43','ÏÔÊ¾ÏêÏ¸ĞÅÏ¢');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('50','±à¼­È¨ÏŞ×ÊÔ´','7','sys_res_edit','2','/background/resources/getById.html','44','±à¼­È¨ÏŞ×ÊÔ´');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('51','É¾³ıÈ¨ÏŞ×ÊÔ´','7','sys_res_delete','2','/background/resources/deleteById.html','45','É¾³ıÈ¨ÏŞ×ÊÔ´');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('52','ÎïÁÏ¹ÜÀí','1010','device','0','device','50','ÎïÁÏ¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('53','ÎïÁÏÁĞ±í','52','device_manager','1','/background/device/list.html','51','ÎïÁÏÁĞ±í');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('71','ÈÎÎñ¹ÜÀí','1010','task','0','task','70','ÈÎÎñ¹ÜÀí');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('72','²¿ÊğÈÎÎñ','71','task_deploy','1','/background/workflow/deployHome.html','71','²¿ÊğÈÎÎñ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('73','´ıÎÒÉóÅú','71','task_myself','1','/background/workflow/myTaskList.html','72','ÎÒµÄÈÎÎñ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('74','ÌîĞ´ÉêÇë','71','task_apply','1','/background/workflow/formTemplateList.html','73','ÌîĞ´ÉêÇëÈÎÎñ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('75','ÉêÇë²éÑ¯','71','task_manager','1','/background/workflow/myApplyList.html','74','¹éµµÈÎÎñ');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('81','Í³¼Æ·ÖÎö','1010','statistics','0','statistics','80','Í³¼Æ·ÖÎö');
-insert into `resources` (`id`, `name`, `parentId`, `resKey`, `type`, `resUrl`, `level`, `description`) values('82','±¨±í·ÖÎö','81','statistics_manager','1','/background/noDevelop.html','81','Éè±¸ÁĞ±í');
-
-
-
-#Ôö¼Ó½ÇÉ«¿ØÖÆ£¬¿ÉÒÔºÍ²¿ÃÅ¶ÔÓ¦
-#Ò»¸öÓÃ»§¿ÉÒÔÊôÓÚ¶à¸ö²¿ÃÅ£¬Ò»¸ö¾ßÌåµÄÓÃ»§£¬Æä½ÇÉ«È¨ÏŞ=ÆäËùÊôËùÓĞ²¿ÃÅÈ¨ÏŞ+×Ô¼ºµÄÈ¨ÏŞ£¨³õÊ¼»¯×ÊÔ´ÏÔÊ¾)
-insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (1,'ÓÃ»§½ÇÉ«','ROLE_USER','ÓÃ»§½ÇÉ«',1);
-insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (3,'É¾³ı','ROLE_DELETE','É¾³ı',0);
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(1,'å®‰å…¨ç®¡ç†',1010,'sys_user','0','user',1,'ç”¨æˆ·ã€æƒé™ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(2,'ç”µå­æµç®¡ç†',1010,'task','0','task',70,'ä»»åŠ¡ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(3,'åº“æˆ¿ç®¡ç†',1010,'device','0','device',50,'åº“æˆ¿ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(4,'ç»Ÿè®¡åˆ†æ',1010,'statistics','0','statistics',80,'ç»Ÿè®¡åˆ†æ');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(5,'æ—¥å¿—ç®¡ç†',1010,'log','0','log',30,'æ—¥å¿—ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(6,'ç™»é™†ä¿¡æ¯ç®¡ç†',1010,'login','0','login',20,'ç™»é™†ä¿¡æ¯ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(7,'é¡¹ç›®ç®¡ç†',1010,'login','0','login',20,'é¡¹ç›®ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(8,'ç”Ÿäº§ç®¡ç†',1010,'login','0','login',20,'ç”Ÿäº§ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(21,'éƒ¨é—¨ç®¡ç†',1,'sys_user_find','1','/background/department/query.html',2,'ç”¨æˆ·å¢åŠ ã€æƒé™â€¦â€¦æ“ä½œ');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(22,'æ–°å¢ç”¨æˆ·',21,'sys_user_addUI','2','/background/department/addUI.html',3,'æ–°å¢ç”¨æˆ·');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(23,'ç”¨æˆ·ç®¡ç†',1,'sys_user','1','/background/user/query.html',4,'ç”¨æˆ·ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(24,'è§’è‰²ç®¡ç†',1,'sys_role_find','1','/background/role/query.html',5,'è§’è‰²å¢åˆ æ”¹ã€æƒé™è®¾ç½®');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(25,'èµ„æºç®¡ç†',1,'sys_resc_find','1','/background/resources/query.html',7,'èµ„æºåˆ—è¡¨');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(26,'æ·»åŠ èµ„æº',25,'sys_resc_addUI','2','/background/resources/addUI.html',8,'æ·»åŠ èµ„æº');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(27,'æ–°å¢è§’è‰²',24,'sys_role_add','2','/background/role/addUI.html',5,'æ–°å¢è§’è‰²');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(28,'ç”¨æˆ·ç™»å½•è®°å½•',6,'log_list','1','/background/userLoginList/query.html',21,'ç”¨æˆ·ç™»å½•è®°å½•');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(40,'æ“ä½œæ—¥å¿—ç®¡ç†',5,'log_find','1','/background/log/query.html',31,'æ“ä½œæ—¥å¿—ç®¡ç†');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(41,'åˆ†é…è§’è‰²',21,'sys_user_fenpeirole','2','sys_user_fenpeirole',32,'åˆ†é…è§’è‰²');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(42,'åˆ†é…æƒé™',21,'sys_user_permissions','2','sys_user_permissions',33,'åˆ†é…æƒé™');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(43,'ç¼–è¾‘ç”¨æˆ·',21,'sys_user_edit','2','/background/department/getById.html',34,'ç¼–è¾‘');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(44,'åˆ é™¤ç”¨æˆ·',21,'sys_user_delete','2','/background/department/deleteById.html',36,'åˆ é™¤ç”¨æˆ·');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(45,'åˆ†é…æƒé™',21,'sys_role_permissions','2','sys_role_permissions',37,'åˆ†é…æƒé™');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(46,'æ˜¾ç¤ºè¯¦ç»†ä¿¡æ¯',24,'sys_role_show','2','sys_role_show',39,'æ˜¾ç¤ºè¯¦ç»†ä¿¡æ¯');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(47,'ç¼–è¾‘è§’è‰²',24,'sys_role_edit','2','/background/role/getById.html',40,'ç¼–è¾‘è§’è‰²');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(48,'åˆ é™¤è§’è‰²',24,'sys_role_delete','2','/background/role/deleteById.html',41,'åˆ é™¤è§’è‰²');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(49,'æ˜¾ç¤ºè¯¦ç»†ä¿¡æ¯',25,'sys_res_show','2','sys_res_show',43,'æ˜¾ç¤ºè¯¦ç»†ä¿¡æ¯');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(50,'ç¼–è¾‘æƒé™èµ„æº',25,'sys_res_edit','2','/background/resources/getById.html',44,'ç¼–è¾‘æƒé™èµ„æº');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(51,'åˆ é™¤æƒé™èµ„æº',25,'sys_res_delete','2','/background/resources/deleteById.html',45,'åˆ é™¤æƒé™èµ„æº');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(72,'éƒ¨ç½²ä»»åŠ¡',2,'task_deploy','1','/background/workflow/deployHome.html',71,'éƒ¨ç½²ä»»åŠ¡');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(73,'å¾…æˆ‘å®¡æ‰¹',2,'task_myself','1','/background/workflow/myTaskList.html',72,'æˆ‘çš„ä»»åŠ¡');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(74,'å¡«å†™ç”³è¯·',2,'task_apply','1','/background/workflow/formTemplateList.html',73,'å¡«å†™ç”³è¯·ä»»åŠ¡');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(75,'ç”³è¯·æŸ¥è¯¢',2,'task_manager','1','/background/workflow/myApplyList.html',74,'å½’æ¡£ä»»åŠ¡');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(76,'æŠ¥è¡¨åˆ†æ',4,'statistics_manager','1','/background/noDevelop.html',4,'è®¾å¤‡åˆ—è¡¨');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(77,'æœºæ¢°å™¨ä»¶',3,'statistics_manager','1','/background/noDevelop.html',4,'æœºæ¢°å™¨ä»¶');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(78,'å…‰å­¦å™¨ä»¶',3,'statistics_manager','1','/background/noDevelop.html',4,'å…‰å­¦å™¨ä»¶');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(79,'å·¥è£…è®¾å¤‡',3,'statistics_manager','1','/background/noDevelop.html',4,'æœºæ¢°å™¨ä»¶');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(80,'å›ºå®šèµ„äº§',3,'statistics_manager','1','/background/device/fixedasset/query.html',4,'å›ºå®šèµ„äº§');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(81,'ä»ªè¡¨è®¾å¤‡',3,'statistics_manager','1','/background/device/instrument/query.html',4,'ä»ªè¡¨è®¾å¤‡');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(82,'é¡¹ç›®æŸ¥è¯¢',7,'statistics_manager','1','/background/project/query.html',4,'é¡¹ç›®æŸ¥è¯¢');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(83,'ç”Ÿäº§æŸ¥è¯¢',8,'statistics_manager','1','/background/noDevelop.html',4,'ç”Ÿäº§æŸ¥è¯¢');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(84,'äº§å“æŸ¥è¯¢',7,'statistics_manager','1','/background/project/product/query.html',4,'äº§å“æŸ¥è¯¢');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(85,'ä»»åŠ¡æŸ¥è¯¢',7,'statistics_manager','1','/background/project/task/query.html',4,'ä»»åŠ¡æŸ¥è¯¢');
+#å¢åŠ è§’è‰²æ§åˆ¶ï¼Œå¯ä»¥å’Œéƒ¨é—¨å¯¹åº”
+#ä¸€ä¸ªç”¨æˆ·å¯ä»¥å±äºå¤šä¸ªéƒ¨é—¨ï¼Œä¸€ä¸ªå…·ä½“çš„ç”¨æˆ·ï¼Œå…¶è§’è‰²æƒé™=å…¶æ‰€å±æ‰€æœ‰éƒ¨é—¨æƒé™+è‡ªå·±çš„æƒé™ï¼ˆåˆå§‹åŒ–èµ„æºæ˜¾ç¤º)
+insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (1,'ç”¨æˆ·è§’è‰²','ROLE_USER','ç”¨æˆ·è§’è‰²',1);
+insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (3,'åˆ é™¤','ROLE_DELETE','åˆ é™¤',0);
 insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (5,'55','55','55',1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('Éú²úÈËÔ±', 'ROLE_PRODUCT', 'Éú²ú³µ¼äÈËÔ±', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('¿â¹ÜÈËÔ±', 'ROLE_PRODUCT', '¿â´æ¹ÜÀí', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('¼ìÑéÔ±', 'ROLE_PRODUCT', '²úÆ·¼ìÑé', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('²É¹ºÔ±', 'ROLE_PRODUCT', 'ÎïÁÏ²É¹º', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('ÉóÅúÔ±', 'ROLE_PRODUCT', 'Á÷³ÌÉóÅú', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('Éè¼ÆÈËÔ±', 'ROLE_PRODUCT', '¹¤ÒÕÉè¼Æ', 1);
-INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('ÏîÄ¿¾­Àí', 'ROLE_PRODUCT', 'ÏîÄ¿¹ÜÀí', 1);
-#³õÊ¼»¯²¿ÃÅ,ÆäÖĞÀàĞÍDepartType, 1,±íÊ¾Êµ¼ÊÉÏÓĞÕâ¸ö²¿ÃÅ£¬0±íÊ¾ĞéÄâÍÅ¶Ó
-insert into DepartmentInfo(DepartId, Name, DepartType, Discribe) values(1, '³¬¼¶¹ÜÀíÔ±', 0, '³¬¼¶¹ÜÀíÔ±');
-insert into DepartmentInfo(DepartId, Name, DepartType, Discribe) values(3, '²âÊÔÕÊ»§', 0, '²âÊÔÕÊ»§');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('Éú²ú²¿', 1, '³µ¼äÉú²ú²úÆ·');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('¿â¹Ü', 0, '²Ö¿â¹ÜÀí');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('¼ìÑé²¿', 0, '²úÆ·¼ìÑé');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('²É¹º²¿', 0, 'ÎïÁÏ²É¹º');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('CCBÉóÅú', 0, '²Ã¾öÎÊÌâ');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('Éè¼Æ²¿', 0, '¹¤ÒÕÉè¼Æ');
-insert into DepartmentInfo(Name, DepartType, Discribe) values('ÏîÄ¿²¿', 0, 'ÏîÄ¿ÊµÊ©');
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('ç”Ÿäº§äººå‘˜', 'ROLE_PRODUCT', 'ç”Ÿäº§è½¦é—´äººå‘˜', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('åº“ç®¡äººå‘˜', 'ROLE_PRODUCT', 'åº“å­˜ç®¡ç†', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('æ£€éªŒå‘˜', 'ROLE_PRODUCT', 'äº§å“æ£€éªŒ', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('é‡‡è´­å‘˜', 'ROLE_PRODUCT', 'ç‰©æ–™é‡‡è´­', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('å®¡æ‰¹å‘˜', 'ROLE_PRODUCT', 'æµç¨‹å®¡æ‰¹', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('è®¾è®¡äººå‘˜', 'ROLE_PRODUCT', 'å·¥è‰ºè®¾è®¡', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('é¡¹ç›®ç»ç†', 'ROLE_PRODUCT', 'é¡¹ç›®ç®¡ç†', 1);
+#åˆå§‹åŒ–éƒ¨é—¨,å…¶ä¸­ç±»å‹DepartType, 1,è¡¨ç¤ºå®é™…ä¸Šæœ‰è¿™ä¸ªéƒ¨é—¨ï¼Œ0è¡¨ç¤ºè™šæ‹Ÿå›¢é˜Ÿ
+insert into DepartmentInfo(DepartId, dName, DepartType, Discribe) values(1, 'è¶…çº§ç®¡ç†å‘˜', 0, 'è¶…çº§ç®¡ç†å‘˜');
+insert into DepartmentInfo(DepartId, dName, DepartType, Discribe) values(3, 'æµ‹è¯•å¸æˆ·', 0, 'æµ‹è¯•å¸æˆ·');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('ç”Ÿäº§éƒ¨', 1, 'è½¦é—´ç”Ÿäº§äº§å“');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('åº“ç®¡', 0, 'ä»“åº“ç®¡ç†');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('æ£€éªŒéƒ¨', 0, 'äº§å“æ£€éªŒ');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('é‡‡è´­éƒ¨', 0, 'ç‰©æ–™é‡‡è´­');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('CCBå®¡æ‰¹', 0, 'è£å†³é—®é¢˜');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('è®¾è®¡éƒ¨', 0, 'å·¥è‰ºè®¾è®¡');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('é¡¹ç›®éƒ¨', 0, 'é¡¹ç›®å®æ–½');
 
 
 insert  into `resources_role`(`resc_id`,`role_id`) values (1,1);
@@ -104,13 +112,22 @@ insert  into `resources_role`(`resc_id`,`role_id`) values (7,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (7,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (8,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (8,3);
-insert  into `resources_role`(`resc_id`,`role_id`) values (11,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (11,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (21,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (21,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (22,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (22,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (23,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (23,3);
-insert  into `resources_role`(`resc_id`,`role_id`) values (39,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (24,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (24,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (25,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (25,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (26,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (26,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (27,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (27,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (28,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (28,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (40,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (41,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (42,1);
@@ -123,18 +140,6 @@ insert  into `resources_role`(`resc_id`,`role_id`) values (48,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (49,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (50,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (51,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (52,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (52,3);
-insert  into `resources_role`(`resc_id`,`role_id`) values (52,5);
-insert  into `resources_role`(`resc_id`,`role_id`) values (53,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (53,3);
-insert  into `resources_role`(`resc_id`,`role_id`) values (53,5);
-insert  into `resources_role`(`resc_id`,`role_id`) values (61,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (61,5);
-insert  into `resources_role`(`resc_id`,`role_id`) values (62,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (62,5);
-insert  into `resources_role`(`resc_id`,`role_id`) values (71,1);
-insert  into `resources_role`(`resc_id`,`role_id`) values (71,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (72,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (72,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (73,1);
@@ -143,10 +148,26 @@ INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (74, 1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (74,5);
 INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (75, 1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (75,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (76,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (76,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (77,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (77,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (78,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (78,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (79,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (79,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (80,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (80,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (81,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (81,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (82,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (82,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (83,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (83,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (84,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (84,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (85,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (85,5);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,1);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,3);
 insert  into `resources_role`(`resc_id`,`role_id`) values (1010,5);
@@ -162,55 +183,95 @@ insert  into `user_role`(`DepartId`,`role_id`) values (15,5);
 insert  into `user_role`(`DepartId`,`role_id`) values (16,5);
 
 
-#SELECT userId FROM user WHERE userName LIKE 'Éú²ú%' 
+#SELECT userId FROM user WHERE userName LIKE 'ç”Ÿäº§%' 
 insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(1, 'admin', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú2ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú3ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú4ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú5ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú6ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú7ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú8ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú9ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'Éú²ú10ºÅ', 'normal', 1);
-#¿â¹Ü
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, '¿â¹Ü1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, '¿â¹Ü2ºÅ', 'normal', 1);
-#¼ìÑé
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '¼ìÑé1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '¼ìÑé2ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '¼ìÑé3ºÅ', 'normal', 1);
-#²É¹º
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, '²É¹º1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, '²É¹º2ºÅ', 'normal', 1);
-#Áìµ¼
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, 'Áìµ¼1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, 'Áìµ¼2ºÅ', 'normal', 1);
-#Éè¼Æ
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'Éè¼Æ1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'Éè¼Æ2ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'Éè¼Æ3ºÅ', 'normal', 1);
-#ÏîÄ¿
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, 'ÏîÄ¿¾­Àí1ºÅ', 'normal', 1);
-insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, 'ÏîÄ¿¾­Àí2ºÅ', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§2å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§3å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§4å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§5å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§6å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§7å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§8å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§9å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, 'ç”Ÿäº§10å·', 'normal', 1);
+#åº“ç®¡
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, 'åº“ç®¡1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, 'åº“ç®¡2å·', 'normal', 1);
+#æ£€éªŒ
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, 'æ£€éªŒ1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, 'æ£€éªŒ2å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, 'æ£€éªŒ3å·', 'normal', 1);
+#é‡‡è´­
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, 'é‡‡è´­1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, 'é‡‡è´­2å·', 'normal', 1);
+#é¢†å¯¼
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, 'é¢†å¯¼1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, 'é¢†å¯¼2å·', 'normal', 1);
+#è®¾è®¡
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'è®¾è®¡1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'è®¾è®¡2å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, 'è®¾è®¡3å·', 'normal', 1);
+#é¡¹ç›®
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, 'é¡¹ç›®ç»ç†1å·', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, 'é¡¹ç›®ç»ç†2å·', 'normal', 1);
 
 #############################################################################
-insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('4','µç×è','v0001','0','300','0','Àû¶û´ï','13888888888','2015-06-13 16:50:41','2015-06-10 21:57:40','0','ÓÃÓÚ¡­¡­¡­¡­¡­¡­');
-insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('5','ÏÔÊ¾Æ÷','050120001150112','1','23','1','ÈıĞÇ','13999999999','2015-03-13 12:57:37','2017-03-13 12:57:37','1','sdvsdvsdvds');
-insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('7','Ö÷°å','v111110909','1','13','0','¼¼¼Î','02988888888','2015-03-13 12:57:37','2017-03-13 12:57:37','0','aaaaaaaaaaaaaaa');
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('4','ç”µé˜»','v0001','0','300','0','åˆ©å°”è¾¾','13888888888','2015-06-13 16:50:41','2015-06-10 21:57:40','0','ç”¨äºâ€¦â€¦â€¦â€¦â€¦â€¦');
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('5','æ˜¾ç¤ºå™¨','050120001150112','1','23','1','ä¸‰æ˜Ÿ','13999999999','2015-03-13 12:57:37','2017-03-13 12:57:37','1','sdvsdvsdvds');
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('7','ä¸»æ¿','v111110909','1','13','0','æŠ€å˜‰','02988888888','2015-03-13 12:57:37','2017-03-13 12:57:37','0','aaaaaaaaaaaaaaa');
 #############################################################################
-#ÏîÄ¿±í
-insert into projectinfo(ProjectName,TaskNumber, info) values('APSĞÇÃô¸ĞÆ÷','RW-G14005','APS');
-insert into projectinfo(ProjectName,TaskNumber, info) values('APSĞÇÃô¸ĞÆ÷','RW-G1543','²âÊÔÑé');
-insert into projectinfo(ProjectName,TaskNumber, info) values('ĞéÄâÔÆ','¼Æ»®1','APS');
-insert into projectinfo(ProjectName,TaskNumber, info) values('ĞéÄâÔÆ','¼Æ»®2','APS');
-insert into projectinfo(ProjectName,TaskNumber, info) values('ĞéÄâÔÆ','¼Æ»®3','APS');
+#é¡¹ç›®è¡¨
+insert into projectinfo(ProjectName,TaskNumber, info) values('APSæ˜Ÿæ•æ„Ÿå™¨','RW-G14005','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('APSæ˜Ÿæ•æ„Ÿå™¨','RW-G1543','æµ‹è¯•éªŒ');
+insert into projectinfo(ProjectName,TaskNumber, info) values('è™šæ‹Ÿäº‘','è®¡åˆ’1','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('è™šæ‹Ÿäº‘','è®¡åˆ’2','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('è™šæ‹Ÿäº‘','è®¡åˆ’3','APS');
 
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (1,'9.3','20','64.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º75.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (2,'0.8','20','60.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º75.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (3,'1.5','20','59.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º75.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (4,'0.7','20','57.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º75.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (5,'2.3','20','57.0','80','75.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º75.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
-insert  into `serverinfo`(`id`,`cpuUsage`,`setCpuUsage`,`jvmUsage`,`setJvmUsage`,`ramUsage`,`setRamUsage`,`email`,`operTime`,`mark`) values (6,'17.9','20','57.0','80','77.0','80','1212614949@qq.com','2015-06-08 19:21:58','<font color=\'red\'>ÄÚ´æµ±Ç°£º77.0%,³¬³öÔ¤ÉèÖµ  60%</font>');
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('é‡å—','(125-500)mm å¤§8å—','070311','é™ˆç”Ÿè¾‰','-','å“ˆå°”æ»¨é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('äºšå¾®ç±³æ•°æ˜¾å…‰æ …æµ‹é•¿ä»ª','SKS50','080310','æœæ°´ç”Ÿ','02-090062','æˆéƒ½æ€å‡¯','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('ä¸‰ç‚¹å†…å¾„åƒåˆ†å°º','(175-200/0.005)mm','S/N1580ï¼ˆ005274ï¼‰','é™ˆç”Ÿè¾‰','-','æ—¥æœ¬ä¸‰ä¸°','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('è¯»æ•°æ˜¾å¾®é•œ','XGJ-4/03','12-3#','æ®µæˆ˜å†›','02-120081','å­æ„Ÿåä¸­ç²¾å¯†ä»ªå™¨æœ‰é™å…¬å¸','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('è¯»æ•°æ˜¾å¾®é•œ','XGJ-4/03','12-4#','ç§¦æ˜Ÿ','02-120082','å­æ„Ÿåä¸­ç²¾å¯†ä»ªå™¨æœ‰é™å…¬å¸','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¹³è¡Œå…‰ç®¡','FPG-3A(80mm)','20150405','ä»˜è¥¿çº¢','-','å­æ„Ÿåä¸­ç²¾å¯†ä»ªå™¨æœ‰é™å…¬å¸','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¹³è¡Œå…‰ç®¡','FPG-3A(80mm)','20150406','ä»˜è¥¿çº¢','-','å­æ„Ÿåä¸­ç²¾å¯†ä»ªå™¨æœ‰é™å…¬å¸','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('æ‰­çŸ©æ‰³æ‰‹','(1-5)NÂ·M','2242447','å¼ å»º','-','ä¸¹çº³èµ«å·¥å…·ï¼ˆä¸Šæµ·ï¼‰æœ‰é™å…¬å¸','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('æ æ†åƒåˆ†è¡¨','0-0.6/0.002)mm','NEG061','æœæ°´ç”Ÿ','-','æ—¥æœ¬ä¸‰ä¸°','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¤–å¾„åƒåˆ†å°º','(20-50/0.01)mm','ZX02-029(O273)','æœæ°´ç”Ÿ','-','ä¸Šæµ·é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¤–å¾„åƒåˆ†å°º','(0-25/0.01)mm','ZX02-017(C1727)','æœæ°´ç”Ÿ','-','å“ˆå°”æ»¨é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('æ¸¸æ ‡é«˜åº¦å°º','(0-300/0.02)mm','ZX01-030(85378)','æœæ°´ç”Ÿ','-','ä¸Šæµ·é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('æ æ†åƒåˆ†è¡¨','(0-0.14/0.001)mm','MXU427','æ¨å®¾å®','-','æ—¥æœ¬ä¸‰ä¸°','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('åƒåˆ†è¡¨','(0-1/0.001)mm','NFH337','é™ˆç”Ÿè¾‰','-','æ—¥æœ¬ä¸‰ä¸°','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('ç™¾åˆ†è¡¨','(0-10/0.01)mm','ZX03-013(A486)','æœæ°´ç”Ÿ','-','æ¡‚æ—é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('åƒåˆ†è¡¨','(0-1/0.001)mm','NEB649','æœæ°´ç”Ÿ','-','æ—¥æœ¬ä¸‰ä¸°','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¤–å¾„åƒåˆ†å°º','(0-25/0.01)mm','0773244','é™ˆç”Ÿè¾‰','-','å“ˆå°”æ»¨é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¤–å¾„åƒåˆ†å°º','(150-175/0.01)mm','ZX02-022(772089)','ä»å®‡é«˜','-','å“ˆå°”æ»¨é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('å¤–å¾„åƒåˆ†å°º','(175-200/0.01)mm','ZX02-023(7112)','ä»å®‡é«˜','-','é’æµ·é‡åˆƒå…·å‚','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('æ•°æ˜¾å¡å°º','(0-200/0.01)mm','00858868','è”ºæ˜æ˜','-','æ¡‚æ—å¹¿é™†æ•°å­—æµ‹æ§å…¬å¸','B',1,0);
+
+
+
+insert  into fixedAsset(name,tagNumber,specifications,serialNumber,status,responsiblePerson,usePerson,equipmentPosition,assetClass, vendorInfo) values('æ•°æ˜¾å¡å°º','00858868','(0-200/0.01)mm','001', 'å®Œå¥½','è”ºæ˜æ˜', 'é»å£°æ ‘','å—æ˜Œå¸‚','å®¶å…·','æ¡‚æ—å¹¿é™†æ•°å­—æµ‹æ§å…¬å¸');
+
+insert into busproject(pid, projectName, projectDescribe) values(1, 'é•¿å¾5å·','å›½å®¶èˆªå¤©é‡ç‚¹Açº§é¡¹ç›®');
+insert into busproject(pid, projectName, projectDescribe) values(2, 'å«¦å¨¥11å·','å›½å®¶èˆªå¤©é‡ç‚¹é¡¹ç›®');
+
+
+
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(1, 1, '705', 'å‰ä»“é•œå¤´', 'C', 'å‡ºæ ·');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(2, 1, '705', 'å‰ä»“é•œå¤´', 'Z', 'ç»ˆæ ·');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(3, 2, '705', 'å‰ä»“é•œå¤´', 'C', 'å‡ºæ ·');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(4, 2, '705', 'å‰ä»“é•œå¤´', 'Z', 'ç»ˆæ ·');
+
+insert into bustask(taskid, taskNo, pid, ppid, totalSetNo, taskSource) values(1, 'RW-G14005', 1, 1, 10, '705');
+insert into bustask(taskid, taskNo, pid, ppid, totalSetNo, taskSource) values(2, 'RW-G14006', 1, 1, 5, '705');
+insert into bustask(taskid, taskNo, pid, ppid, totalSetNo, taskSource) values(3, 'RW-G14005', 1, 2, 4, '705');
+insert into bustask(taskid, taskNo, pid, ppid, totalSetNo, taskSource) values(4, 'RW-G14006', 1, 2, 3, '705');
+
+INSERT INTO devicetype(devid, devName, devNick, reserverd1, reserverd2) VALUES(1, 'å…‰å­¦', '',  0, 0);
+INSERT INTO devicetype(devid, devName, devNick, reserverd1, reserverd2) VALUES(2, 'æœºæ¢°', '',  0, 0);
+
+
+
+
 

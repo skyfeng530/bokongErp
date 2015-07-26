@@ -4,18 +4,18 @@
     <startEvent id="startevent1" name="Start"></startEvent>
     <userTask id="UserTask" name="仓库管理员【填写入库单】" activiti:assignee="${nextName}" activiti:formKey="storage_input"></userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="UserTask"></sequenceFlow>
-    <userTask id="usertask3" name="检验" activiti:assignee="${nextName}" activiti:formKey="storage_check"></userTask>
-    <userTask id="usertask4" name="审批" activiti:assignee="${nextName}" activiti:formKey="storage_approval"></userTask>
+    <userTask id="usertask3" name="检验【入库流程】" activiti:assignee="${nextName}" activiti:formKey="storage_check"></userTask>
+    <userTask id="usertask4" name="审批【入库流程】" activiti:assignee="${nextName}" activiti:formKey="storage_approval"></userTask>
     <sequenceFlow id="flow4" name="不合格" sourceRef="usertask3" targetRef="usertask4">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='不合格'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask5" name="入库" activiti:assignee="${nextName}" activiti:formKey="storage_save"></userTask>
+    <userTask id="usertask5" name="入库【入库流程】" activiti:assignee="${nextName}" activiti:formKey="storage_save"></userTask>
     <sequenceFlow id="flow5" name="批准" sourceRef="usertask6" targetRef="usertask5">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='批准'}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow6" sourceRef="usertask5" targetRef="endevent1"></sequenceFlow>
-    <userTask id="usertask6" name="审批处理结果" activiti:assignee="${nextName}" activiti:formKey="storage_approvalresult"></userTask>
+    <userTask id="usertask6" name="审批处理结果【入库流程】" activiti:assignee="${nextName}" activiti:formKey="storage_approvalresult"></userTask>
     <sequenceFlow id="flow8" sourceRef="usertask4" targetRef="usertask6"></sequenceFlow>
     <sequenceFlow id="flow9" name="驳回" sourceRef="usertask6" targetRef="UserTask">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='驳回'}]]></conditionExpression>

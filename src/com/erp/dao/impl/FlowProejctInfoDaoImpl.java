@@ -13,7 +13,7 @@ public class FlowProejctInfoDaoImpl extends BaseDaoImpl<FlowProejctInfo> impleme
 	@Override
 	public int getFlowIdByTask(int taskId) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectOne(this.getClassName()+".getFlowIdByTask", taskId);
+		return (int)getSqlSession().selectOne(this.getClassName()+".getFlowIdByTask", taskId);
 	}
 	
 }

@@ -18,21 +18,65 @@ CREATE TABLE IF NOT EXISTS `busleave` (
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-	
-DROP TABLE IF EXISTS serverinfo;	
-CREATE TABLE IF NOT EXISTS serverinfo (
-	id INTEGER NOT NULL AUTO_INCREMENT,
-	cpuUsage VARCHAR ( 255 ) NOT NULL,
-	setCpuUsage VARCHAR ( 255 ) NOT NULL,
-	jvmUsage VARCHAR ( 255 ) NOT NULL,
-	setJvmUsage VARCHAR ( 255 ) NOT NULL,
-	ramUsage VARCHAR ( 255 ) NOT NULL,
-	setRamUsage VARCHAR ( 255 ) NOT NULL,
-	email VARCHAR ( 255 ) DEFAULT NULL,
-	operTime TIMESTAMP,
-	mark VARCHAR ( 255 ) DEFAULT NULL,
-	CONSTRAINT PK_SERVER_STATE PRIMARY KEY (id)
-	)ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS busprojectfigure;	
+CREATE TABLE `busprojectfigure` (
+  `pfid` INT(11) NOT NULL AUTO_INCREMENT,
+  `ppid` INT(11) DEFAULT NULL,
+  `figureLibName` VARCHAR(64) NOT NULL,
+  `figureID` VARCHAR(32) NOT NULL,
+  `figureName` VARCHAR(32) NOT NULL,
+  `figureRequest` VARCHAR(256) DEFAULT NULL,
+  `type` INT(11) NOT NULL,
+  `batchNum` INT(11) NOT NULL,
+  `describe` VARCHAR(256) DEFAULT NULL,
+  PRIMARY KEY (`pfid`)
+) ENGINE=INNODB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS busproject;
+CREATE TABLE `busproject` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `projectName` varchar(64) NOT NULL,
+  `projectDescribe` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `busprojectproduct`;
+CREATE TABLE `busprojectproduct` (
+  ppid int(11) NOT NULL AUTO_INCREMENT,
+  projectId  int(11) NOT NULL,
+  productNo varchar(16) NOT NULL,
+  productName varchar(32) DEFAULT NULL,
+  status varchar(3) DEFAULT NULL,
+  bak varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ppid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `bustask`;
+CREATE TABLE `bustask` (
+  `taskId` int(11) NOT NULL AUTO_INCREMENT,
+  `taskNo`  varchar(32) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `ppid` int(11) NOT NULL,
+  `totalSetNo` int(11) NOT NULL,
+  `taskSource` varchar(32) DEFAULT NULL,
+  `bak` varchar(128) DEFAULT NULL,
+  PRIMARY KEY PK_bustask(`taskId`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `bustaskFlow`;
+CREATE TABLE `bustaskFlow` (
+  `flowId` bigint NOT NULL,
+  `taskId` int(11) NOT NULL ,
+  `taskNo`  varchar(32) NOT NULL,
+  `pid` int(11) NOT NULL,
+  `ppid` int(11) NOT NULL,
+  `totalSetNo` int(11) NOT NULL,
+  `taskSource` varchar(32) DEFAULT NULL,
+  `bak` varchar(128) DEFAULT NULL,
+  PRIMARY KEY PK_bustaskFlow(`taskId`, `flowId`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Member_info;
 CREATE TABLE IF NOT EXISTS Member_info (
@@ -119,6 +163,7 @@ CREATE TABLE IF NOT EXISTS StorageFlowResult (
 	TestTime TIMESTAMP,
 	testLevel VARCHAR ( 31 ),
 	TrialOrganization VARCHAR ( 31 ),
+	trialNumber  SMALLINT,
 	TrialResults VARCHAR ( 150 ),
 	TrialPersonnel VARCHAR ( 150 ),
 	callPerson VARCHAR ( 31 ),
@@ -182,21 +227,6 @@ CREATE TABLE IF NOT EXISTS TaskContractManagement (
 	CONSTRAINT PK_TaskContractManagement PRIMARY KEY (project_id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	
-DROP TABLE IF EXISTS InspectionInfo;	
-CREATE TABLE IF NOT EXISTS InspectionInfo (
-	ProjectName VARCHAR ( 51 ) NOT NULL,
-	TaskIndex VARCHAR ( 21 ) NOT NULL,
-	IdNumber VARCHAR ( 11 ) NOT NULL,
-	SubType SMALLINT NOT NULL,
-	InspectionTime TIMESTAMP NOT NULL,
-	Rules VARCHAR ( 150 ) NOT NULL,
-	TotalNumber INTEGER NOT NULL,
-	ValidNumber INTEGER,
-	Results VARCHAR ( 160 ) NOT NULL,
-	Person VARCHAR ( 21 ) NOT NULL,
-	bak VARCHAR ( 100 ),
-	CONSTRAINT PK_InspectionInfo PRIMARY KEY (ProjectName, TaskIndex, IdNumber, SubType, InspectionTime)
-	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS log;	
 CREATE TABLE IF NOT EXISTS log (
@@ -228,35 +258,16 @@ CREATE TABLE IF NOT EXISTS TaskProcessRelationship (
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS user;	
-CREATE TABLE IF NOT EXISTS user (
-	userName VARCHAR ( 20 ) NOT NULL,
-	userPassword VARCHAR ( 100 ) NOT NULL,
-	userNickname VARCHAR ( 20 ),
-	userRealname VARCHAR ( 20 ) NOT NULL,
-	userAge SMALLINT NOT NULL,
-	userSex VARCHAR ( 10 ),
-	userAddress VARCHAR ( 100 ),
-	userPhone VARCHAR ( 30 ),
-	userMail VARCHAR ( 50 ),
-	userQQ VARCHAR ( 30 ),
-   `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	lastLogintime TIMESTAMP,
-	level SMALLINT NOT NULL,
-	province VARCHAR ( 50 ),
-	city VARCHAR ( 50 ),
-	bankName VARCHAR ( 100 ),
-	branchBank VARCHAR ( 100 ),
-	subbranchBank VARCHAR ( 100 ),
-	openBankName VARCHAR ( 50 ),
-	bankAccountName VARCHAR ( 50 ),
-	bankAccount VARCHAR ( 50 ),
-	accountType VARCHAR ( 20 ),
-	pay VARCHAR ( 20 ),
-	mark VARCHAR ( 20 ),
-	status VARCHAR ( 20 ),
-	parentNumber VARCHAR ( 50 ),
-	CONSTRAINT PK_user PRIMARY KEY (userName)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+  `userName` varchar(20) NOT NULL,
+  `userPassword` varchar(100) NOT NULL,
+  `userRealname` varchar(20) DEFAULT NULL,
+  `userBirthday` varchar(20) DEFAULT NULL,
+  `userSex` varchar(10) DEFAULT NULL,
+  `idCard` varchar(100) DEFAULT NULL,
+  `userPhone` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`userName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS user_role;	
 CREATE TABLE IF NOT EXISTS user_role (
@@ -290,7 +301,7 @@ CREATE TABLE IF NOT EXISTS ProjectInfo (
 DROP TABLE IF EXISTS DepartmentInfo;	
 CREATE TABLE IF NOT EXISTS DepartmentInfo (
 	DepartId INTEGER NOT NULL AUTO_INCREMENT,
-	Name VARCHAR ( 51 ) NOT NULL,
+	dName VARCHAR ( 51 ) NOT NULL,
 	DepartType INTEGER,
 	Discribe VARCHAR ( 101 ),
 	CONSTRAINT PK_DepartInfo PRIMARY KEY (DepartId)
@@ -308,8 +319,8 @@ CREATE TABLE IF NOT EXISTS ProcessRule (
 	
 DROP TABLE IF EXISTS BasicMaterialInfo;	
 CREATE TABLE IF NOT EXISTS BasicMaterialInfo (
-	ProjectName VARCHAR ( 51 ) NOT NULL,
-	TaskIndex VARCHAR ( 21 ) NOT NULL,
+	projectName VARCHAR ( 51 ),
+	taskName VARCHAR ( 21 ),
 	IdNumber VARCHAR ( 11 ) NOT NULL,
 	subType SMALLINT DEFAULT 0 NOT NULL,
 	name VARCHAR ( 51 ) NOT NULL,
@@ -347,8 +358,7 @@ CREATE TABLE IF NOT EXISTS BasicMaterialInfo (
 	TrialTime TIMESTAMP,
 	SavePerson VARCHAR ( 21 ) NOT NULL,
 	StorageTime DATE,
-	bak VARCHAR ( 100 ),
-	CONSTRAINT PK_BasicMaterialInfo PRIMARY KEY (ProjectName, TaskIndex, IdNumber, subType)
+	bak VARCHAR ( 100 )
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS ProcessManagement;	
@@ -390,10 +400,103 @@ create table IF NOT EXISTS `device` (
 	`remark` varchar (600)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS devicetype;
+CREATE TABLE devicetype (
+	`devid` INT(11) NOT NULL,
+	`devName` VARCHAR(16) NOT NULL,
+	`devNick` VARCHAR(16) NOT NULL,
+	`reserverd1` INT(11) NOT NULL,
+	`reserverd2` INT(11) NOT NULL,
+	CONSTRAINT PK_omOutStorage PRIMARY KEY (devid)
+	)ENGINE=INNODB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS omOutStorage;
+CREATE TABLE omOutStorage (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+	`pid` INT(11) NOT NULL,
+	`taskId` INT(11) NOT NULL,
+	`componentType` INT(11) NOT NULL,
+	`setNum` INT(11) DEFAULT NULL,
+	`fetchType` INT(11) NOT NULL,
+	`figureId` VARCHAR(32)	NOT NULL,
+	`figureName` VARCHAR(32) NOT NULL,
+	`figureRequest` VARCHAR(256) DEFAULT NULL,
+	`batchNum` INT(11) NOT NULL,
+	`mustNum` INT(11) NOT NULL,
+	`stockNum` INT(11) NOT NULL,
+	`factNum` INT(11) NOT NULL,
+	`reserverd1` INT(11) NOT NULL,
+	`reserverd2` INT(11) NOT NULL,
+	CONSTRAINT PK_omOutStorage PRIMARY KEY (`id`)
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+	
+	
+DROP TABLE IF EXISTS omOutStorageFlow;
+CREATE TABLE omOutStorageFlow (
+        `flowId` bigint(20) NOT NULL,
+	`pid` INT(11) NOT NULL,
+	`taskId` INT(11) NOT NULL,
+	`componentType` INT(11) NOT NULL,
+	`setNum` INT(11) DEFAULT NULL,
+	`fetchType` INT(11) NOT NULL,
+	`figureId` VARCHAR(32)	NOT NULL,
+	`figureName` VARCHAR(32) NOT NULL,
+	`figureRequest` VARCHAR(256) DEFAULT NULL,
+	`batchNum` INT(11) NOT NULL,
+	`mustNum` INT(11) NOT NULL,
+	`stockNum` INT(11) NOT NULL,
+	`factNum` INT(11) NOT NULL,
+	`reserverd1` INT(11) NOT NULL,
+	`reserverd2` INT(11) NOT NULL
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS instrumentDevice;
+CREATE TABLE instrumentDevice (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 51 ),
+	specifications VARCHAR ( 31 ),
+	instrumentNumber VARCHAR ( 31 ),
+	assetNumber VARCHAR ( 31 ),
+	usePerson VARCHAR ( 31 ),
+	manufacturer VARCHAR ( 51 ),
+	instrumentType VARCHAR ( 11 ),
+	status VARCHAR ( 21 ),
+	measurementInfo VARCHAR ( 11 ),
+	price VARCHAR ( 21 ),
+	enableDate TIMESTAMP,
+	tagNumber VARCHAR ( 31 ),
+	verifyCycle INTEGER,
+	verifyCycleUnit SMALLINT,
+	validDate TIMESTAMP,
+	equipmentPosition VARCHAR ( 51 ),
+	calibrationVerify VARCHAR ( 100 ),
+	bak VARCHAR ( 100 ),
+	CONSTRAINT PK_instrumentDevice PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS fixedAsset;
+CREATE TABLE fixedAsset (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 51 ),
+	tagNumber VARCHAR ( 31 ),
+	specifications VARCHAR ( 31 ),
+	serialNumber VARCHAR ( 31 ),
+	status VARCHAR ( 21 ),
+	price VARCHAR ( 31 ),
+	enableDate TIMESTAMP,
+	responsiblePerson VARCHAR ( 31 ),
+	usePerson VARCHAR ( 31 ),
+	equipmentPosition VARCHAR ( 51 ),
+	assetClass VARCHAR ( 51 ),
+	vendorInfo VARCHAR ( 51 ),
+	remark VARCHAR ( 100 ),
+	CONSTRAINT PK_fixedAsset PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+
 ALTER TABLE TaskProcessRelationship ADD CONSTRAINT FK_TaskProcessRelationship FOREIGN KEY (TaskId) REFERENCES TaskContractManagement (project_id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE TaskProcessRelationship ADD CONSTRAINT FK_TaskProcessRelationship1 FOREIGN KEY (ProcessId) REFERENCES ProcessManagement (ProcessId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE InspectionInfo ADD CONSTRAINT FK_InspectionInfo FOREIGN KEY (ProjectName, TaskIndex, IdNumber, SubType) REFERENCES BasicMaterialInfo (ProjectName, TaskIndex, IdNumber, subType)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE BasicMaterialInfo ADD CONSTRAINT FK_BasicMaterialInfo FOREIGN KEY (ProjectName, TaskIndex) REFERENCES ProjectInfo (ProjectName, TaskNumber)  ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE user_role ADD CONSTRAINT FK_user_role02 FOREIGN KEY (DepartId) REFERENCES DepartmentInfo (DepartId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE user_role ADD CONSTRAINT FK_USER_KEY FOREIGN KEY (role_id) REFERENCES role (id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE ProductionManagement ADD CONSTRAINT FK_ProductionManagement FOREIGN KEY (ProcessIndex, TaskIndex) REFERENCES TaskProcessRelationship (ProcessId, TaskId)  ON DELETE NO ACTION ON UPDATE NO ACTION;

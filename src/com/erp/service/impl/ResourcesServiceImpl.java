@@ -47,6 +47,11 @@ public class ResourcesServiceImpl implements ResourcesService {
 		return resourcesDao.findAll();
 	}
 
+	public List<Resources> getDepartmentResources(String dName) {
+		
+		return resourcesDao.getDepartmentResources(dName);
+	}
+	
 	public List<Resources> getUserResources(String userId) {
 		
 		return resourcesDao.getUserResources(userId);

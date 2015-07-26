@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectfigure">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		pfid,
+		projectName,
+	  	taskName,
+	  	materialType,
+	  	materialNumber,
+	  	subTypeNumber,
+	  	pfName,
+	  	testRequirements,
+	  	status,
+	  	bak
+	</sql>
+	<!--resultType="Leave" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="BusProjectFigure" parameterType="BusProjectFigure">
+		select
+		<include refid="selectId" />
+		from busprojectfigure
+		<where>
+			<if test="t.projectName != null and t.projectName != ''">
+				projectName like '%${t.projectName}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加设备 -->
+	<insert id="add" parameterType="BusProjectFigure">
+		INSERT INTO busprojectfigure
+	        (projectName,
+		  	taskName,
+		  	materialType,
+		  	materialNumber,
+		  	subTypeNumber,
+		  	pfName,
+		  	testRequirements,
+		  	status,
+		  	bak)
+		 values 
+			(#{projectName},
+			#{taskName},
+			#{materialType},
+			#{materialNumber},
+			#{subTypeNumber},
+			#{pfName},
+			#{testRequirements},
+			#{status},
+			#{bak})
+	</insert>
+	<select id="getNewProject" resultType="long">
+		SELECT
+  		MAX(pfid)
+		FROM busprojectfigure
+	</select>
+	<select id="getById" parameterType="String" resultType="BusProjectFigure">
+		select
+		<include refid="selectId" />
+		from busprojectfigure where pfid=#{pfid}
+	</select>
+	<update id="update" parameterType="BusProjectFigure">
+		update busprojectfigure
+		<set>
+			<if test="status != null and status != ''">
+				status=#{status},
+			</if>
+		</set>
+		where pfid=#{pfid}
+	</update>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from busprojectfigure
+		pfid=#{pfid}
+	</delete>
+</mapper>

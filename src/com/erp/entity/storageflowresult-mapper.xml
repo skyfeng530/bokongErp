@@ -36,6 +36,7 @@
 		TestTime,
 		testLevel,
 		TrialOrganization,
+		trialNumber,
 		TrialResults,
 		TrialPersonnel,
 		callPerson,
@@ -55,8 +56,13 @@
 				</if>
 		</where>
 	</select>
+		<select id="queryByFlowId" resultType="StorageFlowResult" parameterType="int">
+		select
+		<include refid="selectId" />
+		from storageflowresult where flowId = ${_parameter}
+	</select>
 	<!-- 总记录数 -->
-	<select id="count" parameterType="StorageFlowResult" resultType="int">
+	<select id="count" parameterType="StorageFlowResult" resultType="Integer">
 		select count(0) from storageflowresult
 		<where>
 			<if test="t.flowId != null and t.flowId != ''">
@@ -67,6 +73,7 @@
 	<!-- 增加用户 -->
 	<insert id="add" parameterType="StorageFlowResult">
 		insert into storageflowresult(
+		flowid,
 		MaterialNumber,
 		IdNumber, 
 		SubType,
@@ -98,6 +105,7 @@
 		TestTime,
 		testLevel,
 		TrialOrganization,
+		trialNumber,
 		TrialResults,
 		TrialPersonnel,
 		callPerson,
@@ -106,6 +114,7 @@
 		taskName,
 		bak )
 		values (
+		#{flowId},
 		#{materialNumber},
 		#{idNumber}, 
 		#{subType},
@@ -137,6 +146,7 @@
 		#{TestTime},
 		#{testLevel},
 		#{TrialOrganization},
+		#{trialNumber},
 		#{TrialResults},
 		#{TrialPersonnel},
 		#{callPerson},
@@ -178,8 +188,8 @@
 		nSize=#{nSize},
 		InspectionMode=#{inspectionMode},
 		ProductSource=#{productSource},
-		TransferPerson=#{TransferPerson},
-		TransferTime=#{TransferTime},
+		TransferPerson=#{transferPerson},
+		TransferTime=#{transferTime},
 		TestRequirements=#{TestRequirements},
 		testNumber=#{testNumber},
 		validNumber=#{validNumber},
@@ -188,6 +198,7 @@
 		TestTime=#{TestTime},
 		testLevel=#{testLevel},
 		TrialOrganization=#{TrialOrganization},
+		trialNumber=#{trialNumber},
 		TrialResults=#{TrialResults},
 		TrialPersonnel=#{TrialPersonnel},
 		callPerson=#{callPerson},

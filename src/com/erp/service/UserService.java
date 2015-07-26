@@ -1,6 +1,8 @@
 package com.erp.service;
 
 
+import java.util.List;
+
 import com.erp.entity.Roles;
 import com.erp.entity.User;
 import com.erp.util.PageView;
@@ -21,4 +23,6 @@ public interface UserService{
 	public User querySingleUser(String userName);
 	
 	public Roles findbyUserRole(String userId);
+	
+	public List<User> queryAll(User user);
 }

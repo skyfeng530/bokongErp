@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bustask">
+    <sql id="selectId">
+        taskId,
+        taskNo,
+        pid,
+        ppid,
+        totalSetNo,
+        taskSource,
+        bak
+    </sql>
+
+    <select id="query" resultType="BusTask" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusTask
+        <where>
+            <if test="t.taskId != null and t.taskId != ''">
+                taskId=#{taskId}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusTask" resultType="int">
+        select count(0) from BusTask
+        <where>
+            <if test="t.taskId != null and t.taskId != ''">
+                taskId=#{taskId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusTask">
+        select * from BusTask where taskId=#{id}
+    </select>
+    <insert id="add" parameterType="BusTask">
+        insert into BusTask(
+        taskId,
+        taskNo,
+        pid,
+        ppid,
+        totalSetNo,
+        taskSource,
+        bak )
+        values (
+        #{taskId},
+        #{taskNo},
+        #{pid},
+        #{ppid},
+        #{totalSetNo},
+        #{taskSource},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="BusTask">
+        update BusTask
+        <set>
+            taskNo=#{taskNo},
+            pid=#{pid},
+            ppid=#{ppid},
+            totalSetNo=#{totalSetNo},
+            taskSource=#{taskSource},
+            bak=#{bak}
+        </set>
+        <where>
+            <if test="t.taskId != null and t.taskId != ''">
+                taskId=#{taskId}
+            </if>
+        </where>
+    </update>
+</mapper>

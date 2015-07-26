@@ -14,6 +14,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="transactionManager" ref="transactionManager" />
 		<!-- 设置建表策略，如果没有表，自动创建表 -->
 		<property name="databaseSchemaUpdate" value="true" />
+		<property name="activityFontName" value="宋体"/>
+        <property name="labelFontName" value="宋体"/>
 	</bean>
 	<!-- 创建流程引擎对象 -->
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
@@ -33,5 +35,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
 	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
 	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+	
+	<bean id="activitiRule" class="org.activiti.engine.test.ActivitiRule">
+	  <property name="processEngine" ref="processEngine" />
+	</bean>
 	
 </beans>

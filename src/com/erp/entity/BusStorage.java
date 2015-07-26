@@ -1,7 +1,7 @@
 package com.erp.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 入库申请单实体类
@@ -10,7 +10,7 @@ import java.util.Set;
 public class BusStorage {
 	private String projectInfoID;
 	private String flowRecordInfoID;
-	private Set<StorageComponent> storages = new HashSet<StorageComponent>(0);
+	private List<StorageFlowResult> storages = new ArrayList<StorageFlowResult>(0);
 	
 	public String getProjectInfoID() {
 		return projectInfoID;
@@ -24,10 +24,10 @@ public class BusStorage {
 	public void setFlowRecordInfoID(String flowRecordInfoID) {
 		this.flowRecordInfoID = flowRecordInfoID;
 	}
-	public Set<StorageComponent> getStorages() {
+	public List<StorageFlowResult> getStorages() {
 		return storages;
 	}
-	public void setStorages(Set<StorageComponent> storages) {
+	public void setStorages(List<StorageFlowResult> storages) {
 		this.storages = storages;
 	}
 	

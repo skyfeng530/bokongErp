@@ -31,26 +31,27 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public void deleteByDepartmentname(String dName) {
-		// TODO Auto-generated method stub
 		departmentDao.deleteByDepartmentname(dName);
 	}
 
 	@Override
 	public void modify(Department department) {
-		// TODO Auto-generated method stub
 		departmentDao.modify(department);
 	}
 
 	@Override
 	public Department getByDepartmentName(String dName) {
-		// TODO Auto-generated method stub
 		return departmentDao.getByDepartmentname(dName);
 	}
 
 	@Override
-	public Roles findbyDepartmentRole(String dId) {
-		// TODO Auto-generated method stub
-		return departmentDao.findbyDepartmentRole(dId);
+	public Roles findbyDepartmentRole(String dName) {
+		return departmentDao.findbyDepartmentRole(dName);
+	}
+
+	@Override
+	public List<Department> findAll() {
+		return departmentDao.findAll();
 	}
 
 }

@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 	<title>库管审核</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath }/style/blue/pageCommon.css" />
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/states.js"></script>
@@ -13,6 +14,9 @@
     <script type="text/javascript">
      var pdid = '${pdid}';
      var taskId = '${taskId}';
+     var projectName = '${projectName}';
+     var taskName = '${taskName}';
+     var flowId = '${flowId}';
     </script>
 </head>
 <body>

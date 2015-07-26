@@ -1,55 +1,52 @@
 function topView() {
 
-	// create the Data Store
+	var proxy = new Ext.data.HttpProxy({
+		url : '../workflow/loadFormGridData.html',
+		method : 'POST'
+	});
+	var render = new Ext.data.JsonReader({
+		root : 'data',
+		totalProperty : 'totalCount'
+	}, [ {
+		name : 'materialNumber',
+		type : 'string'
+	}, {
+		name : 'idNumber',
+		type : 'int'
+	}, {
+		name : 'name',
+		type : 'string'
+	}, {
+		name : 'materialType',
+		type : 'int'
+	}, {
+		name : 'codeName',
+		type : 'string'
+	}, {
+		name : 'totalNumber',
+		type : 'int'
+	}, {
+		name : 'TestRequirements',
+		type : 'string'
+	}, {
+		name : 'TestResult',
+		type : 'string'
+	}, {
+		name : 'testLevel',
+		type : 'string'
+	}, {
+		name : 'bak',
+		type : 'string'
+	} ]);
 	var store = new Ext.data.Store({
-		autoDestroy : true,
-		url : '',
-		autoload : false,
-		reader : new Ext.data.XmlReader({
-			record : 'total',
-			fields : [ {
-				name : 'id',
-				type : 'string'
-			}, {
-				name : 'picid',
-				type : 'string'
-			}, {
-				name : 'componentName',
-				type : 'string'
-			}, {
-				name : 'componentType',
-				type : 'int'
-			}, {
-				name : 'total',
-				type : 'int'
-			}, {
-				name : 'shelfLife',
-				type : 'int'
-			}, {
-				name : 'productfrom',
-				type : 'string'
-			}, {
-				name : 'materialForm',
-				type : 'string'
-			}, {
-				name : 'workinprocessFlag',
-				type : 'int'
-			}, {
-				name : 'measurementUnit',
-				type : 'string'
-			}, {
-				name : 'saveTime',
-				type : 'int'
-			}, {
-				name : 'remark',
-				type : 'string'
-			}
-
-			]
-		}),
-
+		proxy : proxy,
+		reader : render,
+		autoLoad : true,
+		baseParams : {
+			flowId : flowId
+		},
 		sortInfo : {
-			field : 'picid',
+			field : 'idNumber',
 			direction : 'ASC'
 		}
 	});
@@ -64,65 +61,110 @@ function topView() {
 		store : store,
 		columns : [ sm, {
 			header : "序号",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'id',
+			dataIndex : 'materialNumber',
+			menuDisabled : true
+		}, {
+			header : "图库",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "对应厂商名称",
+			width : 45,
+			sortable : false,
 			menuDisabled : true
 		}, {
 			header : "图号",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'picid',
+			dataIndex : 'idNumber',
+			menuDisabled : true
+		}, {
+			header : "子图号",
+			width : 45,
+			sortable : false,
 			menuDisabled : true
 		}, {
 			header : "零件名称",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'componentName',
+			dataIndex : 'name',
+			menuDisabled : true
+		}, {
+			header : '对应厂商编号',
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "零件编号",
+			width : 45,
+			sortable : false,
+			dataIndex : 'codeName',
 			menuDisabled : true
 		}, {
 			header : "数量",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'total',
-			menuDisabled : true
-		}, {
-			header : "检验方式",
-			width : 100,
-			sortable : false,
-			dataIndex : 'validType',
-			menuDisabled : true
-		}, {
-			header : "图纸要求",
-			width : 100,
-			sortable : false,
-			dataIndex : 'picRequire',
+			dataIndex : 'totalNumber',
 			menuDisabled : true
 		}, {
 			header : "检验结果",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'validResult',
 			menuDisabled : true
 		}, {
-			header : "不合格性质",
-			width : 100,
+			header : "检验数量",
+			width : 45,
 			sortable : false,
-			dataIndex : 'unqualifiedType',
 			menuDisabled : true
 		}, {
-			header : "审理结果",
-			width : 100,
+			header : "合格数量",
+			width : 45,
 			sortable : false,
-			dataIndex : 'trialresults',
+			menuDisabled : true
+		}, {
+			header : "不合格数量",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "不合格原因",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "合格等级",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "审理单号",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "处理结果",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "审理组织",
+			width : 45,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "图片",
+			width : 45,
+			sortable : false,
 			menuDisabled : true
 		}, {
 			header : "备注",
-			width : 100,
+			width : 45,
 			sortable : false,
-			dataIndex : 'remark',
 			menuDisabled : true
-		} ],
+		}],
 		viewConfig : {
 			forceFit : true
 		},
@@ -146,28 +188,43 @@ function topView() {
 		autoWidth : true,
 		layout : 'column',
 		items : [ {
-			columnWidth : .5,
+			columnWidth : .3,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 55,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
 				fieldLabel : '项目名称',
-				xtype : 'combo',
-				anchor : '85%'
+				xtype : 'label',
+				anchor : '85%',
+				html : '<div style="padding-top:3px">' + projectName + '</div>'
 			} ]
 		}, {
-			columnWidth : .5,
+			columnWidth : .3,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 55,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
 				fieldLabel : '任务编号',
 				anchor : '85%',
-				xtype : 'combo'
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + taskName + '</div>'
+			} ]
+		}, {
+			columnWidth : .3,
+			layout : 'form',
+			labelWidth : 55,
+			labelAlign : "left",
+			baseCls : "x-plain",
+			labelAlign : "left",
+			items : [ {
+				fieldLabel : '器件类型',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">光学器件（测试数据）</div>'
 			} ]
 		}, {
 			clumnWidth : 1,
@@ -187,13 +244,37 @@ function topView() {
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
-				id : 'trialresults_id',
-				fieldLabel : '审理结果',
+				id : 'trialNumber_id',
+				fieldLabel : '审理单号',
+				anchor : '85%',
+				xtype : 'textfield',
+				allowBlank : false,
+				blankText : '不能为空',
+				readOnly : true,
+				value : "SLD" + taskName + new Date().getFullYear() +'1' + "(G)"
+			}, {
+				id : 'Trialorg_id',
+				fieldLabel : '审理组织',
 				anchor : '85%',
 				xtype : 'combo',
 				maxLength : 10,
 				allowBlank : false,
-				blankText : '不能为空'
+				blankText : '不能为空',
+				store : workflow.states.trialOrgStore,
+				emptyText : '请选择...',
+				mode : 'local',
+				valueField : 'value',
+				displayField : 'text',
+				allowBlank : false,
+				blankText : '不能为空',
+				selectOnFocus : true,
+				forceSelection : true,
+				triggerAction : 'all',
+				valueNotFoundText : ''
+			}, {
+				xtype : 'textfield',
+				fieldLabel : '备注',
+				anchor : '85%',
 			}, {
 				xtype : 'button',
 				text : '增加',
@@ -201,7 +282,46 @@ function topView() {
 				style : 'margin-left:104px;',
 				handler : addFormDataToGrid_handler
 			} ]
-		}]
+		}, {
+			columnWidth : .5,
+			layout : 'form',
+			labelWidth : 100,
+			labelAlign : "left",
+			baseCls : "x-plain",
+			labelAlign : "left",
+			items : [ {
+				id : 'trialresults_id',
+				fieldLabel : '处理结果',
+				anchor : '85%',
+				xtype : 'combo',
+				maxLength : 10,
+				allowBlank : false,
+				blankText : '不能为空',
+				store : workflow.states.trialResultsStore,
+				emptyText : '请选择...',
+				mode : 'local',
+				valueField : 'value',
+				displayField : 'text',
+				allowBlank : false,
+				blankText : '不能为空',
+				selectOnFocus : true,
+				forceSelection : true,
+				triggerAction : 'all',
+				valueNotFoundText : ''
+			}, {
+				id : 'savePic_id',
+				fieldLabel : '上传图片',
+				anchor : '85%',
+				xtype : 'fileuploadfield',
+				allowBlank : true,
+				blankText : '不能为空',
+				emptyText : '请选择要上传的文件...',
+				buttonText : '',
+				buttonCfg : {
+					iconCls : 'upload-icon'
+				}
+			} ]
+		} ]
 	};
 
 	return partTransfer;
@@ -210,77 +330,172 @@ function topView() {
 function mainView() {
 	var _topPanel = topView();
 
+	var _processInfoStore = loadProcessInfo(taskId);
+	var _processUser = loadProcessUser();
+
 	var mainPanel = new Ext.form.FormPanel({
 		title : "不合格品审理",
-		height : 670,
-		width : 1200,
+		autoHeight : true,
+		autoWidth : true,
 		labelWidth : 100,
 		labelAlign : "left",
-		style : 'margin-top:10px;',
+		style : 'margin-top:1px;',
 		buttonAlign : 'left',
 		frame : true,
 		defaults : {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [ _topPanel, {
-			name : "operate",
-			fieldLabel : "选择您要的操作",
-			xtype : 'combo'
-		}, {
-			name : "operateUser",
-			fieldLabel : "处理人员",
-			xtype : 'combo'
-		}, {
-			name : "copyUser",
-			fieldLabel : "抄送人员",
-			xtype : 'combo'
-		}, {
-			xtype : "textarea",
-			name : "mask",
-			height : 50,
-			fieldLabel : "批注"
-		} ],
-		buttons : [ {
-			text : "提交",
-			handler : function(){
-				Ext.Ajax.request({
-					url : '../workflow/submitForm_storage.html',
-					params : {
-						taskId : taskId,
-						comment : 'aaa'
-					},
-					method : 'POST',
-					success : function(response) {
-						var result = Ext.decode(response.responseText);
+		items : [
+				_topPanel,
+				{
+					id : 'processId',
+					name : "operate",
+					fieldLabel : "选择您要的操作",
+					xtype : 'combo',
+					store : _processInfoStore,
+					allowBlank : false,
+					blankText : '不能为空',
+					selectOnFocus : true,
+					forceSelection : true,
+					triggerAction : 'all',
+					valueNotFoundText : '',
+					emptyText : '请选择...',
+					mode : "local",
+					valueField : 'value',
+					displayField : 'text',
+					listeners : {
+						'render' : function() {
 
-						if (result.success) {
-							Ext.Msg.alert("提示", "提交成功", forWardToNextPage);
-						} else {
-							Ext.Msg.alert("提示", "提交失败");
+							Ext.getCmp("processId").store.reload({
+								callback : function() {
+
+									if (Ext.getCmp("processId").store
+											.getTotalCount() == 1) {
+										var firstValue = Ext
+												.getCmp("processId").store
+												.getRange()[0].data.value;
+
+										Ext.getCmp("processId").setValue(
+												firstValue);
+									}
+
+								}
+							});
+
 						}
-					},
-					failure : function() {
-						Ext.Msg.alert("提示", "提交失败");
 					}
-				});
-			}
-		}, {
-			text : "取消"
-		} ]
+				}, {
+					id : 'processUserId',
+					name : "operateUser",
+					fieldLabel : "处理人员",
+					xtype : 'combo',
+					store : _processUser,
+					allowBlank : false,
+					triggerAction : 'all',
+					blankText : '不能为空',
+					selectOnFocus : true,
+					forceSelection : true,
+					valueNotFoundText : '',
+					emptyText : '请选择...',
+					mode : "local",
+					valueField : 'userName',
+					displayField : 'userName',
+				}, {
+					name : "copyUser",
+					fieldLabel : "抄送人员",
+					xtype : 'combo'
+				}, {
+					id : 'commonMask_id',
+					xtype : "textarea",
+					name : "mask",
+					height : 50,
+					fieldLabel : "批注",
+					allowBlank : false,
+					blankText : '不能为空'
+				} ],
+		buttons : [
+				{
+					text : "提交",
+					handler : function() {
+
+						var _gridData = getGridData();
+
+						if (!Ext.getCmp("processId").isValid()) {
+							return;
+						}
+
+						if (!Ext.getCmp("processUserId").isValid()) {
+							return;
+						}
+
+						if (!Ext.getCmp("commonMask_id").isValid()) {
+							return;
+						}
+
+						var commonRemarkValue = Ext.getCmp("commonMask_id")
+								.getValue();
+						var outcome = Ext.getCmp("processId").getValue();
+						var nextName = Ext.getCmp("processUserId").getValue();
+						var TrialResults = Ext.getCmp("trialresults_id")
+								.getValue();
+
+						Ext.Ajax.request({
+							url : '../workflow/submitForm_storage.html',
+							params : {
+								taskId : taskId,
+								comment : commonRemarkValue,
+								data : _gridData,
+								projectName : projectName,
+								taskName : taskName,
+								outcome : outcome,
+								nextName : nextName,
+								TrialResults : TrialResults
+							},
+							method : 'POST',
+							success : function(response) {
+								var result = Ext.decode(response.responseText);
+
+								if (result.success) {
+									Ext.Msg.alert("提示", "入库电子流提交成功",
+											forWardToNextPage);
+								} else {
+									Ext.Msg.alert("提示", "入库电子流提交失败");
+								}
+							},
+							failure : function() {
+								Ext.Msg.alert("提示", "入库电子流提交失败");
+							}
+						});
+					}
+				}, {
+					text : "取消",
+					handler : forWordPraPage
+				} ]
 	});
 
 	mainPanel.render("main_id");
 }
 
-function forWardToNextPage()
-{
-	window.location.href = ctxPath + "/background/workflow/submitTask.html?taskId="+taskId;
-}
-
 function initview() {
 	Ext.QuickTips.init();
 	Ext.form.Field.prototype.msgTarget = 'qtip';
+
+	var myMask = new Ext.LoadMask(Ext.getBody(), {
+		msg : "请稍候..."
+	});
+
+	Ext.Ajax.on("beforerequest", function() {
+		myMask.show();
+	});
+
+	Ext.Ajax.on("requestcomplete", function() {
+		myMask.hide();
+	});
+
+	Ext.Ajax.on("requestexception", function() {
+		myMask.hide();
+	});
 
 	mainView();
 

@@ -25,5 +25,5 @@ public interface BaseDao<T> {
 	public void delete(String id);
 	public void modify(T t);
 	public T getById(String id);
-	public void add(T t);
+	public int add(T t);
 }

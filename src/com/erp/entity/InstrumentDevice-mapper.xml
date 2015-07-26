@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="instrumentdevice">
+    <sql id="selectId">
+        id,
+        name,
+        specifications,
+        instrumentNumber,
+        assetNumber,
+        usePerson,
+        manufacturer,
+        instrumentType,
+        status,
+        measurementInfo,
+        price,
+        enableDate,
+        tagNumber,
+        verifyCycle,
+        verifyCycleUnit,
+        validDate,
+        equipmentPosition,
+        calibrationVerify,
+        bak
+    </sql>
+
+    <select id="query" resultType="InstrumentDevice" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from InstrumentDevice
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="InstrumentDevice" resultType="int">
+        select count(0) from InstrumentDevice
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="InstrumentDevice">
+        select * from InstrumentDevice where id=#{id}
+    </select>
+    <insert id="add" parameterType="InstrumentDevice">
+        insert into InstrumentDevice(
+        name,
+        specifications,
+        instrumentNumber,
+        assetNumber,
+        usePerson,
+        manufacturer,
+        instrumentType,
+        status,
+        measurementInfo,
+        price,
+        enableDate,
+        tagNumber,
+        verifyCycle,
+        verifyCycleUnit,
+        validDate,
+        equipmentPosition,
+        calibrationVerify,
+        bak )
+        values (
+        #{name},
+        #{specifications},
+        #{instrumentNumber},
+        #{assetNumber},
+        #{usePerson},
+        #{manufacturer},
+        #{instrumentType},
+        #{status},
+        #{measurementInfo},
+        #{price},
+        #{enableDate},
+        #{tagNumber},
+        #{verifyCycle},
+        #{verifyCycleUnit},
+        #{validDate},
+        #{equipmentPosition},
+        #{calibrationVerify},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="InstrumentDevice">
+        update InstrumentDevice
+        <set>
+            name=#{name},
+            specifications=#{specifications},
+            instrumentNumber=#{instrumentNumber},
+            assetNumber=#{assetNumber},
+            usePerson=#{usePerson},
+            manufacturer=#{manufacturer},
+            instrumentType=#{instrumentType},
+            status=#{status},
+            measurementInfo=#{measurementInfo},
+            price=#{price},
+            enableDate=#{enableDate},
+            tagNumber=#{tagNumber},
+            verifyCycle=#{verifyCycle},
+            verifyCycleUnit=#{verifyCycleUnit},
+            validDate=#{validDate},
+            equipmentPosition=#{equipmentPosition},
+            calibrationVerify=#{calibrationVerify},
+            bak=#{bak}
+        </set>
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </update>
+</mapper>

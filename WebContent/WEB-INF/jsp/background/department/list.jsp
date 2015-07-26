@@ -85,14 +85,6 @@ function userRole(dName){
   <td align="center">
   <!-- 这里的表单 name 必须是fenye -->
   	<div class="search_k" align="left">
-		<fieldset class="search">
-			<legend><img src="${pageContext.servletContext.contextPath }/images/search_btn.gif" align="middle"/>&nbsp;<span class="STYLE1" style="color: blue;">高级查找</span></legend>
-			<div class="search_content">
-				用户名：<input type="text" name="dName" value="${param.dName}" style="height: 20px"/>　　
-				<input type="submit" value="开始查询" class="input_btn_style1"/>&nbsp;&nbsp;
-				<input type="reset" value="重置" class="input_btn_style1"/>
-			</div>
-		</fieldset>
 	</div>
   </td>
   </tr>
@@ -107,6 +99,7 @@ function userRole(dName){
             </td>
  
             <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">部门名称</span></td>
+            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属角色</span></td>
             <td  height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
@@ -117,6 +110,7 @@ function userRole(dName){
             </td>
             
             <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/department/getById.html?dName=${key.dName}&&type=0">${key.dName}</a></span></td>
+            <td height="20" ><span class="STYLE1">${key.roleName }</span></td>
             <td height="20" ><span class="STYLE4">
              <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
              <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />

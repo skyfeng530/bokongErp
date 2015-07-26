@@ -29,11 +29,11 @@ function mainView() {
 	});
 
 	var mainPanel = new Ext.form.FormPanel({
-		id  : 'taskForm_id',
+		id : 'taskForm_id',
 		title : "项目申请",
-		autoHt : true,
+		autoHeight : true,
 		autoWidth : true,
-		labelWidth : 100,
+		labelWidth : 70,
 		labelAlign : "left",
 		style : 'margin-top:10px;',
 		buttonAlign : 'left',
@@ -45,11 +45,13 @@ function mainView() {
 		items : [ {
 			id : 'projectName_id',
 			name : "projectName_name",
+			labelStyle : "margin-left:20px;",
 			fieldLabel : "项目名称",
 			xtype : 'combo',
 			store : _projectStore,
 			allowBlank : false,
 			blankText : '不能为空',
+			triggerAction : 'all',
 			selectOnFocus : true,
 			forceSelection : true,
 			valueNotFoundText : '',
@@ -69,21 +71,39 @@ function mainView() {
 			id : 'projectNum_id',
 			name : "projectNum",
 			fieldLabel : "项目编号",
+			labelStyle : "margin-left:20px;",
 			xtype : 'combo',
 			emptyText : '请选择...',
 			mode : "local",
 			allowBlank : false,
 			selectOnFocus : true,
 			forceSelection : true,
+			triggerAction : 'all',
 			valueNotFoundText : '',
 			blankText : '不能为空',
 			valueField : 'taskNumber',
 			displayField : 'taskNumber',
 			store : _taskNumStore,
 		}, {
+			id : 'deviceType_id',
+			fieldLabel : "器件类型",
+			xtype : 'combo',
+			emptyText : '请选择...',
+			labelStyle : "margin-left:20px;",
+			mode : "local",
+			allowBlank : true,
+			selectOnFocus : true,
+			forceSelection : true,
+			triggerAction : 'all',
+			valueNotFoundText : '',
+			blankText : '不能为空',
+			valueField : 'taskNumber',
+			displayField : 'taskNumber'
+		},  {
 			id : 'remark_id',
 			xtype : "textarea",
 			name : "mask",
+			labelStyle : "margin-left:20px;",
 			height : 60,
 			allowBlank : false,
 			blankText : '不能为空',
@@ -94,11 +114,10 @@ function mainView() {
 					text : "提交",
 					handler : function() {
 
-						if(!Ext.getCmp("taskForm_id").getForm().isValid())
-						{
+						if (!Ext.getCmp("taskForm_id").getForm().isValid()) {
 							return;
 						}
-						
+
 						var _projectNameValue = Ext.getCmp("projectName_id")
 								.getValue();
 						var _taskNumValue = Ext.getCmp("projectNum_id")
@@ -145,6 +164,23 @@ function forWardToNextPage() {
 function initview() {
 	Ext.QuickTips.init();
 	Ext.form.Field.prototype.msgTarget = 'qtip';
+
+	var myMask = new Ext.LoadMask(Ext.getBody(), {
+		msg : "请稍候..."
+	});
+
+	Ext.Ajax.on("beforerequest", function() {
+		myMask.show();
+	});
+
+	Ext.Ajax.on("requestcomplete", function() {
+		myMask.hide();
+	});
+
+	Ext.Ajax.on("requestexception", function() {
+		myMask.hide();
+	});
+
 	mainView();
 
 };

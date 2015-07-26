@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fixedasset">
+    <sql id="selectId">
+        id,
+        name,
+        tagNumber,
+        specifications,
+        serialNumber,
+        status,
+        price,
+        enableDate,
+        responsiblePerson,
+        usePerson,
+        equipmentPosition,
+        assetClass,
+        vendorInfo,
+        remark
+    </sql>
+
+    <select id="query" resultType="FixedAsset" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from FixedAsset
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="FixedAsset" resultType="int">
+        select count(0) from FixedAsset
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="FixedAsset">
+        select * from FixedAsset where id=#{id}
+    </select>
+    <insert id="add" parameterType="FixedAsset">
+        insert into FixedAsset(
+        id,
+        name,
+        tagNumber,
+        specifications,
+        serialNumber,
+        status,
+        price,
+        enableDate,
+        responsiblePerson,
+        usePerson,
+        equipmentPosition,
+        assetClass,
+        vendorInfo,
+        remark )
+        values (
+        #{id},
+        #{name},
+        #{tagNumber},
+        #{specifications},
+        #{serialNumber},
+        #{status},
+        #{price},
+        #{enableDate},
+        #{responsiblePerson},
+        #{usePerson},
+        #{equipmentPosition},
+        #{assetClass},
+        #{vendorInfo},
+        #{remark})
+    </insert>
+    <update id="update" parameterType="FixedAsset">
+        update FixedAsset
+        <set>
+            name=#{name},
+            tagNumber=#{tagNumber},
+            specifications=#{specifications},
+            serialNumber=#{serialNumber},
+            status=#{status},
+            price=#{price},
+            enableDate=#{enableDate},
+            responsiblePerson=#{responsiblePerson},
+            usePerson=#{usePerson},
+            equipmentPosition=#{equipmentPosition},
+            assetClass=#{assetClass},
+            vendorInfo=#{vendorInfo},
+            remark=#{remark}
+        </set>
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </update>
+</mapper>

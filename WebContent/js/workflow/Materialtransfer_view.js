@@ -1,13 +1,16 @@
-function topView() {
+// 序号
+var mNumber = 0;
 
-	//序号
-	var mNumber = 0;
-	
+function topView() {
 	// create the Data Store
 	var store = new Ext.data.Store({
-		autoDestroy : true,
-		url : '',
-		autoload : false,
+		autoLoad : {
+			params : {
+				start : 0,
+				limit : 1
+			}
+		},
+		proxy : new Ext.data.PagingMemoryProxy(),
 		reader : new Ext.data.XmlReader({
 			record : 'total',
 			fields : [ {
@@ -29,15 +32,19 @@ function topView() {
 				name : 'totalNumber',
 				type : 'int'
 			}, {
+				name : 'TestRequirements',
+				type : 'string'
+			}, {
+				name : 'TestResult',
+				type : 'string'
+			}, {
+				name : 'testLevel',
+				type : 'string'
+			}, {
 				name : 'bak',
 				type : 'string'
 			} ]
-		}),
-
-		sortInfo : {
-			field : 'picid',
-			direction : 'ASC'
-		}
+		})
 	});
 
 	var sm = new Ext.grid.CheckboxSelectionModel();
@@ -45,62 +52,94 @@ function topView() {
 	var _gridPanel = {
 		id : '_gridPanel_id',
 		xtype : 'grid',
-		anchor : '104%',
-		style : 'margin-left:102px; margin-top:10px; margin-bottom:10px',
+		anchor : '105%',
+		autoWidth : true,
+		style : 'margin-left:82px; margin-top:10px; margin-bottom:10px',
 		store : store,
 		columns : [ sm, {
 			header : "序号",
-			width : 120,
+			align : 'center',
+			width : 82,
 			sortable : false,
 			dataIndex : 'materialNumber',
 			menuDisabled : true
 		}, {
+			header : "图库",
+			align : 'center',
+			width : 82,
+			sortable : false,
+			menuDisabled : true
+		}, {
+			header : "对应厂商名称",
+			align : 'center',
+			width : 82,
+			sortable : false,
+			menuDisabled : true
+		}, {
 			header : "图号",
-			width : 120,
+			width : 82,
+			align : 'center',
 			sortable : false,
 			dataIndex : 'idNumber',
 			menuDisabled : true
 		}, {
+			header : "子图号",
+			align : 'center',
+			width : 82,
+			sortable : false,
+			menuDisabled : true
+		}, {
 			header : "零件名称",
-			width : 120,
+			align : 'center',
+			width : 82,
 			sortable : false,
 			dataIndex : 'name',
 			menuDisabled : true
 		}, {
-			header : "类别",
-			width : 120,
+			header : '对应厂商编号',
+			align : 'center',
+			width : 82,
 			sortable : false,
-			dataIndex : 'materialType',
-			menuDisabled : true,
-			renderer : category_rendererFunc
+			menuDisabled : true
 		}, {
 			header : "零件编号",
-			width : 120,
+			align : 'center',
+			width : 82,
 			sortable : false,
 			dataIndex : 'codeName',
-			menuDisabled : true,
-			renderer : workinprocess_rendererFunc
+			menuDisabled : true
 		}, {
 			header : "数量",
-			width : 120,
+			align : 'center',
+			width : 82,
 			sortable : false,
 			dataIndex : 'totalNumber',
 			menuDisabled : true
 		}, {
 			header : "备注",
-			width : 120,
+			align : 'center',
+			width : 82,
 			sortable : false,
 			dataIndex : 'bak',
 			menuDisabled : true
 		}, {
 			header : "操作",
+			align : 'center',
 			text : '操作',
 			xtype : 'actioncolumn',
+			menuDisabled : true,
 			width : 50,
 			items : [ {
 				icon : '../../style/images/icon-delete.gif',
 				tooltip : '操作',
+				Align : 'center',
 				handler : function(grid, rowIndex, colIndex) {
+
+					if (mNumber == 0) {
+						return;
+					}
+
+					mNumber = mNmber - 1;
 					store.removeAt(rowIndex);
 				}
 			} ]
@@ -113,17 +152,17 @@ function topView() {
 		height : 300,
 		stripeRows : true,
 		frame : true,
-		iconCls : 'icon-grid',
-		tbar : [ {
-			text : '删除',
-			iconCls : 'silk-application-delete',
-			scope : this
-		}, '-' ],
-		bbar : new Ext.PagingToolbar({
-			pageSize : 10,
-			store : store,
-			emptyMsg : "无记录"
-		})
+		iconCls : 'icon-grid'
+//		tbar : [ {
+//			text : '删除',
+//			iconCls : 'silk-application-delete',
+//			scope : this
+//		}, '-' ],
+//		bbar : new Ext.PagingToolbar({
+//			pageSize : 1,
+//			store : store,
+//			emptyMsg : "无记录"
+//		})
 	};
 
 	var partTransfer = {
@@ -133,37 +172,48 @@ function topView() {
 		autoWidth : true,
 		layout : 'column',
 		items : [ {
-			columnWidth : .5,
+			columnWidth : .3,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 55,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
 				fieldLabel : '项目名称',
-				xtype : 'combo',
+				xtype : 'label',
 				anchor : '85%',
-				value : projectName
+				html : '<div style="padding-top:3px">' + projectName + '</div>'
 			} ]
 		}, {
-			columnWidth : .5,
+			columnWidth : .3,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 55,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
 				fieldLabel : '任务编号',
 				anchor : '85%',
-				xtype : 'combo',
-				value : taskName
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + taskName + '</div>'
+			} ]
+		}, {
+			columnWidth : .3,
+			layout : 'form',
+			labelWidth : 55,
+			labelAlign : "left",
+			baseCls : "x-plain",
+			labelAlign : "left",
+			items : [ {
+				fieldLabel : '器件类型',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">光学器件（测试数据）</div>'
 			} ]
 		}, {
 			clumnWidth : 1,
-			anchor : '85%',
-			colspan : 2,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 70,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
@@ -171,34 +221,39 @@ function topView() {
 		}, {
 			columnWidth : .5,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 80,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
+				id : 'gallery_id',
+				fieldLabel : '图库',
+				anchor : '85%',
+				xtype : 'combo',
+				allowBlank : false,
+				blankText : '不能为空',
+				enableKeyEvents : true
+			}, {
 				id : 'picid',
 				fieldLabel : '图号',
 				anchor : '85%',
-				xtype : 'textfield',
-				maxLength : 10,
+				xtype : 'combo',
 				allowBlank : false,
-				blankText : '不能为空'
+				blankText : '不能为空',
+				enableKeyEvents : true
 			}, {
-				id : 'componentType',
-				fieldLabel : '类别',
+				id : 'subpicid',
+				fieldLabel : '子图号',
 				anchor : '85%',
 				xtype : 'combo',
-				store : workflow.states.categoryStore,
-				emptyText : '请选择...',
-				mode : 'local',
-				valueField : 'value',
-				displayField : 'text',
-				selectOnFocus : true,
-				editable : false,
-				forceSelection : true,
-				valueNotFoundText : '',
 				allowBlank : false,
-				blankText : '不能为空'
+				blankText : '不能为空',
+				enableKeyEvents : true
+			}, {
+				id : 'factoryCode',
+				fieldLabel : '对应厂商编号',
+				anchor : '85%',
+				xtype : 'textfield'
 			}, {
 				id : 'total',
 				fieldLabel : '数量',
@@ -207,59 +262,89 @@ function topView() {
 				allowBlank : false,
 				blankText : '不能为空'
 			}, {
-				id : 'savePic_id',
-				fieldLabel : '上传图片',
+				id : 'add_batch_id',
+				fieldLabel : '批量输入功能',
 				anchor : '85%',
-				xtype : 'fileuploadfield',
-				allowBlank : true,
-				blankText : '不能为空',
-				emptyText : '请选择要上传的文件...',
-				buttonText : '',
-				buttonCfg : {
-					iconCls : 'upload-icon'
-				}
-			}
-			, {
+				xtype : 'panel',
+				layout : 'column',
+				items : [ {
+					columnWidth : .3,
+					layout : 'form',
+					labelWidth : 35,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						fieldLabel : '批号',
+						xtype : 'textfield',
+						width : 70
+					} ]
+				}, {
+					columnWidth : .35,
+					layout : 'form',
+					labelWidth : 60,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						fieldLabel : '起始序号',
+						xtype : 'numberfield',
+						width : 70
+					} ]
+				}, {
+					columnWidth : .35,
+					layout : 'form',
+					labelWidth : 60,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						fieldLabel : '结束序号',
+						xtype : 'numberfield',
+						width : 75
+					} ]
+				} ]
+			}, {
 				xtype : 'button',
 				text : '增加',
 				width : '80',
-				style : 'margin-left:104px;',
-				handler : function(){
-					addFormDataToGrid_handler(mNumber);
+				style : 'margin-left:84px;',
+				handler : function() {
+					mNumber = mNumber + 1;
+					addFormDataToGrid_handler();
 				}
 			} ]
 		}, {
 			columnWidth : .5,
 			layout : 'form',
-			labelWidth : 100,
+			labelWidth : 80,
 			labelAlign : "left",
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ {
+				id : 'factoryName',
+				fieldLabel : '对应厂商名称',
+				anchor : '85%',
+				xtype : 'textfield'
+			}, {
 				id : 'componentName',
 				fieldLabel : '零件名称',
+				anchor : '85%',
+				xtype : 'combo'
+			}, {
+				id : 'Drawingreq_id',
+				fieldLabel : '图纸要求',
+				anchor : '85%',
+				xtype : 'combo',
+				enableKeyEvents : true
+			}, {
+				id : 'componentNumber',
+				fieldLabel : '零件编号',
 				anchor : '85%',
 				xtype : 'textfield',
 				allowBlank : false,
 				blankText : '不能为空'
 			}, {
-				id : 'componentNumber',
-				fieldLabel : '零件编号',
-				anchor : '85%',
-				xtype : 'combo',
-				store : workflow.states.workInProcessStore,
-				emptyText : '请选择...',
-				mode : 'local',
-				valueField : 'value',
-				displayField : 'text',
-				selectOnFocus : true,
-				editable : false,
-				forceSelection : true,
-				valueNotFoundText : '',
-				allowBlank : false,
-				blankText : '不能为空'
-			}
-			, {
 				id : 'remark_id',
 				fieldLabel : '备注',
 				anchor : '85%',
@@ -278,80 +363,116 @@ function topView() {
 function mainView() {
 	var _topPanel = topView();
 
+	var _processInfoStore = loadProcessInfo(taskId);
+	var _processUser = loadProcessUser();
+	
+	var _flowCommonComp = getFlowCommonComp();
+
 	var mainPanel = new Ext.form.FormPanel({
 		id : 'taskForm_id',
 		title : "入库电子流处理",
-		height : 780,
-		width : 1200,
+		autoHeight : true,
+		autoWidth : true,
 		labelWidth : 100,
 		labelAlign : "left",
-		style : 'margin-top:10px;',
+		style : 'margin-top:1px;',
 		buttonAlign : 'left',
 		frame : true,
 		defaults : {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [ _topPanel, {
-			name : "operate",
-			fieldLabel : "选择您要的操作",
-			xtype : 'combo'
-		}, {
-			name : "operateUser",
-			fieldLabel : "处理人员",
-			xtype : 'combo'
-		}, {
-			name : "copyUser",
-			fieldLabel : "抄送人员",
-			xtype : 'combo'
-		}, {
-			xtype : "textarea",
-			name : "mask",
-			height : 50,
-			fieldLabel : "批注"
-		} ],
-		buttons : [ {
-			text : "提交",
-			handler : function() {
+		items : [
+				_topPanel,
+				_flowCommonComp],
+		buttons : [
+				{
+					text : "提交",
+					handler : function() {
 
-				Ext.Ajax.request({
-					url : '../workflow/submitForm_storage.html',
-					params : {
-						taskId : taskId,
-						comment : 'aaa'
-					},
-					method : 'POST',
-					success : function(response) {
-						var result = Ext.decode(response.responseText);
+						var _gridData = getGridData();
 
-						if (result.success) {
-							Ext.Msg.alert("提示", "提交成功", forWardToNextPage);
-						} else {
-							Ext.Msg.alert("提示", "提交失败");
+						// if (Ext.isEmpty(_gridData)) {
+						// Ext.Msg.alert("提示", "请先配置零件数据。");
+						// return;
+						// }
+
+						if (!Ext.getCmp("processId").isValid()) {
+							return;
 						}
-					},
-					failure : function() {
-						Ext.Msg.alert("提示", "提交失败");
-					}
-				});
 
-			}
-		}, {
-			text : "取消"
-		} ]
+						if (!Ext.getCmp("processUserId").isValid()) {
+							return;
+						}
+
+						if (!Ext.getCmp("commonMask_id").isValid()) {
+							return;
+						}
+
+						var commonRemarkValue = Ext.getCmp("commonMask_id")
+								.getValue();
+						var outcome = Ext.getCmp("processId").getValue();
+						var nextName = Ext.getCmp("processUserId").getValue();
+
+						Ext.Ajax.request({
+							url : '../workflow/submitForm_storage.html',
+							timeout : 300000,
+							params : {
+								taskId : taskId,
+								comment : commonRemarkValue,
+								data : _gridData,
+								projectName : projectName,
+								taskName : taskName,
+								outcome : outcome,
+								nextName : nextName
+							},
+							method : 'POST',
+							success : function(response) {
+								var result = Ext.decode(response.responseText);
+
+								if (result.success) {
+									Ext.Msg.alert("提示", "入库电子流提交成功",
+											forWardToNextPage);
+								} else {
+									Ext.Msg.alert("提示", "入库电子流提交失败");
+								}
+							},
+							failure : function() {
+								Ext.Msg.alert("提示", "入库电子流提交失败");
+							}
+						});
+
+					}
+				}, {
+					text : "取消",
+					handler : forWordPraPage
+				} ]
 	});
 
 	mainPanel.render("main_id");
 }
 
-function forWardToNextPage() {
-
-	window.location.href = "../workflow/submitTask.html?taskId=" + taskId;
-}
-
 function initview() {
+
 	Ext.QuickTips.init();
+
 	Ext.form.Field.prototype.msgTarget = 'qtip';
+
+	var myMask = new Ext.LoadMask(Ext.getBody(), {
+		msg : "请稍候..."
+	});
+
+	Ext.Ajax.on("beforerequest", function() {
+		myMask.show();
+	});
+
+	Ext.Ajax.on("requestcomplete", function() {
+		myMask.hide();
+	});
+
+	Ext.Ajax.on("requestexception", function() {
+		myMask.hide();
+	});
 
 	mainView();
 

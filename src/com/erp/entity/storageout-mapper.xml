@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busstorageout">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		pid,
+		projectName,
+	  	taskNumber,
+	  	startTime,
+	  	endTime,
+	  	info,
+	  	status
+	</sql>
+	<!--resultType="Leave" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="BusStorageOut" parameterType="BusStorageOut">
+		select
+		<include refid="selectId" />
+		from busProject
+		<where>
+			<if test="t.projectName != null and t.projectName != ''">
+				projectName like '%${t.projectName}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加设备 -->
+	<insert id="add" parameterType="BusStorageOut">
+		INSERT INTO busProject
+	        (projectName,
+	  		taskNumber,
+	  		startTime,
+	  		endTime,
+	  		info,
+	  		status)
+		 values 
+			(#{projectName},
+			#{taskNumber},
+			#{startTime},
+			#{endTime},
+			#{info},
+			#{status})
+	</insert>
+	<select id="getNewProject" resultType="long">
+		SELECT
+  		MAX(pid)
+		FROM busproject
+	</select>
+	<select id="getById" parameterType="String" resultType="BusStorageOut">
+		select
+		<include refid="selectId" />
+		from busProject where pid=#{pid}
+	</select>
+	<update id="update" parameterType="BusStorageOut">
+		update busProject
+		<set>
+			<if test="status != null and status != ''">
+				status=#{status},
+			</if>
+		</set>
+		where pid=#{pid}
+	</update>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from busProject
+		pid=#{pid}
+	</delete>
+</mapper>

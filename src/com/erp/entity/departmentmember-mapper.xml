@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="departmentmember">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		departId,
+		userName,
+		position,
+		resc_enable,
+		discribe
+	</sql>
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="DepartmentMember">
+		insert into departmentmember( 
+  		departId,
+		userName,
+		position,
+		resc_enable,
+		discribe )
+		values (
+		#{departId},
+		#{userName},
+		#{position}, 
+		#{resc_enable},  
+		#{discribe})
+	</insert>
+</mapper>

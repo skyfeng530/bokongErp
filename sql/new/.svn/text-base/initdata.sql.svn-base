@@ -1,0 +1,264 @@
+#为了把部门纳入角色，这里设计把10到99之间的用户Id留给部门id,也就是说，10至99之间的id值，需要在部门表中同有
+#用户id为10至99之间的值，禁止登录，因为是部门使用
+#增加用户时，因为是userId为主键，需要人为控制用户名称是否存在（冲突）
+insert  into `user`(`userName`,`userPassword`,`userRealname`,`userBirthday`,`userSex`,`idCard`,`userPhone`) values 
+('admin','admin','admin','1999-01-01','男','6111111111111111111','0253526'),
+('test','111111','张三思','1989-09-19','男','999999999999999999','15098888888'),
+('库管1号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('库管2号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('检验1号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('检验2号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('检验3号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('检验4号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产10号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产1号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产2号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产3号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产4号','test','张三','1999-01-01','男','7','7'),
+('生产5号','test','张三','1999-01-01','男','7','7'),
+('生产6号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产7号','test','张三','1999-01-01','男','7','7'),
+('生产8号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('生产9号','test','张三','1999-01-01','男','7','7'),
+('设计1号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('设计2号','test','张三','1999-01-01','男','7','7'),
+('设计3号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('采购1号','test','张三','1999-01-01','男','7','7'),
+('采购2号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('项目经理1号','test','张三','1999-01-01','男','7','7'),
+('项目经理2号','test','张三','1999-01-01','男','6111111111111111111','7'),
+('领导1号','test','张三','1999-01-01','男','7','7'),
+('领导2号','test','张三','1999-01-01','男','6111111111111111111','7');
+
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(1,'安全管理',1010,'sys_user','0','user',1,'用户、权限管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(2,'电子流管理',1010,'task','0','task',70,'任务管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(3,'库房管理',1010,'device','0','device',50,'库房管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(4,'统计分析',1010,'statistics','0','statistics',80,'统计分析');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(5,'日志管理',1010,'log','0','log',30,'日志管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(6,'登陆信息管理',1010,'login','0','login',20,'登陆信息管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(7,'项目管理',1010,'login','0','login',20,'项目管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(8,'生产管理',1010,'login','0','login',20,'生产管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(21,'部门管理',1,'sys_user_find','1','/background/department/query.html',2,'用户增加、权限……操作');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(22,'新增用户',21,'sys_user_addUI','2','/background/department/addUI.html',3,'新增用户');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(23,'用户管理',1,'sys_user','1','/background/user/query.html',4,'用户管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(24,'角色管理',1,'sys_role_find','1','/background/role/query.html',5,'角色增删改、权限设置');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(25,'资源管理',1,'sys_resc_find','1','/background/resources/query.html',7,'资源列表');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(26,'添加资源',25,'sys_resc_addUI','2','/background/resources/addUI.html',8,'添加资源');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(27,'新增角色',24,'sys_role_add','2','/background/role/addUI.html',5,'新增角色');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(28,'用户登录记录',6,'log_list','1','/background/userLoginList/query.html',21,'用户登录记录');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(40,'操作日志管理',5,'log_find','1','/background/log/query.html',31,'操作日志管理');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(41,'分配角色',21,'sys_user_fenpeirole','2','sys_user_fenpeirole',32,'分配角色');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(42,'分配权限',21,'sys_user_permissions','2','sys_user_permissions',33,'分配权限');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(43,'编辑用户',21,'sys_user_edit','2','/background/department/getById.html',34,'编辑');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(44,'删除用户',21,'sys_user_delete','2','/background/department/deleteById.html',36,'删除用户');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(45,'分配权限',21,'sys_role_permissions','2','sys_role_permissions',37,'分配权限');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(46,'显示详细信息',24,'sys_role_show','2','sys_role_show',39,'显示详细信息');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(47,'编辑角色',24,'sys_role_edit','2','/background/role/getById.html',40,'编辑角色');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(48,'删除角色',24,'sys_role_delete','2','/background/role/deleteById.html',41,'删除角色');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(49,'显示详细信息',25,'sys_res_show','2','sys_res_show',43,'显示详细信息');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(50,'编辑权限资源',25,'sys_res_edit','2','/background/resources/getById.html',44,'编辑权限资源');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(51,'删除权限资源',25,'sys_res_delete','2','/background/resources/deleteById.html',45,'删除权限资源');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(72,'部署任务',2,'task_deploy','1','/background/workflow/deployHome.html',71,'部署任务');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(73,'待我审批',2,'task_myself','1','/background/workflow/myTaskList.html',72,'我的任务');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(74,'填写申请',2,'task_apply','1','/background/workflow/formTemplateList.html',73,'填写申请任务');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(75,'申请查询',2,'task_manager','1','/background/workflow/myApplyList.html',74,'归档任务');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(76,'报表分析',4,'statistics_manager','1','/background/noDevelop.html',4,'设备列表');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(77,'机械器件',3,'statistics_manager','1','/background/noDevelop.html',4,'机械器件');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(78,'光学器件',3,'statistics_manager','1','/background/noDevelop.html',4,'光学器件');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(79,'工装设备',3,'statistics_manager','1','/background/noDevelop.html',4,'机械器件');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(80,'固定资产',3,'statistics_manager','1','/background/device/fixedasset/query.html',4,'固定资产');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(81,'仪表设备',3,'statistics_manager','1','/background/device/instrument/query.html',4,'仪表设备');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(82,'项目查询',7,'statistics_manager','1','/background/project/query.html',4,'项目查询');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(83,'生产查询',8,'statistics_manager','1','/background/noDevelop.html',4,'生产查询');
+#增加角色控制，可以和部门对应
+#一个用户可以属于多个部门，一个具体的用户，其角色权限=其所属所有部门权限+自己的权限（初始化资源显示)
+insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (1,'用户角色','ROLE_USER','用户角色',1);
+insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (3,'删除','ROLE_DELETE','删除',0);
+insert  into `role`(`id`,`name`,`roleKey`,`description`,`enable`) values (5,'55','55','55',1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('生产人员', 'ROLE_PRODUCT', '生产车间人员', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('库管人员', 'ROLE_PRODUCT', '库存管理', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('检验员', 'ROLE_PRODUCT', '产品检验', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('采购员', 'ROLE_PRODUCT', '物料采购', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('审批员', 'ROLE_PRODUCT', '流程审批', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('设计人员', 'ROLE_PRODUCT', '工艺设计', 1);
+INSERT INTO `role` (`name`,`roleKey`,`description`,`enable`) VALUES ('项目经理', 'ROLE_PRODUCT', '项目管理', 1);
+#初始化部门,其中类型DepartType, 1,表示实际上有这个部门，0表示虚拟团队
+insert into DepartmentInfo(DepartId, dName, DepartType, Discribe) values(1, '超级管理员', 0, '超级管理员');
+insert into DepartmentInfo(DepartId, dName, DepartType, Discribe) values(3, '测试帐户', 0, '测试帐户');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('生产部', 1, '车间生产产品');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('库管', 0, '仓库管理');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('检验部', 0, '产品检验');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('采购部', 0, '物料采购');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('CCB审批', 0, '裁决问题');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('设计部', 0, '工艺设计');
+insert into DepartmentInfo(dName, DepartType, Discribe) values('项目部', 0, '项目实施');
+
+
+insert  into `resources_role`(`resc_id`,`role_id`) values (1,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (1,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (2,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (2,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (3,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (3,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (4,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (4,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (5,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (5,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (6,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (6,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (7,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (7,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (8,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (8,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (21,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (21,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (22,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (22,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (23,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (23,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (24,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (24,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (25,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (25,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (26,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (26,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (27,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (27,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (28,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (28,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (40,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (41,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (42,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (43,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (44,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (45,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (46,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (47,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (48,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (49,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (50,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (51,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (72,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (72,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (73,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (73,5);
+INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (74, 1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (74,5);
+INSERT INTO `resources_role` (`resc_id`,`role_id`) VALUES (75, 1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (75,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (76,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (76,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (77,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (77,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (78,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (78,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (79,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (79,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (80,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (80,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (81,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (81,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (82,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (82,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (83,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (83,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (1010,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (1010,3);
+insert  into `resources_role`(`resc_id`,`role_id`) values (1010,5);
+
+insert  into `user_role`(`DepartId`,`role_id`) values (1,1);
+insert  into `user_role`(`DepartId`,`role_id`) values (3,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (10,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (11,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (12,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (13,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (14,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (15,5);
+insert  into `user_role`(`DepartId`,`role_id`) values (16,5);
+
+
+#SELECT userId FROM user WHERE userName LIKE '生产%' 
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(1, 'admin', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产2号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产3号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产4号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产5号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产6号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产7号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产8号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产9号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(10, '生产10号', 'normal', 1);
+#库管
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, '库管1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(11, '库管2号', 'normal', 1);
+#检验
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '检验1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '检验2号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(12, '检验3号', 'normal', 1);
+#采购
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, '采购1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(13, '采购2号', 'normal', 1);
+#领导
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, '领导1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(14, '领导2号', 'normal', 1);
+#设计
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, '设计1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, '设计2号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(15, '设计3号', 'normal', 1);
+#项目
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, '项目经理1号', 'normal', 1);
+insert into DepartmentMember(DepartId, userName,Position, resc_enable) values(16, '项目经理2号', 'normal', 1);
+
+#############################################################################
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('4','电阻','v0001','0','300','0','利尔达','13888888888','2015-06-13 16:50:41','2015-06-10 21:57:40','0','用于………………');
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('5','显示器','050120001150112','1','23','1','三星','13999999999','2015-03-13 12:57:37','2017-03-13 12:57:37','1','sdvsdvsdvds');
+insert into `device` (`id`, `deviceName`, `deviceVersion`, `deviceType`, `deviceCount`, `ischeckout`, `manufacturers`, `manufacturersPhone`, `productDate`, `outDate`, `deviceStatus`, `remark`) values('7','主板','v111110909','1','13','0','技嘉','02988888888','2015-03-13 12:57:37','2017-03-13 12:57:37','0','aaaaaaaaaaaaaaa');
+#############################################################################
+#项目表
+insert into projectinfo(ProjectName,TaskNumber, info) values('APS星敏感器','RW-G14005','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('APS星敏感器','RW-G1543','测试验');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划1','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划2','APS');
+insert into projectinfo(ProjectName,TaskNumber, info) values('虚拟云','计划3','APS');
+
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('量块','(125-500)mm 大8块','070311','陈生辉','-','哈尔滨量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('亚微米数显光栅测长仪','SKS50','080310','杜水生','02-090062','成都思凯','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('三点内径千分尺','(175-200/0.005)mm','S/N1580（005274）','陈生辉','-','日本三丰','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('读数显微镜','XGJ-4/03','12-3#','段战军','02-120081','孝感华中精密仪器有限公司','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('读数显微镜','XGJ-4/03','12-4#','秦星','02-120082','孝感华中精密仪器有限公司','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('平行光管','FPG-3A(80mm)','20150405','付西红','-','孝感华中精密仪器有限公司','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('平行光管','FPG-3A(80mm)','20150406','付西红','-','孝感华中精密仪器有限公司','B',2,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('扭矩扳手','(1-5)N·M','2242447','张建','-','丹纳赫工具（上海）有限公司','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('杠杆千分表','0-0.6/0.002)mm','NEG061','杜水生','-','日本三丰','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('外径千分尺','(20-50/0.01)mm','ZX02-029(O273)','杜水生','-','上海量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('外径千分尺','(0-25/0.01)mm','ZX02-017(C1727)','杜水生','-','哈尔滨量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('游标高度尺','(0-300/0.02)mm','ZX01-030(85378)','杜水生','-','上海量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('杠杆千分表','(0-0.14/0.001)mm','MXU427','杨宾宏','-','日本三丰','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('千分表','(0-1/0.001)mm','NFH337','陈生辉','-','日本三丰','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('百分表','(0-10/0.01)mm','ZX03-013(A486)','杜水生','-','桂林量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('千分表','(0-1/0.001)mm','NEB649','杜水生','-','日本三丰','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('外径千分尺','(0-25/0.01)mm','0773244','陈生辉','-','哈尔滨量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('外径千分尺','(150-175/0.01)mm','ZX02-022(772089)','仝宇高','-','哈尔滨量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('外径千分尺','(175-200/0.01)mm','ZX02-023(7112)','仝宇高','-','青海量刃具厂','B',1,0);
+insert  into instrumentDevice(name,specifications,instrumentNumber,usePerson,assetNumber,manufacturer,instrumentType,verifyCycle,verifyCycleUnit) values('数显卡尺','(0-200/0.01)mm','00858868','蔺明明','-','桂林广陆数字测控公司','B',1,0);
+
+
+
+insert  into fixedAsset(name,tagNumber,specifications,serialNumber,status,responsiblePerson,usePerson,equipmentPosition,assetClass, vendorInfo) values('数显卡尺','00858868','(0-200/0.01)mm','001', '完好','蔺明明', '黎声树','南昌市','家具','桂林广陆数字测控公司');
+
+insert into busproject(pid, projectName, projectDescribe) values(1, '长征5号','国家航天重点A级项目');
+insert into busproject(pid, projectName, projectDescribe) values(2, '嫦娥11号','国家航天重点项目');
+
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(1, 1, '705', '前仓镜头', 'C', '出样');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(2, 1, '705', '前仓镜头', 'Z', '终样');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(3, 2, '705', '前仓镜头', 'C', '出样');
+insert into busprojectproduct(ppid, projectId, productNo, productName, status, bak) values(4, 2, '705', '前仓镜头', 'Z', '终样');
+
+INSERT INTO devicetype(devid, devName, devNick, reserverd1, reserverd2) VALUES(1, '光学', '',  0, 0);
+INSERT INTO devicetype(devid, devName, devNick, reserverd1, reserverd2) VALUES(2, '机械', '',  0, 0);
+
+
+
+
+

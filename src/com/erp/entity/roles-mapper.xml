@@ -68,6 +68,13 @@
 		</set>
 		where id=#{id}
 	</update>
+	<select id="findbyDepartmentRole" parameterType="String" resultType="Roles">
+		select
+		<include refid="selectId" />
+		FROM role WHERE id IN (SELECT role_id FROM user_role
+		WHERE departid=(SELECT departid FROM departmentinfo WHERE dname = #{dName}))
+	</select>
+	
 	<select id="findbyUserRole" parameterType="String" resultType="Roles">
 		select
 		<include refid="selectId" />

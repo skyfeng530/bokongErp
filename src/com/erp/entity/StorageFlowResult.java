@@ -2,7 +2,7 @@ package com.erp.entity;
 
 //入库电子流第一步,清点录入
 public class StorageFlowResult {
-	private long flowId;				//流程ID
+	private Long flowId;				//流程ID
 	private String materialNumber;		//物料序号
 	private String projectName;		//工程名称
 	private String taskName;			//任务编号
@@ -31,21 +31,22 @@ public class StorageFlowResult {
 	private String transferTime;		//交接时间
 	private String TestRequirements;	// 图纸要求
 	private Integer testNumber;		// 实际检验数量
-	private Integer ValidNumber;		// 合格数量
+	private Integer validNumber;		// 合格数量
 	private String TestResult;			// 检验结果
 	private String TestPerson;			// 检验人员
 	private String TestTime;			// 检验时间
 	private String testLevel;			// 合格程度
 	private String TrialOrganization;	// 审理组织
+	private String trialNumber;			//审理单号
 	private String TrialResults;		// 审理结果
 	private String TrialPersonnel;		// 审理人员
 	private String callPerson;			// 召集人
 	private String TrialTime;			// 审理时间
 	private String bak;				//备注
-	public long getFlowId() {
+	public Long getFlowId() {
 		return flowId;
 	}
-	public void setFlowId(long flowId) {
+	public void setFlowId(Long flowId) {
 		this.flowId = flowId;
 	}
 	public String getMaterialNumber() {
@@ -217,11 +218,9 @@ public class StorageFlowResult {
 		this.testNumber = testNumber;
 	}
 	public Integer getValidNumber() {
-		return ValidNumber;
+		return validNumber;
 	}
-	public void setValidNumber(Integer validNumber) {
-		ValidNumber = validNumber;
-	}
+	
 	public String getTestResult() {
 		return TestResult;
 	}
@@ -282,7 +281,13 @@ public class StorageFlowResult {
 	public void setBak(String bak) {
 		this.bak = bak;
 	}
-	
-	
-	
+	public String getTrialNumber() {
+		return trialNumber;
+	}
+	public void setTrialNumber(String trialNumber) {
+		this.trialNumber = trialNumber;
+	}
+	public void setValidNumber(Integer validNumber) {
+		this.validNumber = validNumber;
+	}
 }
