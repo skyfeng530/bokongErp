@@ -261,13 +261,13 @@ function loadProcessUser() {
 	} ]);
 
 	var UserReader = new Ext.data.JsonReader({
-		root : "data",
+//		root : "data",
 	}, _User);
 
 	var _userStore = new Ext.data.Store({
 		autoLoad : true,
 		proxy : new Ext.data.HttpProxy({
-			url : '..//background/user/queryUserName.html',
+			url : '../user/queryUserName.html',
 			method : 'POST'
 		}),
 		reader : UserReader

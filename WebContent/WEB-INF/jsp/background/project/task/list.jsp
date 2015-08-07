@@ -9,7 +9,7 @@
 	href="${pageContext.servletContext.contextPath }/css/fenyecss.css" />
 </head>
 <body>
-<form id="fenye" name="fenye" action="${pageContext.servletContext.contextPath }/background/project/task/task/query.html" method="post">
+<form id="fenye" name="fenye" action="${pageContext.servletContext.contextPath }/background/project/task/query.html" method="post">
 <table width="100%">
   <tr>
     <td height="30" background="${pageContext.servletContext.contextPath }/images/tab_05.gif"><table width="100%">
@@ -46,7 +46,7 @@
                 <td width="60"><table width="90%">
                   <tr>
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
-                    <td class="STYLE1"><div align="center"><a href="${pageContext.servletContext.contextPath }/background/project/task/task/addUI.html">新增</a></div></td>
+                    <td class="STYLE1"><div align="center"><a href="${pageContext.servletContext.contextPath }/background/project/task/addUI.html">新增</a></div></td>
                   </tr>
                 </table></td>
               </tr>
@@ -79,6 +79,8 @@
             <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务编号</span></td>
             <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">总套数</span></td>
             <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务来源</span></td>
+            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">备注</span></td>
+			
             <td  height="22%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
@@ -88,11 +90,12 @@
               <input type="checkbox" name="check" value="${key.taskId}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/task/getById.html?id=${key.taskId}&&type=0">${key.pid}</a></span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/task/getById.html?id=${key.taskId}&&type=0">${key.ppid}</a></span></td>
             <td height="20" ><span class="STYLE1">${key.ppid}</span></td>
 			<td height="20" ><span class="STYLE1">${key.taskNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.totalSetNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.taskSource}</span></td>
+			<td height="20" ><span class="STYLE1">${key.bak}</span></td>
             <td height="20" ><span class="STYLE4">
             
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">

@@ -22,6 +22,13 @@
             </if>
         </where>
     </select>
+    
+        <select id="queryByProjectId" resultType="BusProjectProduct" parameterType="String">
+
+        select
+        <include refid="selectId" />
+        from BusProjectProduct where projectId=#{projectId}
+    </select>
 
     <!-- total count -->
     <select id="count" parameterType="BusProjectProduct" resultType="int">
@@ -67,4 +74,16 @@
             </if>
         </where>
     </update>
+    <delete id="deleteById" parameterType="String">
+     delete from BusProjectProduct where projectId =#{id}
+    </delete>
+    <insert id="addAll" parameterType="String">
+        insert into BusProjectProduct(
+        projectId,
+        productNo,
+        productName,
+        status,
+        bak )
+        select a.projectId,c.productNo,c.productName,c.status,c.bak from busprojectproductflow c left join busprojectproductprojectflow a on a.flowId=c.flowId where a.flowId = #{flowId}
+    </insert>
 </mapper>

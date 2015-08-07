@@ -23,7 +23,7 @@ public interface BaseDao<T> {
 	 */
 	public List<T> queryAll(T t);
 	public void delete(String id);
-	public void modify(T t);
+	public boolean modify(T t);
 	public T getById(String id);
 	public int add(T t);
 }

@@ -23,6 +23,7 @@ import com.erp.service.DepartmentMemberService;
 import com.erp.service.DepartmentService;
 import com.erp.service.RolesService;
 import com.erp.service.UserService;
+import com.erp.util.CiphertextUtil;
 import com.erp.util.Common;
 import com.erp.util.PageView;
 
@@ -85,6 +86,9 @@ public class UserController {
 	 */
 	@RequestMapping("add")
 	public String add(Model model, User user) {
+		String pwd = user.getUserPassword();
+		pwd = CiphertextUtil.passAlgorithmsCiphering(pwd, CiphertextUtil.MD5);
+		user.setUserPassword(pwd);
 		userService.add(user);
 		return "redirect:query.html";
 	}
@@ -125,12 +129,18 @@ public class UserController {
 		String userName =request.getParameter("userName");  
 		byte b[] =userName.getBytes("ISO-8859-1");  
 		userName = new String(b, "utf-8");
-		//int type = Integer.parseInt(request.getParameter("type"));
+		int type = Integer.parseInt(request.getParameter("type"));
 		User user = userService.getByUsername(userName);
 		model.addAttribute("user", user);
 		List<Roles> roles=rolesService.findAll();
 		model.addAttribute("roles", roles);
-		return "/background/user/edit";
+		if (type == 1) {//编辑用户
+			return "/background/user/edit";
+		} else if(type == 0){//显示个人信息
+			return "/background/user/show";
+		}else{
+			return "/background/user/changePwd";
+		}
 	}
 
 	/**
@@ -141,10 +151,54 @@ public class UserController {
 	 */
 	@RequestMapping("update")
 	public String update(Model model, User user,UserRoles userRoles) {
+		String pwd = user.getUserPassword();
+		pwd = CiphertextUtil.passAlgorithmsCiphering(pwd, CiphertextUtil.MD5);
+		user.setUserPassword(pwd);
 		userService.modify(user);
 		if(userRoles.getRoleId()!=null)
 		rolesService.saveUserRole(userRoles);
 		return "redirect:query.html";
+	}
+	
+	/**
+	 * 改密码
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("changePwd")
+	@ResponseBody
+	public String changePwd(Model model, HttpServletRequest request) {
+		String errorCode = "1000";
+		String userName = request.getParameter("userName");
+		String oldpwd = request.getParameter("userPassword");
+		oldpwd = CiphertextUtil.passAlgorithmsCiphering(oldpwd, CiphertextUtil.MD5);
+		String newpwd1 = request.getParameter("newPwd1");
+		newpwd1 = CiphertextUtil.passAlgorithmsCiphering(newpwd1, CiphertextUtil.MD5);
+		String newpwd2 = request.getParameter("newPwd2");
+		newpwd2 = CiphertextUtil.passAlgorithmsCiphering(newpwd2, CiphertextUtil.MD5);
+		if (userName != null && oldpwd != null && newpwd1 != null && newpwd2 != null) {
+			if (!newpwd1.equals(newpwd2)) {
+				return "1001";
+			}
+			User user = userService.getByUsername(userName);
+			if (!oldpwd.equals(user.getUserPassword())) {
+				return "1001";
+			}
+			try {
+				user.setUserPassword(newpwd1);
+				boolean result = userService.modify(user);
+				if (!result) {
+					errorCode="1001";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorCode="1001";
+			}
+		}else{
+			errorCode = "1001";
+		}
+		return errorCode;
 	}
 
 	/**
@@ -224,6 +278,22 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			errorCode="1001";
+		}
+		return errorCode;
+	}
+	
+	/**
+	 * 检查用户名存在性
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("checkUserName")
+	public String checkUserName(Model model, HttpServletRequest request){
+		String errorCode = "1000";
+		String userName = request.getParameter("userName");
+		User user = userService.getByUsername(userName);
+		if (null != user) {
 			errorCode="1001";
 		}
 		return errorCode;

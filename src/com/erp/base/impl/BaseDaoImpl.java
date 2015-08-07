@@ -39,8 +39,9 @@ public class BaseDaoImpl<T> extends SqlSessionDaoSupport{
 	public T getById(String id) {
 		return (T)getSqlSession().selectOne(this.getClassName()+".getById",id);
 	}
-	public void modify(T t) {
-		getSqlSession().update(this.getClassName()+".update",t);
+	public boolean modify(T t) {
+		int res = getSqlSession().update(this.getClassName()+".update",t);
+		return res > 0 ? true : false;
 	}
 	public List<T> query(PageView pageView,T t) {
 		Map<Object, Object> map = new HashMap<Object, Object>();

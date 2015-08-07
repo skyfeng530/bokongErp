@@ -4,9 +4,7 @@
 <mapper namespace="busprojectfigureflow">
     <sql id="selectId">
         flowId,
-        ppid,
-        figureLibName,
-        figureID,
+        figureNo,
         figureName,
         figureRequest,
         type,
@@ -20,9 +18,13 @@
         <include refid="selectId" />
         from BusProjectFigureFlow
     </select>
+    
+    <select id="queryByPage" resultType="List" parameterType="java.util.HashMap">
+		select * from busprojectfigureflow limit #{limit} offset #{offset}
+    </select>
 
     <!-- total count -->
-    <select id="count" parameterType="BusProjectFigureFlow" resultType="int">
+    <select id="count" resultType="int">
         select count(0) from BusProjectFigureFlow
     </select>
 
@@ -32,9 +34,7 @@
     <insert id="add" parameterType="BusProjectFigureFlow">
         insert into BusProjectFigureFlow(
         flowId,
-        ppid,
-        figureLibName,
-        figureID,
+        figureNo,
         figureName,
         figureRequest,
         type,
@@ -42,9 +42,7 @@
         describe )
         values (
         #{flowId},
-        #{ppid},
-        #{figureLibName},
-        #{figureID},
+        #{figureNo},
         #{figureName},
         #{figureRequest},
         #{type},
@@ -55,9 +53,7 @@
         update BusProjectFigureFlow
         <set>
             flowId=#{flowId},
-            ppid=#{ppid},
-            figureLibName=#{figureLibName},
-            figureID=#{figureID},
+            figureNo=#{figureNo},
             figureName=#{figureName},
             figureRequest=#{figureRequest},
             type=#{type},

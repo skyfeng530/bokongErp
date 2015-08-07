@@ -22,6 +22,7 @@ import com.erp.entity.User;
 import com.erp.entity.UserLoginList;
 import com.erp.service.ResourcesService;
 import com.erp.service.UserLoginListService;
+import com.erp.util.CiphertextUtil;
 import com.erp.util.Common;
 import com.erp.util.Log4jUtils;
 import com.erp.util.Log4jUtils.LogLevel;
@@ -68,6 +69,7 @@ public class BackgroundController
 				return "/background/framework/login";
 			}
 			// 验证用户账号与密码是否正确
+			password = CiphertextUtil.passAlgorithmsCiphering(password, CiphertextUtil.MD5);
 			User users = this.userDao.querySingleUser(username);
 			if (users == null || !users.getUserPassword().equals(password)) {
 				request.setAttribute("error", "用户或密码不正确！");

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bustaskproductflow">
+    <sql id="selectId">
+        flowId,
+        ppid
+    </sql>
+
+    <select id="query" resultType="BusTaskProductFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusTaskProductFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusTaskProductFlow" resultType="int">
+        select count(0) from BusTaskProductFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusTaskProductFlow">
+        select * from BusTaskProductFlow where id=#{id}
+    </select>
+    <insert id="add" parameterType="BusTaskProductFlow">
+        insert into BusTaskProductFlow(
+        flowId,
+        ppid )
+        values (
+        #{flowId},
+        #{ppid})
+    </insert>
+    <update id="update" parameterType="BusTaskProductFlow">
+        update BusTaskProductFlow
+        <set>
+            flowId=#{flowId},
+            ppid=#{ppid}
+        </set>
+    </update>
+</mapper>

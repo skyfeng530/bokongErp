@@ -152,12 +152,6 @@ body {
 														</table>
 													</td>
 												</tr>
-												<tr>
-													<td height="9"
-														style="line-height: 9px; background: #0a5c8e;">
-														&nbsp;
-													</td>
-												</tr>
 											</table>
 										</td>
 									</tr>

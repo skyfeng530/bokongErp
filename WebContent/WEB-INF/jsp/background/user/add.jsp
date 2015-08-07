@@ -4,13 +4,87 @@
 <html>
 <head>
 <%@include file="../../common/common-css.jsp"%>
+<script src="${pageContext.servletContext.contextPath }/js/jquery_1_7_2_min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  function validateUserName(uname){
+	  $.ajax({
+    		async:false, //请勿改成异步，下面有些程序依赖此请数据
+    		type : "POST",
+    		data:{userName:uname},
+    		url: "${pageContext.servletContext.contextPath }/background/user/checkUserName.html",
+    		dataType:'json',
+    		success: function(json){
+    			if(json == "1000"){
+    				$("span[name='uname_tips']").html("");
+            	}else if(json == "1001"){
+            		$("span[name='uname_tips']").html("用户名已存在！");
+              };
+     		}
+    	});
+  }
+  function validate(){
+	  var uname = $('input[name="userName"]').val();
+	  var upwd = $('input[name="userPassword"]').val();
+	  var userRealname = $('input[name="userRealname"]').val();
+	  var userBirthday = $('input[name="userBirthday"]').val();
+	  var idCard = $('input[name="idCard"]').val();
+	  var userPhone = $('input[name="userPhone"]').val();
+	  var uname_tips = $('span[name="uname_tips"]').val();
+	  if(uname_tips != ""){
+		  alert("用户名已存在！");
+		  return false;
+	  }
+	  if(uname!=""&&upwd!=""&&userRealname!=""&&userBirthday&&idCard!=""&&userPhone){
+		  if(!validateDate(userBirthday)){
+			  alert("生日格式错误！");
+			  return false;
+		  }
+		  if(!isPhone(userPhone)){
+			  alert("电话号码格式错误！");
+			  return false;
+		  }
+		  if(!isCardNo(idCard)){
+			  alert("身份证号码错误！");
+			  return false;
+		  }
+		  return true;
+	  }else{
+		  alert("参数不能为空！");
+		  return false;
+	  }
+  }
+  function validateDate(val){//验证时间2010-10-10
+	  var patten = /^\d{4}[\/-]\d{1,2}[\/-]\d{1,2}$/;  
+	  return patten.test(val);  
+  }
+   function isPhone(aPhone) {
+       var bValidate = RegExp(/^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/).test(aPhone);
+       if (bValidate) {
+           return true;
+       }
+       else{
+           return false;
+       }
+   }
+   function isCardNo(card)
+   {  
+      // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X  
+      var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+      if(reg.test(card) === false)  
+      {  
+          return  false;  
+      }else{
+    	  return true;
+      }
+   }
+  </script>
 </head>
 
 <body>
 	<div style="height: 100%;overflow-y: auto;">
 		<br /> <br />
 		<form
-			action="${pageContext.servletContext.contextPath }/background/user/add.html"
+			action="${pageContext.servletContext.contextPath }/background/user/add.html" onsubmit="return validate()"
 			method="post">
 			<table class="ttab" height="100" width="85%" border="0"
 				cellpadding="0" cellspacing="1" align="center">
@@ -26,8 +100,8 @@
 						<div align="right" class="STYLE1">用户名：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userName" />
-							*用户登录的名称
+							<input style="height: 20px;width: 200px" name="userName" onblur="validateUserName(this.value)"/>
+							<span name="uname_tips" style="color: red;"></span>
 						</div>
 					</td>
 					<td height="30" width="10%">
@@ -58,7 +132,8 @@
 						<div align="right" class="STYLE1">性别：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userSex" />
+							<input type="radio" name="userSex" value="男" checked="checked"/>：男
+							<input type="radio" name="userSex" value="女"/>：女
 						</div>
 					</td>
 					<td height="30" width="10%">

@@ -40,7 +40,6 @@
         <td><table class="ttab" width="100%" cellspacing="1" onMouseOver="changeto()"  onmouseout="changeback()">
           <tr>
  			<td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">登陆ID</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户ID</span></td>
             <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
             <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">登陆时间</span></td>
             <td width="15%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">登陆IP</td>
@@ -49,7 +48,6 @@
           <c:forEach var="loginList" items="${pageView.records}">
           <tr>
             <td height="20" ><span class="STYLE1">${loginList.loginId}</span></td>
-            <td height="20" ><span class="STYLE1">${loginList.userId}</span></td>
             <td height="20" ><span class="STYLE1">${loginList.userName}</span></td>
             <td height="20" ><span class="STYLE1">
             <fmt:formatDate value="${loginList.loginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -20,7 +20,7 @@
 				<td height="30"
 					 colspan="2">
 					<div align="center">
-					<font color="blue" size="6" ><b>添加资源</b></font>
+					<font color="blue" size="6" ><b>查看资源</b></font>
 					</div>
 				</td>
 			</tr>
@@ -118,7 +118,6 @@
 				<tr>
 					<td colspan="2" style="padding: 10px">
 						<div align="center">
-			 				<input type="submit" value="　保　存　" class="input_btn_style1"/>　　　　
 			 				<input id="backBt" type="button" value="　返　回　" class="input_btn_style1" onclick="javascript:window.location.href='javascript:history.go(-1)'"/>
 		 				</div>
 					</td>

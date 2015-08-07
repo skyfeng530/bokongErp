@@ -24,8 +24,8 @@ public class BusProjectProductServiceImpl implements BusProjectProductService {
     }
 
     @Override
-    public void add(BusProjectProduct busProjectProduct) {
-        busProjectProductDao.add(busProjectProduct);
+    public int add(BusProjectProduct busProjectProduct) {
+        return busProjectProductDao.add(busProjectProduct);
     }
 
     @Override
@@ -45,4 +45,15 @@ public class BusProjectProductServiceImpl implements BusProjectProductService {
         return busProjectProductDao.getById(id);
     }
 
+    @Override
+    public List<BusProjectProduct> queryByProjectId(BusProjectProduct busProjectProduct)
+    {
+    	return busProjectProductDao.queryByProjectId(busProjectProduct);
+    }
+
+	@Override
+	public int addAll(String flowId) {
+		// TODO Auto-generated method stub
+		return busProjectProductDao.addAll(flowId);
+	}
 }

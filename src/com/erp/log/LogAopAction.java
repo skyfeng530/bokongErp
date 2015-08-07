@@ -44,7 +44,7 @@ public class LogAopAction {
 			user = Common.getAuthenticatedUsername();
 			// System.out.println("Username:" +user);
 		} catch (Throwable e) {
-			// e.printStackTrace();
+		    e.printStackTrace();
 		}
 		String name = null;
 		// 操作范围

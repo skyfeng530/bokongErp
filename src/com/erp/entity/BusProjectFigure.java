@@ -1,77 +1,64 @@
 package com.erp.entity;
 
-import java.io.Serializable;
-
 @SuppressWarnings("serial")
-public class BusProjectFigure implements Serializable {
-	  private Integer pfid;
-	  private String projectName;
-	  private String taskName;
-	  private Integer materialType;
-	  private String materialNumber;
-	  private String subTypeNumber;
-	  private String pfName;
-	  private String testRequirements;
-	  private Integer status;
-	  private String bak;
-	public Integer getPfid() {
-		return pfid;
-	}
-	public void setPfid(Integer pfid) {
-		this.pfid = pfid;
-	}
-	public String getProjectName() {
-		return projectName;
-	}
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-	public String getTaskName() {
-		return taskName;
-	}
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-	public Integer getMaterialType() {
-		return materialType;
-	}
-	public void setMaterialType(Integer materialType) {
-		this.materialType = materialType;
-	}
-	public String getMaterialNumber() {
-		return materialNumber;
-	}
-	public void setMaterialNumber(String materialNumber) {
-		this.materialNumber = materialNumber;
-	}
-	public String getSubTypeNumber() {
-		return subTypeNumber;
-	}
-	public void setSubTypeNumber(String subTypeNumber) {
-		this.subTypeNumber = subTypeNumber;
-	}
-	public String getPfName() {
-		return pfName;
-	}
-	public void setPfName(String pfName) {
-		this.pfName = pfName;
-	}
-	public String getTestRequirements() {
-		return testRequirements;
-	}
-	public void setTestRequirements(String testRequirements) {
-		this.testRequirements = testRequirements;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	public String getBak() {
-		return bak;
-	}
-	public void setBak(String bak) {
-		this.bak = bak;
-	}
+public class BusProjectFigure implements java.io.Serializable {
+    private int pfid;
+    private int ppid;
+    private String figureNo;
+    private String figureName;
+    private String figureRequest;
+    private int type;
+    private int batchNum;
+    private String describe;
+    public BusProjectFigure() {
+    }
+    public int getPfid() {
+        return pfid;
+    }
+    public void setPfid(int pfid) {
+        this.pfid =pfid;
+    }
+    public int getPpid() {
+        return ppid;
+    }
+    public void setPpid(int ppid) {
+        this.ppid =ppid;
+    }
+    public String getFigureNo() {
+        return figureNo;
+    }
+    public void setFigureNo(String figureNo) {
+        this.figureNo =figureNo;
+    }
+    public String getFigureName() {
+        return figureName;
+    }
+    public void setFigureName(String figureName) {
+        this.figureName =figureName;
+    }
+    public String getFigureRequest() {
+        return figureRequest;
+    }
+    public void setFigureRequest(String figureRequest) {
+        this.figureRequest =figureRequest;
+    }
+    public int getType() {
+        return type;
+    }
+    public void setType(int type) {
+        this.type =type;
+    }
+    public int getBatchNum() {
+        return batchNum;
+    }
+    public void setBatchNum(int batchNum) {
+        this.batchNum =batchNum;
+    }
+    public String getDescribe() {
+        return describe;
+    }
+    public void setDescribe(String describe) {
+        this.describe =describe;
+    }
 }
+

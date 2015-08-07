@@ -45,7 +45,7 @@ else
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="171" id=frmTitle noWrap name="fmTitle" align="center" valign="top">
-	<iframe name="I1" height="100%" width="171" src="${pageContext.servletContext.contextPath }/background/left.html" border="0" frameborder="0" scrolling="no">
+	<iframe name="I1" height="100%" width="175" src="${pageContext.servletContext.contextPath }/background/left.html" border="0" frameborder="0" scrolling="auto">
 	浏览器不支持嵌入式框架，或被配置为不显示嵌入式框架。</iframe>	</td>
     <td width="9" valign="middle"  bgcolor="#0a5c8e" onclick="switchSysBar()" style="cursor: pointer;"><SPAN class=navPoint 
 id=switchPoint title=关闭/打开左栏><img src="${pageContext.servletContext.contextPath }/images/main_41.gif" name="img1" width=9 height=52 id=img1></SPAN></td>

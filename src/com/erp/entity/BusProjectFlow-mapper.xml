@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectflow">
+    <sql id="selectId">
+        flowId,
+        projectName,
+        projectDescribe
+    </sql>
+
+    <select id="query" resultType="BusProjectFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProjectFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProjectFlow" resultType="int">
+        select count(0) from BusProjectFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProjectFlow">
+        select * from BusProjectFlow where flowId=#{id}
+    </select>
+    <select id="getByName" parameterType="BusProjectFlow" resultType="int">
+        select count(*) from BusProjectFlow where projectName=#{projectName}
+    </select>
+    <insert id="add" parameterType="BusProjectFlow">
+        insert into BusProjectFlow(
+        flowId,
+        projectName,
+        projectDescribe )
+        values (
+        #{flowId},
+        #{projectName},
+        #{projectDescribe})
+    </insert>
+    <update id="update" parameterType="BusProjectFlow">
+        update BusProjectFlow
+        <set>
+            flowId=#{flowId},
+            projectName=#{projectName},
+            projectDescribe=#{projectDescribe}
+        </set>
+    </update>
+</mapper>

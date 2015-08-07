@@ -1,10 +1,7 @@
 package com.erp.service;
 
 
-import java.util.List;
-
 import com.erp.entity.InstrumentDevice;
-
 import com.erp.util.PageView;
 
 public interface InstrumentDeviceService{

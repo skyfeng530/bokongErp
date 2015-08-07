@@ -7,7 +7,6 @@ import java.util.List;
  * //分页封装函数
  * @param <T>
  */
-@SuppressWarnings("unchecked")
 public class PageView {
 	/**
 	 * 分页数据

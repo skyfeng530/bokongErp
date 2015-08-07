@@ -48,6 +48,17 @@ function MM_swapImage() { //v3.0
   var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
    if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
 }
+function changepwd(){
+	 var url = "${pageContext.servletContext.contextPath }/background/user/getById.html?userName=${userSession.userName}&&type=2";
+	 var h_sp1 = 420;
+	 var w_sp1 = 600;
+	//兼容IE，firefox,google.模态窗口居中问题
+	 var iTop2 = (window.screen.availHeight - 20 - h_sp1) / 2;
+	 var iLeft2 = (window.screen.availWidth - 10 - w_sp1) / 2;
+	 var params = 'menubar:no;dialogHeight=' + h_sp1 + 'px;dialogWidth=' + w_sp1 + 'px;dialogLeft=' + iLeft2 + 'px;dialogTop=' + iTop2 + 'px;resizable=yes;scrollbars=0;resizeable=0;center=yes;location:no;status:no;scroll:no'
+	 window.showModalDialog(url, window, params);
+	 //location.href=url;
+}
 //-->
 </script>
 </head>
@@ -66,8 +77,8 @@ function MM_swapImage() { //v3.0
             <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="61" height="29" background="${pageContext.servletContext.contextPath }/images/main_06.gif">&nbsp;</td>
-                <td width="72"><a href="#"><img src="${pageContext.servletContext.contextPath }/images/main_07.gif" name="Image1" width="72" height="29" border="0" id="Image1" onmouseover="MM_swapImage('Image1','','${pageContext.servletContext.contextPath }/images/main_07_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>
-                <td width="72"><a href="#"><img src="${pageContext.servletContext.contextPath }/images/main_08.gif" name="Image2" width="72" height="29" border="0" id="Image2" onmouseover="MM_swapImage('Image2','','${pageContext.servletContext.contextPath }/images/main_08_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>
+                <td width="72"><a href="javascript:void(0);" onclick="changepwd()"><img src="${pageContext.servletContext.contextPath }/images/main_07.gif" name="Image1" width="72" height="29" border="0" id="Image1" onmouseover="MM_swapImage('Image1','','${pageContext.servletContext.contextPath }/images/main_07_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>
+                <td width="72"><a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userName=${userSession.userName}&&type=0" target="main"><img src="${pageContext.servletContext.contextPath }/images/main_08.gif" name="Image2" width="72" height="29" border="0" id="Image2" onmouseover="MM_swapImage('Image2','','${pageContext.servletContext.contextPath }/images/main_08_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>
                 <td width="292" background="${pageContext.servletContext.contextPath }/images/main_09.gif">&nbsp;</td>
                 <td width="40"><a href="${pageContext.servletContext.contextPath }/background/tab.html" target="main"><img src="${pageContext.servletContext.contextPath }/images/main_10.gif" name="Image3" width="40" height="29" border="0" id="Image3" onmouseover="MM_swapImage('Image3','','${pageContext.servletContext.contextPath }/images/main_10_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>
                 <td width="44"><a href="javascript:history.go(-1);"><img src="${pageContext.servletContext.contextPath }/images/main_11.gif" name="Image4" width="44" height="29" border="0" id="Image4" onmouseover="MM_swapImage('Image4','','${pageContext.servletContext.contextPath }/images/main_11_1.gif',1)" onmouseout="MM_swapImgRestore()" /></a></td>

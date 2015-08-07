@@ -33,7 +33,7 @@
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input type="radio" name="departType" value="0" <c:if test="${department.departType eq 0}">checked="checked"</c:if>/>：虚拟部门
-							<input type="radio" name="departType" value="1" <c:if test="${department.departType eq 1}">checked="checked"</c:if>/>：真是部门
+							<input type="radio" name="departType" value="1" <c:if test="${department.departType eq 1}">checked="checked"</c:if>/>：真实部门
 						</div></td>
 				</tr>
 				<tr>

@@ -4,10 +4,7 @@
 <mapper namespace="bustaskflow">
     <sql id="selectId">
         flowId,
-        taskId,
         taskNo,
-        pid,
-        ppid,
         totalSetNo,
         taskSource,
         bak
@@ -18,48 +15,23 @@
         select
         <include refid="selectId" />
         from BusTaskFlow
-        <where>
-            <if test="t.taskId != null and t.taskId != ''">
-                taskId=#{taskId}
-            </if>
-            <if test="t.flowId != null and t.flowId != ''">
-                flowId=#{flowId}
-            </if>
-        </where>
     </select>
 
     <!-- total count -->
     <select id="count" parameterType="BusTaskFlow" resultType="int">
         select count(0) from BusTaskFlow
-        <where>
-            <if test="t.taskId != null and t.taskId != ''">
-                taskId=#{taskId}
-            </if>
-            <if test="t.flowId != null and t.flowId != ''">
-                flowId=#{flowId}
-            </if>
-        </where>
     </select>
 
-    <select id="getById" parameterType="String" resultType="BusTaskFlow">
-        select * from BusTaskFlow where flowId=#{id}
-    </select>
     <insert id="add" parameterType="BusTaskFlow">
         insert into BusTaskFlow(
         flowId,
-        taskId,
         taskNo,
-        pid,
-        ppid,
         totalSetNo,
         taskSource,
         bak )
         values (
         #{flowId},
-        #{taskId},
         #{taskNo},
-        #{pid},
-        #{ppid},
         #{totalSetNo},
         #{taskSource},
         #{bak})
@@ -67,20 +39,11 @@
     <update id="update" parameterType="BusTaskFlow">
         update BusTaskFlow
         <set>
+            flowId=#{flowId},
             taskNo=#{taskNo},
-            pid=#{pid},
-            ppid=#{ppid},
             totalSetNo=#{totalSetNo},
             taskSource=#{taskSource},
             bak=#{bak}
         </set>
-        <where>
-            <if test="t.taskId != null and t.taskId != ''">
-                taskId=#{taskId}
-            </if>
-            <if test="t.flowId != null and t.flowId != ''">
-                flowId=#{flowId}
-            </if>
-        </where>
     </update>
 </mapper>

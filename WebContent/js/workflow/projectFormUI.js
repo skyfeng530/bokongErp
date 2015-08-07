@@ -11,35 +11,23 @@ function topView() {
 		reader : new Ext.data.XmlReader({
 			record : 'total',
 			fields : [ {
-				name : 'materialNumber',
+				name : 'projectName',
 				type : 'string'
 			}, {
-				name : 'idNumber',
+				name : 'productName',
+				type : 'string'
+			}, {
+				name : 'pictureId',
+				type : 'string'
+			}, {
+				name : 'pictureName',
+				type : 'string'
+			}, {
+				name : 'pictruerequire',
+				type : 'string'
+			}, {
+				name : 'total',
 				type : 'int'
-			}, {
-				name : 'name',
-				type : 'string'
-			}, {
-				name : 'materialType',
-				type : 'int'
-			}, {
-				name : 'codeName',
-				type : 'string'
-			}, {
-				name : 'totalNumber',
-				type : 'int'
-			}, {
-				name : 'TestRequirements',
-				type : 'string'
-			}, {
-				name : 'TestResult',
-				type : 'string'
-			}, {
-				name : 'testLevel',
-				type : 'string'
-			}, {
-				name : 'bak',
-				type : 'string'
 			} ]
 		})
 	});
@@ -56,44 +44,44 @@ function topView() {
 		columns : [ sm, {
 			header : "项目名称",
 			align : 'center',
-			width : 125,
+			width : 130,
+			dataIndex : 'projectName',
 			sortable : false,
 			menuDisabled : true
 		}, {
 			header : "产品名称",
 			align : 'center',
-			width : 125,
+			width : 130,
 			sortable : false,
-			menuDisabled : true
-		}, {
-			header : "图库名称",
-			align : 'center',
-			width : 125,
-			sortable : false,
+			dataIndex : 'productName',
 			menuDisabled : true
 		}, {
 			header : "图ID",
-			width : 125,
+			width : 130,
 			align : 'center',
 			sortable : false,
+			dataIndex : 'pictureId',
 			menuDisabled : true
 		}, {
 			header : "图名称",
 			align : 'center',
-			width : 125,
+			width : 130,
 			sortable : false,
+			dataIndex : 'pictureName',
 			menuDisabled : true
 		}, {
 			header : "图纸要求",
 			align : 'center',
-			width : 125,
+			width : 130,
 			sortable : false,
+			dataIndex : 'pictruerequire',
 			menuDisabled : true
 		}, {
 			header : '数量（套）',
 			align : 'center',
-			width : 125,
+			width : 130,
 			sortable : false,
+			dataIndex : 'total',
 			menuDisabled : true
 		} ],
 		viewConfig : {
@@ -142,8 +130,9 @@ function topView() {
 			items : [ {
 				id : 'project_id',
 				fieldLabel : '项目名称',
-				xtype : 'combo',
-				anchor : '85%'
+				xtype : 'label',
+				anchor : '85%',
+				html : '<div style="padding-top:3px">' + projectName + '</div>'
 			} ]
 		}, {
 			columnWidth : .5,
@@ -156,7 +145,8 @@ function topView() {
 				id : 'product_id',
 				fieldLabel : '产品名称',
 				anchor : '85%',
-				xtype : 'combo'
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + productName + '</div>'
 			} ]
 		}, {
 			clumnWidth : 1,
@@ -175,10 +165,13 @@ function topView() {
 function mainView() {
 
 	var _topPanel = topView();
+	var _processInfoStore = loadProcessInfo(taskId);
+	var _processUser = loadProcessUser();
+	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
 		id : 'taskForm_id',
-		title : "入库电子流处理",
+		title : "图库电子流处理",
 		autoHeight : true,
 		autoWidth : true,
 		labelWidth : 100,
@@ -190,13 +183,18 @@ function mainView() {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [ _topPanel ],
+		items : [ _topPanel, _flowCommonComp ],
 		buttons : [
 				{
 					text : "提交",
 					handler : function() {
 
-						var _gridData = getGridData();
+						var _gridData = getFigureGridData(flowId);
+
+						if (Ext.isEmpty(_gridData)) {
+							Ext.Msg.alert("提示", "请先配置图库数据。");
+							return;
+						}
 
 						if (!Ext.getCmp("processId").isValid()) {
 							return;
@@ -216,22 +214,28 @@ function mainView() {
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../workflow/submitForm_storage.html',
+							url : '../project/figure/submitFormStorage.html',
 							timeout : 300000,
-							params : {},
+							params : {
+								taskId : taskId,
+								comment : commonRemarkValue,
+								outcome : outcome,
+								nextName : nextName,
+								data : _gridData
+							},
 							method : 'POST',
 							success : function(response) {
 								var result = Ext.decode(response.responseText);
 
 								if (result.success) {
-									Ext.Msg.alert("提示", "入库电子流提交成功",
+									Ext.Msg.alert("提示", "图库电子流提交成功",
 											forWardToNextPage);
 								} else {
-									Ext.Msg.alert("提示", "入库电子流提交失败");
+									Ext.Msg.alert("提示", "图库电子流提交失败");
 								}
 							},
 							failure : function() {
-								Ext.Msg.alert("提示", "入库电子流提交失败");
+								Ext.Msg.alert("提示", "图库电子流提交失败");
 							}
 						});
 

@@ -32,12 +32,14 @@ function mainView() {
 		id : 'taskForm_id',
 		title : "项目申请",
 		autoHeight : true,
+		bodyStyle:"background-color:#F3F9FD",
 		autoWidth : true,
 		labelWidth : 70,
 		labelAlign : "left",
 		style : 'margin-top:10px;',
 		buttonAlign : 'left',
-		frame : true,
+		border : false,
+		frame : false,
 		defaults : {
 			xtype : "textfield",
 			width : 300

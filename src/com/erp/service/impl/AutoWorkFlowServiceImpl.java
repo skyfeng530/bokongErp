@@ -30,6 +30,7 @@ import com.erp.util.Log4jUtils.LogLevel;
 @Transactional
 @Service("autoWorkflowService")
 public class AutoWorkFlowServiceImpl implements AutoWorkflowService {
+	
 
 	private static Log4jUtils logger = new Log4jUtils(AutoWorkFlowServiceImpl.class);
 	

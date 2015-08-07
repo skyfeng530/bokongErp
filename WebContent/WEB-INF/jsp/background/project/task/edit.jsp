@@ -25,7 +25,7 @@
 						<div align="right" class="STYLE1">项目名称：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="pid" value="${busTask.pid}"/>
+							<input style="height: 20px;width: 200px" name="pid" value="${busTask.ppid}"/>
 						</div>
 					</td>
 					<td height="30" width="10%">
@@ -58,6 +58,13 @@
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="taskSource" value="${busTask.taskSource}"/>
+						</div>
+					</td>
+					<td height="30" width="10%">
+						<div align="right" class="STYLE1">备注:</div></td>
+					<td>
+						<div align="left" class="STYLE1" style="padding-left:10px;">
+							<input style="height: 20px;width: 200px" name="bak" value="${busTask.bak}"/>
 						</div>
 					</td>
 				</tr>

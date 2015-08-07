@@ -1,6 +1,10 @@
 package com.erp.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.entity.BusProject;
 
@@ -26,7 +31,7 @@ public class BusProjectController {
     private BusProjectService busProjectService;
     /**
     * @param model
-    * 存放返回界面的model
+    * 瀛樻斁杩斿洖鐣岄潰鐨刴odel
     * @return
     */
     @RequestMapping("query")
@@ -43,7 +48,7 @@ public class BusProjectController {
     }
 
     /**
-    * 保存数据
+    * 淇濆瓨鏁版嵁
     *
     * @param model
     * @param videoType
@@ -56,7 +61,7 @@ public class BusProjectController {
     }
 
     /**
-    * 跑到新增界面
+    * 璺戝埌鏂板鐣岄潰
     *
     * @param model
     * @return
@@ -67,7 +72,7 @@ public class BusProjectController {
     }
 
     /**
-    * 删除
+    * 鍒犻櫎
     *
     * @param model
     * @param videoTypeId
@@ -84,7 +89,7 @@ public class BusProjectController {
     }
 
     /**
-    * 修改界面
+    * 淇敼鐣岄潰
     *
     * @param model
     * @param videoTypeIds
@@ -102,7 +107,7 @@ public class BusProjectController {
     }
 
     /**
-    * 更新类型
+    * 鏇存柊绫诲瀷
     * 
     * @param model
     * @return
@@ -111,5 +116,24 @@ public class BusProjectController {
     public String update(Model model, BusProject busProject) {
         busProjectService.modify(busProject);
         return "redirect:query.html";
+    }
+    
+    @RequestMapping("queryAll")
+    @ResponseBody
+    public List<Map<String,Object>> getQueryAll(){
+    	List<Map<String,Object>> results = new ArrayList<Map<String,Object>>();
+    	List<BusProject> lists = busProjectService.queryAll(new BusProject());
+    	if (lists == null)
+    	{
+    		return results;
+    	}
+    	for (BusProject busProject : lists)
+    	{
+    		Map<String,Object> map = new HashMap<String,Object>(); 
+    		map.put("pid", busProject.getPid());
+    		map.put("projectName", busProject.getProjectName());
+    		results.add(map);
+    	}
+    	return results;
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taskcopyperson">
+	<!-- 以下与实体类的中字段一致 -->
+	<sql id="selectId">
+		id,
+		pdname,
+		applyperson,
+		copyperson,
+		taskid,
+		businesskey,
+		state
+	</sql>
+	<!--resultType="User" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="TaskCopyPerson" parameterType="TaskCopyPerson">
+		select
+		<include refid="selectId" />
+		from taskcopyperson
+		<where>
+			<if test="t.copyperson != null and t.copyperson != ''">
+				copyperson like '%${t.copyperson}%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加设备 -->
+	<insert id="add" parameterType="TaskCopyPerson">
+		INSERT INTO taskcopyperson
+        (pdname,
+        applyperson,
+		copyperson,
+		taskid,
+		businesskey,
+		state)
+		 values (#{pdname},
+		 #{applyperson},
+         #{copyperson},
+         #{taskid},
+         #{businesskey},
+         #{state})
+	</insert>
+	
+	<delete id="deleteById" parameterType="String">
+		delete from taskcopyperson where
+		id=#{id}
+	</delete>
+</mapper>

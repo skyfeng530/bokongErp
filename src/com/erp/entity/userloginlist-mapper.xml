@@ -11,11 +11,10 @@
    </sql>
    <!-- 查询 -->
    <select id="query" resultType="UserLoginList" parameterType="UserLoginList">
-   	   select u.userName,l.* from userloginlist l,user u
-   	   <where>
-   	       u.userName = l.userName
-   	       <!-- and u.userName=#{userName}  -->
-   	   </where>
+   	   select
+		<include refid="selectId" />
+		from userloginlist  
+		order By loginId desc
    </select>
    
    <!-- 总页数 -->

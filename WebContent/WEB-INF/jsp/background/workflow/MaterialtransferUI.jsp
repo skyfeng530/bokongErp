@@ -7,8 +7,6 @@
 <head>
 	<title>提交申请</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath }/style/blue/pageCommon.css" />
-    <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/states.js"></script>
-    <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/eventFunction.js"></script>
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/Materialtransfer_view.js"></script>
     <script type="text/javascript">
      var taskId = ${taskId};

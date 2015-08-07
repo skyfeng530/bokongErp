@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busmaterialinfotaskflow">
+    <sql id="selectId">
+        flowId,
+        taskId
+    </sql>
+
+    <select id="query" resultType="BusMaterialInfoTaskFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusMaterialInfoTaskFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusMaterialInfoTaskFlow" resultType="int">
+        select count(0) from BusMaterialInfoTaskFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusMaterialInfoTaskFlow">
+        select * from BusMaterialInfoTaskFlow where id=#{id}
+    </select>
+    <insert id="add" parameterType="BusMaterialInfoTaskFlow">
+        insert into BusMaterialInfoTaskFlow(
+        flowId,
+        taskId )
+        values (
+        #{flowId},
+        #{taskId})
+    </insert>
+    <update id="update" parameterType="BusMaterialInfoTaskFlow">
+        update BusMaterialInfoTaskFlow
+        <set>
+            flowId=#{flowId},
+            taskId=#{taskId}
+        </set>
+    </update>
+</mapper>

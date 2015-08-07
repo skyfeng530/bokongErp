@@ -279,6 +279,17 @@ function mainView()
 			}
 		}]
 	});
+	
+	var formAudit = new Ext.form.FormPanel({
+		id:"formId",
+		renderTo:'project_id',
+		lableAlign:'right',
+		buttonAlign:'center',
+		labelWidth:80,
+		frame:true,
+		items:[{},{},{}]
+	});
+	
 	function setDisabled(bool)
 	{
 		 Ext.getCmp('pictureNoId').setDisabled(bool);

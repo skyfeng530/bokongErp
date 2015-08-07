@@ -24,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.erp.dao.FlowProejctInfoDao;
-import com.erp.dao.FlowRecordInfoDao;
 import com.erp.dao.StorageFlowResultDao;
 import com.erp.dao.UserDao;
 import com.erp.entity.BusLeave;
 import com.erp.entity.BusProject;
 import com.erp.entity.BusProjectFigure;
+import com.erp.entity.BusProjectFlow;
+import com.erp.entity.BusProjectProduct;
+import com.erp.entity.BusProjectProductProjectFlow;
 import com.erp.entity.BusStorage;
 import com.erp.entity.BusStorageOut;
 import com.erp.entity.FlowProejctInfo;
@@ -38,13 +40,21 @@ import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
 import com.erp.entity.StorageFlowResult;
+import com.erp.entity.TaskCopyPerson;
 import com.erp.entity.User;
 import com.erp.entity.WorkflowBean;
 import com.erp.service.AutoWorkflowService;
+import com.erp.service.BusProjectFigureProductFlowService;
 import com.erp.service.BusProjectFigureService;
+import com.erp.service.BusProjectFlowService;
+import com.erp.service.BusProjectProductProjectFlowService;
+import com.erp.service.BusProjectProductService;
+import com.erp.service.BusProjectService;
+import com.erp.service.BusTaskFlowService;
+import com.erp.service.BusTaskProductFlowService;
 import com.erp.service.IWorkflowService;
 import com.erp.service.LeaveService;
-import com.erp.service.BusProjectService;
+import com.erp.service.TaskCopyPersonService;
 import com.erp.util.Common;
 import com.erp.util.JsonUtil;
 import com.erp.util.Log4jUtils;
@@ -80,14 +90,31 @@ public class Workflowcontroller{
 	private BusProjectFigureService busProjectFigureService;
 	
 	@Autowired
-	private FlowRecordInfoDao flowrecordinfoDao;
-	
-	
-	@Autowired
 	private FlowProejctInfoDao flowProejctInfoDao;
 	
 	@Autowired
 	private AutoWorkflowService autoWorkflowService;
+	
+	@Autowired
+	private BusProjectFigureProductFlowService busprojectfigureproductflowService;
+	
+	@Autowired
+	private BusProjectFlowService busProjectFlowService;
+	
+	@Autowired
+	private BusProjectProductProjectFlowService busprojectproductprojectflowService;
+	
+	@Autowired
+	private BusProjectProductService busProjectProductService;
+
+	@Autowired
+	private BusTaskProductFlowService bustaskproductflowService;
+	
+	@Autowired
+	private BusTaskFlowService bustaskflowService;
+	
+	@Autowired
+	private TaskCopyPersonService taskCopyPersonService;
 
 	/**
 	 * 部署管理首页显示
@@ -226,17 +253,27 @@ public class Workflowcontroller{
 		else if ("BusProject".equals(pd.getKey())) 
 		{
 			model.addAttribute("url", "project");
-			return "/background/workflow/projectFormUI";
+			return "/background/workflow/page/project";
+		}
+		else if ("BusProduct".equals(pd.getKey())) 
+		{
+			model.addAttribute("url", "product");
+			return "/background/workflow/page/product";
 		}
 		else if ("BusProjectFigure".equals(pd.getKey())) 
 		{
 			model.addAttribute("url", "projectFigure");
-			return "/background/workflow/projectFormUI";
+			return "/background/workflow/projectfigureflow/projectfigureApply";
 		}
 		else if ("BusStorageOut".equals(pd.getKey())) 
 		{
 			model.addAttribute("url", "storageOut");
-			return "/background/workflow/projectFormUI";//gai
+			return "/background/workflow/page/storageOut";//gai
+		}
+		else if("BusTaskProcess".equals(pd.getKey()))
+		{
+			model.addAttribute("url", "storageOut");
+			return "/background/workflow/taskflow/taskFlowApply";
 		}
 		else
 		{
@@ -316,9 +353,9 @@ public class Workflowcontroller{
 	 */
 	@RequestMapping(value="submitForm_projectFigure")
 	public String submitForm_projectFigure(HttpServletRequest request, BusProjectFigure projectFigure){
-		boolean result = busProjectFigureService.add(projectFigure);
+		int result = busProjectFigureService.add(projectFigure);
 		String pdkey = request.getParameter("pdkey");
-		if (result) {
+		if (result > 0) {
 			FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
 			long pid = busProjectFigureService.getNewProjectId();
 			FlowRecordInfo record = new FlowRecordInfo();
@@ -339,40 +376,102 @@ public class Workflowcontroller{
 	public String projectFigure_input(HttpServletRequest request, Model model){
 		//获取任务ID
 		String taskId = request.getParameter("taskId");
-		model.addAttribute("taskId",taskId);
-		//使用任务ID，查找请假单ID，从而获取请假单信息
-		BusProjectFigure projectFigure = workflowService.findProjectFigureByTaskId(taskId);
-		model.addAttribute("projectFigure",projectFigure);
-		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
-		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
-		model.addAttribute("outcomeList", outcomeList);
-		//查询所有历史审核人的审核信息
-		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
-		model.addAttribute("commentList", commentList);
-		model.addAttribute("url", "projectFigure");
-		List<User> users = userDao.query(new PageView(),new User());
-		model.addAttribute("users", users);
-		return "/background/workflow/taskFormUI";
+		
+		initFigureModel(model, taskId);
+		
+		return "/background/workflow/projectFormUI";
+	}
+	
+	
+	/**
+	 *  准备表单数据----立项单
+	 * @return
+	 */
+	@RequestMapping(value="task_input")
+	public String taskInput(HttpServletRequest request, Model model){
+		//获取任务ID
+		String taskId = request.getParameter("taskId");
+		
+		initTaskModel(model, taskId);
+		
+		return "/background/workflow/taskflow/taskInputFormUI";
+	}
+	
+	
+	@RequestMapping(value="task_approval")
+	public String taskApproval(HttpServletRequest request, Model model){
+		//获取任务ID
+		String taskId = request.getParameter("taskId");
+		
+		initTaskModel(model, taskId);
+		
+		return "/background/workflow/taskflow/taskInputFormUIReview";
+	}
+	
+	private void initTaskModel(Model model, String taskId) {
+		
+		model.addAttribute("taskId", taskId);
+		
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
+		
+		List<Map<String, Object>> list = bustaskproductflowService.queryTaskInfoByFlowId(flowId + "");
+		
+		List<Map<String, Object>> taskList = bustaskflowService.queryBusTaskFlowByFlowId(flowId + "");
+		
+		model.addAttribute("projectName", list.get(0).get("projectname"));
+		model.addAttribute("productName", list.get(0).get("productname"));
+		
+		if(!CollectionUtils.isEmpty(taskList))
+		{
+			model.addAttribute("taskno", taskList.get(0).get("taskno"));
+			model.addAttribute("totalsetno", taskList.get(0).get("totalsetno"));
+			model.addAttribute("tasksource", taskList.get(0).get("tasksource"));
+		}
+		
+		model.addAttribute("flowId", flowId);
 	}
 	
 	/**
-	 * 提交请假任务
+	 *  图库审核
+	 * @return
 	 */
-	@RequestMapping(value="submitForm_project")
-	public String submitForm_project(HttpServletRequest request, BusProject project){
-		boolean result = busProjectService.add(project);
+	@RequestMapping(value="projectFigure_review")
+	public String projectFigure_review(HttpServletRequest request, Model model){
+		//获取任务ID
+		String taskId = request.getParameter("taskId");
+		
+		initFigureModel(model, taskId);
+		
+		return "/background/workflow/projectfigureflow/projectFormReviewUI";
+	}
+	
+	/**
+	 * 保存立项
+	 */
+	@RequestMapping(value="save_project")
+	public void save_project(HttpServletRequest request,
+			HttpServletResponse response, BusProjectFlow busProjectFlow){
+        response.setCharacterEncoding("UTF-8");
+        int isexist=busProjectFlowService.getByName(busProjectFlow);
+        if (isexist>0)
+        {
+        	JsonUtil.outJson(response, "{success:false,msg:'exist'}");
+        	return;
+        }
+		boolean result = false;
 		String pdkey = request.getParameter("pdkey");
-		if (result) {
-			FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
-			long pid = busProjectService.getNewProjectId();
-			FlowRecordInfo record = new FlowRecordInfo();
-			record.setFlowId(pid);
-			record.setHandlePerson(SessionContext.get(request).getUserName());
-			flowTaskInfo.setFlowRecordInfo(record);
-			flowTaskInfo.setPdid(pdkey);
-			workflowService.saveStartProcess(flowTaskInfo);
-		}
-		return "redirect:myTaskList.html";
+		FlowRecordInfo recordInfo = new FlowRecordInfo();
+		recordInfo.setHandlePerson(SessionContext.get(request).getUserName());
+		recordInfo.setCreatePerson(SessionContext.get(request).getUserName());
+		
+		FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
+		flowTaskInfo.setFlowRecordInfo(recordInfo);
+		flowTaskInfo.setPdid(pdkey);
+		workflowService.saveFlow(flowTaskInfo, pdkey);
+		
+		busProjectFlow.setFlowId(flowTaskInfo.getFlowRecordInfo().getFlowId());
+		result = busProjectFlowService.add(busProjectFlow);
+		JsonUtil.outJson(response, "{success:'"+result+"'}");
 	}
 	
 	/**
@@ -384,9 +483,10 @@ public class Workflowcontroller{
 		//获取任务ID
 		String taskId = request.getParameter("taskId");
 		model.addAttribute("taskId",taskId);
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
 		//使用任务ID，查找请假单ID，从而获取请假单信息
-		BusProject project = workflowService.findProjectBillByTaskId(taskId);
-		model.addAttribute("project",project);
+		BusProjectFlow busProjectFlow = busProjectFlowService.getById(flowId+"");
+		model.addAttribute("busProjectFlow",busProjectFlow);
 		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
 		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
 		model.addAttribute("outcomeList", outcomeList);
@@ -394,11 +494,40 @@ public class Workflowcontroller{
 		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("url", "project");
-		List<User> users = userDao.query(new PageView(),new User());
-		model.addAttribute("users", users);
-		return "/background/workflow/taskFormUI";
+		return "/background/workflow/page/projectSubmit";
 	}
 	
+	
+	/**
+	 * 提交立项
+	 */
+	@RequestMapping(value="submit_project")
+	public void submit_project(HttpServletRequest request,
+			HttpServletResponse response, FlowTaskInfo flowTaskInfo){
+
+		logger.log(LogLevel.INFO, "[Workflowcontroller] submit_project start");
+		boolean result = false;
+		String strUser = request.getParameter("nextName");
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(flowTaskInfo.getTaskId()));
+		if (workflowService.nextWorkFlow(strUser, flowTaskInfo) == 0)
+		{
+			//使用任务ID，查找请假单ID，从而获取请假单信息
+			BusProjectFlow busProjectFlow = busProjectFlowService.getById(flowId+"");
+			BusProject busProject = busProjectService.getByProjectName(busProjectFlow.getProjectName());
+			if (busProject != null)
+			{
+				JsonUtil.outJson(response, "{success:'true',message:'falseAndTure'}");
+				return;
+			}
+			busProject = new BusProject();
+			busProject.setProjectName(busProjectFlow.getProjectName());
+			busProject.setProjectDescribe(busProjectFlow.getProjectDescribe());
+			result = busProjectService.add(busProject) > 0;
+		}
+		JsonUtil.outJson(response, "{success:'"+result+"'}");
+		
+		logger.log(LogLevel.INFO, "[Workflowcontroller] ubmit_project end");
+	}
 	/**
 	 *  准备表单数据----立项单
 	 * @return
@@ -408,9 +537,10 @@ public class Workflowcontroller{
 		//获取任务ID
 		String taskId = request.getParameter("taskId");
 		model.addAttribute("taskId",taskId);
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
 		//使用任务ID，查找请假单ID，从而获取请假单信息
-		BusProject project = workflowService.findProjectBillByTaskId(taskId);
-		model.addAttribute("project",project);
+		BusProjectFlow busProjectFlow = busProjectFlowService.getById(flowId+"");
+		model.addAttribute("busProjectFlow",busProjectFlow);
 		//已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称
 		List<String> outcomeList = workflowService.findOutComeListByTaskId(taskId);
 		model.addAttribute("outcomeList", outcomeList);
@@ -418,11 +548,85 @@ public class Workflowcontroller{
 		List<Comment> commentList = workflowService.findCommentByTaskId(taskId);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("url", "project");
-		List<User> users = userDao.query(new PageView(),new User());
-		model.addAttribute("users", users);
-		return "/background/workflow/taskFormUI";
+		return "/background/workflow/page/projectApproval";
 	}
 	
+	/**
+	 * 保存产品工程
+	 */
+	@RequestMapping(value="save_product")
+	public void save_product(HttpServletRequest request,
+			HttpServletResponse response, BusProjectProductProjectFlow busProjectProductProjectFlow){
+        response.setCharacterEncoding("UTF-8");
+		boolean result = false;
+		String pdkey = request.getParameter("pdkey");
+		//String pdid = request.getParameter("pdid");
+		FlowRecordInfo recordInfo = new FlowRecordInfo();
+		recordInfo.setHandlePerson(SessionContext.get(request).getUserName());
+		recordInfo.setCreatePerson(SessionContext.get(request).getUserName());
+		
+		FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
+		flowTaskInfo.setFlowRecordInfo(recordInfo);
+		//flowTaskInfo.setPdkey(pdid);
+		flowTaskInfo.setPdid(pdkey);
+		workflowService.saveFlow(flowTaskInfo, pdkey);
+		
+		busProjectProductProjectFlow.setFlowId(flowTaskInfo.getFlowRecordInfo().getFlowId());
+		result = busprojectproductprojectflowService.add(busProjectProductProjectFlow) > 0;
+		JsonUtil.outJson(response, "{success:'"+result+"'}");
+	}
+	
+	
+	@RequestMapping(value="product_input")
+	public String product_input(HttpServletRequest request, Model model)
+	{
+		//获取任务ID
+		String taskId = request.getParameter("taskId");
+		model.addAttribute("taskId",taskId);
+		List<String> pd = workflowService.findOutComeListByTaskId(taskId);
+		//放置到上下文对象中
+		model.addAttribute("pd", pd);
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
+		//使用任务ID，查找请假单ID，从而获取请假单信息
+		BusProjectProductProjectFlow busProjectProductProjectFlow = busprojectproductprojectflowService.getById(flowId+"");
+		model.addAttribute("flowId",busProjectProductProjectFlow.getFlowId());
+		BusProject busProject = busProjectService.getById(busProjectProductProjectFlow.getProjectId()+"");
+		model.addAttribute("busProject",busProject);
+		return "/background/workflow/page/productAdd";
+	}
+	
+	/**
+	 * 提交产品电子流
+	 */
+	@RequestMapping(value="submit_product")
+	public void submit_product(HttpServletRequest request,
+			HttpServletResponse response, FlowTaskInfo flowTaskInfo){
+
+		logger.log(LogLevel.INFO, "[Workflowcontroller] submit_product start");
+		boolean result = false;
+		String strUser = request.getParameter("nextName");
+		if (workflowService.nextWorkFlow(strUser, flowTaskInfo) == 0)
+		{
+			String flowId = request.getParameter("flowId");
+			result = busProjectProductService.addAll(flowId)>0;
+		}
+		JsonUtil.outJson(response, "{success:'"+result+"'}");
+		
+		logger.log(LogLevel.INFO, "[Workflowcontroller] submit_product end");
+	}
+	
+	@RequestMapping(value="product_approval")
+	public String product_approval(HttpServletRequest request, Model model){
+		//获取任务ID
+		String taskId = request.getParameter("taskId");
+		model.addAttribute("taskId",taskId);
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
+		BusProjectProductProjectFlow busProjectProductProjectFlow = busprojectproductprojectflowService.getById(flowId+"");
+		model.addAttribute("flowId",busProjectProductProjectFlow.getFlowId());
+		BusProject busProject = busProjectService.getById(busProjectProductProjectFlow.getProjectId()+"");
+		model.addAttribute("busProject",busProject);
+		return "/background/workflow/page/productApproval";
+	}
 	/**
 	 * 提交入库任务
 	 */
@@ -450,7 +654,8 @@ public class Workflowcontroller{
 		boolean result = true;
 		
 		String strUser = SessionContext.get(request).getUserName();
-		workflowService.addStorage(strUser, flowTaskInfo, storage);
+		workflowService.nextWorkFlow(strUser, flowTaskInfo);
+//		workflowService.addStorage(strUser, flowTaskInfo, storage);
 		
 		JsonUtil.outJson(response, "{success:'"+result+"'}");
 		
@@ -642,6 +847,11 @@ public class Workflowcontroller{
 		return flowProejctInfo;
 	}
 	
+	private List<Map<String, String>> queryProductFigureInfo(int flowId)
+	{
+		return busprojectfigureproductflowService.getProductInfoByid(flowId + "");
+	}
+	
 	/**
 	 *  准备入库表单数据-----入库检验
 	 * @return
@@ -703,6 +913,19 @@ public class Workflowcontroller{
 		model.addAttribute("projectName", flowProejctInfo.getProjectName());
 		model.addAttribute("taskName", flowProejctInfo.getTaskName());
 		model.addAttribute("flowId", flowProejctInfo.getFlowId());
+	}
+	
+	private void initFigureModel(Model model, String taskId) {
+		
+		model.addAttribute("taskId", taskId);
+		
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(taskId));
+		
+		List<Map<String, String>> list = queryProductFigureInfo(flowId);
+		
+		model.addAttribute("projectName", list.get(0).get("projectname"));
+		model.addAttribute("productName", list.get(0).get("productname"));
+		model.addAttribute("flowId", flowId);
 	}
 	
 	/**
@@ -843,5 +1066,34 @@ public class Workflowcontroller{
 		flowProejctInfoDao.add(flowProejctInfo);
 		
 		JsonUtil.outJson(response, "{success:'"+result+"'}");
+	}
+	
+	/**
+	 * 保存抄送人
+	 * @param copyPerson
+	 */
+	public void saveCopyPerson(TaskCopyPerson copyPerson){
+		taskCopyPersonService.add(copyPerson);
+	}
+	
+	/**
+	 * 跳转至抄送人页面
+	 * @param model
+	 * @param copyPerson
+	 * @param pageNow
+	 * @return
+	 */
+	@RequestMapping(value="copyPersonUI")
+	public String copyPersonUI(Model model, TaskCopyPerson copyPerson, String pageNow, HttpServletRequest request){
+		copyPerson.setCopyperson(SessionContext.get(request).getUserName());
+		PageView pageView = null;
+		if(Common.isEmpty(pageNow)){
+			pageView = new PageView(1);
+		}else{
+			pageView = new PageView(Integer.parseInt(pageNow));
+		}
+		pageView = taskCopyPersonService.query(pageView, copyPerson);
+		model.addAttribute("pageView", pageView);
+		return "/background/workflow/copyPersonList";
 	}
 }

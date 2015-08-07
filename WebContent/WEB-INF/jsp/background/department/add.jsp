@@ -34,7 +34,7 @@
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input type="radio" name="departType" value="0" checked="checked"/>：虚拟部门
-							<input type="radio" name="departType" value="1"/>：真是部门
+							<input type="radio" name="departType" value="1"/>：真实部门
 						</div></td>
 				</tr>
 				<tr>

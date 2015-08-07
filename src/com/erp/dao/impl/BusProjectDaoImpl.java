@@ -6,13 +6,12 @@ import com.erp.dao.BusProjectDao;
 import com.erp.entity.BusProject;
 
 
-@Repository("busProjectDao")
-public class BusProjectDaoImpl extends BaseDaoImpl<BusProject> implements BusProjectDao
-{
+@Repository("busprojectDao")
+public class BusProjectDaoImpl extends BaseDaoImpl<BusProject> implements BusProjectDao{
 
 	@Override
-	public long getNewProjectId() {
-		return getSqlSession().selectOne("busproject.getNewProject");
+	public BusProject getByProjectName(String projectName) {
+		
+		return getSqlSession().selectOne(this.getClassName()+".getByProjectName",projectName);
 	}
-
 }

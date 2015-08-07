@@ -4,7 +4,6 @@ package com.erp.entity;
 public class BusTask implements java.io.Serializable {
     private int taskId;
     private String taskNo;
-    private int pid;
     private int ppid;
     private int totalSetNo;
     private String taskSource;
@@ -22,12 +21,6 @@ public class BusTask implements java.io.Serializable {
     }
     public void setTaskNo(String taskNo) {
         this.taskNo =taskNo;
-    }
-    public int getPid() {
-        return pid;
-    }
-    public void setPid(int pid) {
-        this.pid =pid;
     }
     public int getPpid() {
         return ppid;

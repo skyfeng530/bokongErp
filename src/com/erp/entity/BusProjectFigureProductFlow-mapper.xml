@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectfigureproductflow">
+    <sql id="selectId">
+        flowId,
+        ppid,
+        bak
+    </sql>
+
+    <select id="query" resultType="BusProjectFigureProductFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProjectFigureProductFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProjectFigureProductFlow" resultType="int">
+        select count(0) from BusProjectFigureProductFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProjectFigureProductFlow">
+        select * from BusProjectFigureProductFlow where flowId=#{id}
+    </select>
+    
+    <select id="getProductInfoByid" parameterType="String" resultType="java.util.HashMap">
+        select projectname, productname from busprojectfigureproductflow f left join busprojectproduct d on d.ppid = f.ppid left join busproject p on d.projectid = p.pid where f.flowid = #{flowId}
+    </select>
+    
+    <insert id="add" parameterType="BusProjectFigureProductFlow">
+        insert into BusProjectFigureProductFlow(
+        flowId,
+        ppid,
+        bak )
+        values (
+        #{flowId},
+        #{ppid},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="BusProjectFigureProductFlow">
+        update BusProjectFigureProductFlow
+        <set>
+            flowId=#{flowId},
+            ppid=#{ppid},
+            bak=#{bak}
+        </set>
+    </update>
+</mapper>

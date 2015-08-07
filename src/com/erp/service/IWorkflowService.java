@@ -58,7 +58,7 @@ public interface IWorkflowService {
 
 	public void saveSubmitTask(MyTask task);
 	
-	public void saveSubmitTask(FlowTaskInfo flowTaskInfo);
+	public int saveSubmitTask(FlowTaskInfo flowTaskInfo);
 
 	public List<FlowTaskInfo> findApplyFormByName(PageView pageView, FlowTaskInfo flowTaskInfo);
 
@@ -81,4 +81,6 @@ public interface IWorkflowService {
 	BusProjectFigure findProjectFigureByTaskId(String taskId);
 	
 	public int saveFlow(FlowTaskInfo flowTaskInfo, String flowPrefix);
+	
+	public int nextWorkFlow(String handlePerson, FlowTaskInfo flowTaskInfo);
 }

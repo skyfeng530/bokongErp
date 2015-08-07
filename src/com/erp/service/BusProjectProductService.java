@@ -10,7 +10,7 @@ import com.erp.util.PageView;
 public interface BusProjectProductService{
     public PageView query(PageView pageView, BusProjectProduct busProjectProduct);
 
-    public void add(BusProjectProduct busProjectProduct);
+    public int add(BusProjectProduct busProjectProduct);
 
     public void modify(BusProjectProduct busProjectProduct);
 
@@ -18,4 +18,7 @@ public interface BusProjectProductService{
 
     public BusProjectProduct getById(String id);
 
+    public List<BusProjectProduct> queryByProjectId(BusProjectProduct busProjectProduct);
+    
+    public int addAll(String flowId);
 }

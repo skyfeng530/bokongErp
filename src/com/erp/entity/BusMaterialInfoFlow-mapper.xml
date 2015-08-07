@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busmaterialinfoflow">
+    <sql id="selectId">
+        flowId,
+        pfid,
+        totalNumber,
+        vendorNo,
+        checkRst,
+        checkNum,
+        qualifiedNum,
+        unqualifiedNum,
+        unqualifiedGrade,
+        unqualifiedReason,
+        reviewRst,
+        reviewGrp,
+        reviewNo,
+        graphicPath,
+        bak
+    </sql>
+
+    <select id="query" resultType="BusMaterialInfoFlow" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusMaterialInfoFlow
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusMaterialInfoFlow" resultType="int">
+        select count(0) from BusMaterialInfoFlow
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusMaterialInfoFlow">
+        select * from BusMaterialInfoFlow where flowId=#{id}
+    </select>
+    <insert id="add" parameterType="BusMaterialInfoFlow">
+        insert into BusMaterialInfoFlow(
+        flowId,
+        pfid,
+        totalNumber,
+        vendorNo,
+        checkRst,
+        checkNum,
+        qualifiedNum,
+        unqualifiedNum,
+        unqualifiedGrade,
+        unqualifiedReason,
+        reviewRst,
+        reviewGrp,
+        reviewNo,
+        graphicPath,
+        bak )
+        values (
+        #{flowId},
+        #{pfid},
+        #{totalNumber},
+        #{vendorNo},
+        #{checkRst},
+        #{checkNum},
+        #{qualifiedNum},
+        #{unqualifiedNum},
+        #{unqualifiedGrade},
+        #{unqualifiedReason},
+        #{reviewRst},
+        #{reviewGrp},
+        #{reviewNo},
+        #{graphicPath},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="BusMaterialInfoFlow">
+        update BusMaterialInfoFlow
+        <set>
+            flowId=#{flowId},
+            pfid=#{pfid},
+            totalNumber=#{totalNumber},
+            vendorNo=#{vendorNo},
+            checkRst=#{checkRst},
+            checkNum=#{checkNum},
+            qualifiedNum=#{qualifiedNum},
+            unqualifiedNum=#{unqualifiedNum},
+            unqualifiedGrade=#{unqualifiedGrade},
+            unqualifiedReason=#{unqualifiedReason},
+            reviewRst=#{reviewRst},
+            reviewGrp=#{reviewGrp},
+            reviewNo=#{reviewNo},
+            graphicPath=#{graphicPath},
+            bak=#{bak}
+        </set>
+    </update>
+</mapper>

@@ -109,7 +109,7 @@ function userRole(dName){
               <input type="checkbox" name="check" value="${key.dName}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/department/getById.html?dName=${key.dName}&&type=0">${key.dName}</a></span></td>
+            <td height="20" ><span class="STYLE1">${key.dName}</span></td>
             <td height="20" ><span class="STYLE1">${key.roleName }</span></td>
             <td height="20" ><span class="STYLE4">
              <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">

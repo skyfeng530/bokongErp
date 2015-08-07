@@ -362,11 +362,8 @@ function topView() {
 
 function mainView() {
 	var _topPanel = topView();
-
-	var _processInfoStore = loadProcessInfo(taskId);
-	var _processUser = loadProcessUser();
 	
-	var _flowCommonComp = getFlowCommonComp();
+	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
 		id : 'taskForm_id',

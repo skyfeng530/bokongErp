@@ -106,6 +106,7 @@
 	<context:component-scan base-package="com.erp.log"/>
 	<context:component-scan base-package="com.erp.security"/>
 	<context:component-scan base-package="com.erp.task"/>
+	<context:component-scan base-package="com.erp.base"/>
 	<!-- 隐式地向 Spring 容器注册  -->
 	<context:annotation-config/>
 	

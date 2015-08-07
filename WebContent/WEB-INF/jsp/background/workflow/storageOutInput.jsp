@@ -33,6 +33,7 @@
 </table>
 <div id="main_id" style="margin: 10px"></div>
 <div id="update_id" style="margin: 10px"></div>
+<div id="audit_id" style="margin: 10px"></div>
 <table style="width: 120px;margin-left: auto;margin-right: auto">
   <tr>
   <td id="submit_id"></td>

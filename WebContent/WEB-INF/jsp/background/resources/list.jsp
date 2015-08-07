@@ -116,12 +116,6 @@
             <td height="20" ><span class="STYLE1">${resources.level}</span></td>
             <td height="20" ><span class="STYLE1">${resources.parentName}</span></td>
             <td height="20" ><span class="STYLE4">
-            <sec:authorize ifAnyGranted="ROLE_sys_res_show">
-            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
-            	<a href="${pageContext.servletContext.contextPath }/background/resources/getById.html?resourcesId=${resources.id}&&typeKey=0">
-            	显示详细信息</a>
-            	&nbsp;&nbsp;
-				</sec:authorize>
             <sec:authorize ifAnyGranted="ROLE_sys_res_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
             <a href="${pageContext.servletContext.contextPath }/background/resources/getById.html?resourcesId=${resources.id}&&typeKey=1">

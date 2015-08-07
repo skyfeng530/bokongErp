@@ -15,6 +15,7 @@
 		<typeAlias type="com.erp.entity.Log" alias="Log"/>
 		<typeAlias type="com.erp.entity.Device" alias="Device"/>
 		<typeAlias type="com.erp.entity.BusLeave" alias="BusLeave"/>
+		<typeAlias type="com.erp.entity.TaskCopyPerson" alias="TaskCopyPerson"/>
 		<typeAlias type="com.erp.entity.FlowRecordInfo" alias="FlowRecordInfo"/>
 		<typeAlias type="com.erp.entity.StorageFlowResult" alias="StorageFlowResult"/>
 		<typeAlias type="com.erp.entity.ProjectInfo" alias="ProjectInfo"/>
@@ -30,5 +31,15 @@
 		<typeAlias type="com.erp.entity.BusTask" alias="BusTask"/>
 		<typeAlias type="com.erp.entity.BusTaskFlow" alias="BusTaskFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectFigureFlow" alias="BusProjectFigureFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectFigureProductFlow" alias="BusProjectFigureProductFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectFlow" alias="BusProjectFlow"/>
+		<typeAlias type="com.erp.entity.BusMaterialInfo" alias="BusMaterialInfo"/>
+		<typeAlias type="com.erp.entity.BusMaterialInfoFlow" alias="BusMaterialInfoFlow"/>
+		<typeAlias type="com.erp.entity.BusTaskProductFlow" alias="BusTaskProductFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectProductFlow" alias="BusProjectProductFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectProductProjectFlow" alias="BusProjectProductProjectFlow"/>
+		<typeAlias type="com.erp.entity.BusMaterialInfoTaskFlow" alias="BusMaterialInfoTaskFlow"/>
+		<typeAlias type="com.erp.entity.BusMaterialInfoFlow" alias="BusMaterialInfoFlow"/>
+		<typeAlias type="com.erp.entity.BusProjectProductFlowVo" alias="BusProjectProductFlowVo"/>
 	</typeAliases>
 </configuration>

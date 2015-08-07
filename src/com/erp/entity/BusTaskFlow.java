@@ -2,27 +2,18 @@ package com.erp.entity;
 
 @SuppressWarnings("serial")
 public class BusTaskFlow implements java.io.Serializable {
-    private long flowId;
-    private int taskId;
+    private Long flowId;
     private String taskNo;
-    private int pid;
-    private int ppid;
-    private int totalSetNo;
+    private Integer totalSetNo;
     private String taskSource;
     private String bak;
     public BusTaskFlow() {
     }
-    public long getFlowId() {
+    public Long getFlowId() {
         return flowId;
     }
-    public void setFlowId(long flowId) {
+    public void setFlowId(Long flowId) {
         this.flowId =flowId;
-    }
-    public int getTaskId() {
-        return taskId;
-    }
-    public void setTaskId(int taskId) {
-        this.taskId =taskId;
     }
     public String getTaskNo() {
         return taskNo;
@@ -30,22 +21,10 @@ public class BusTaskFlow implements java.io.Serializable {
     public void setTaskNo(String taskNo) {
         this.taskNo =taskNo;
     }
-    public int getPid() {
-        return pid;
-    }
-    public void setPid(int pid) {
-        this.pid =pid;
-    }
-    public int getPpid() {
-        return ppid;
-    }
-    public void setPpid(int ppid) {
-        this.ppid =ppid;
-    }
-    public int getTotalSetNo() {
+    public Integer getTotalSetNo() {
         return totalSetNo;
     }
-    public void setTotalSetNo(int totalSetNo) {
+    public void setTotalSetNo(Integer totalSetNo) {
         this.totalSetNo =totalSetNo;
     }
     public String getTaskSource() {
@@ -61,4 +40,3 @@ public class BusTaskFlow implements java.io.Serializable {
         this.bak =bak;
     }
 }
-

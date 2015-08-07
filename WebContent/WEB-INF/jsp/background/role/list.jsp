@@ -124,11 +124,6 @@ function permissio(id){
             <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
             	<a href="javascript:void(0);" onclick="permissio('${role.id}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
             </sec:authorize>
-            <sec:authorize ifAnyGranted="ROLE_sys_role_show">
-            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
-            	<a href="${pageContext.servletContext.contextPath }/background/role/getById.html?roleId=${role.id}&&typeKey=0">
-            	显示详细信息</a>
-            	&nbsp;&nbsp;</sec:authorize>
             <sec:authorize ifAnyGranted="ROLE_sys_role_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
             <a href="${pageContext.servletContext.contextPath }/background/role/getById.html?roleId=${role.id}&&typeKey=1">

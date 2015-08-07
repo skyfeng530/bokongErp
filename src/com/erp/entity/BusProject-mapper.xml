@@ -19,6 +19,12 @@
             </if>
         </where>
     </select>
+    
+    <select id="queryAll" resultType="BusProject">
+	  select
+	  <include refid="selectId"/>
+	  from BusProject
+	</select>
 
     <!-- total count -->
     <select id="count" parameterType="BusProject" resultType="int">
@@ -32,6 +38,9 @@
 
     <select id="getById" parameterType="String" resultType="BusProject">
         select * from BusProject where pid=#{pid}
+    </select>
+    <select id="getByProjectName" parameterType="String" resultType="BusProject">
+        select * from BusProject where projectname=#{projectName}
     </select>
     <insert id="add" parameterType="BusProject">
         insert into BusProject(

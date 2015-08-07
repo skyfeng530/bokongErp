@@ -107,9 +107,11 @@
                         <div class=FuncBtnHead></div>
                         <div class=FuncBtnMemo><a href="deployUI.html">部署流程定义文档</a></div>
                         <div class=FuncBtnTail></div>
+                        <!-- 
                         <div class=FuncBtnHead></div>
                         <div class=FuncBtnMemo><a href="autoNewdeploy.html">自动部署流程定义文档</a></div>
                         <div class=FuncBtnTail></div>
+                         -->
                     </div>
                 </td>
             </tr>

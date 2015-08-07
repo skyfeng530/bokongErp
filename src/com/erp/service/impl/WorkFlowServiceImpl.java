@@ -40,7 +40,6 @@ import com.erp.entity.BusLeave;
 import com.erp.entity.BusProject;
 import com.erp.entity.BusProjectFigure;
 import com.erp.entity.BusStorage;
-import com.erp.entity.FlowProejctInfo;
 import com.erp.entity.FlowRecordInfo;
 import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
@@ -172,6 +171,17 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 		if ("BusProjectFigure".equals(pdid)) {
 			variables.put("nextName", record.getHandlePerson());//表示惟一用户
 		}
+		if ("BusStorageOut".equals(pdid)) {
+			variables.put("nextName", record.getHandlePerson());//表示惟一用户
+		}
+		if ("BusProduct".equals(pdid)) {
+			variables.put("nextName", record.getHandlePerson());//表示惟一用户
+		}
+		else
+		{
+			variables.put("nextName", record.getHandlePerson());//表示惟一用户
+		}
+		
 		//格式：类名.id的形式（使用流程变量）
 		record.setClassName(key);
 		String objId = key+"."+id;
@@ -518,7 +528,7 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	}
 
 	@Override
-	public void saveSubmitTask(FlowTaskInfo flowTaskInfo) {
+	public int saveSubmitTask(FlowTaskInfo flowTaskInfo) {
 		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
 		//获取任务ID
 		String taskId = flowTaskInfo.getTaskId();
@@ -567,41 +577,14 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 				.singleResult();
 		// 流程结束了
 		if (pi == null) {
-			// 更新请假单表的状态从1变成2（审核中-->审核完成）
-			if ("BusLeave".equals(className)) {
-				/*BusLeave bill = leaveDao.getById(id + "");
-				bill.setState(2);
-				leaveDao.modify(bill);*/
-			}
-			if ("BusStorage".equals(className)) {
-				/*
-				 * BusStorage storage = storageDao.getById(id + "");
-				 * storage.setState(2); leaveDao.modify(storage);
-				 */
-			}
+			return 0;
 		}
-		
+		return 1;
 	}
 
 	@Override
 //	@Transactional
 	public void addStorage(String strUserName, FlowTaskInfo flowTaskInfo, BusStorage storage) {
-		// TODO Auto-generated method stub
-		Task task = taskService.createTaskQuery()//
-				.taskId(flowTaskInfo.getTaskId())// 使用任务ID查询
-				.singleResult();
-		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
-		String excuteId = task.getExecutionId();
-		String proc_def_id = task.getProcessDefinitionId();
-		recordInfo.setExecution_ID(excuteId);
-		recordInfo.setProc_def_id(proc_def_id);
-		PageView pageView = new PageView(1);
-		List<FlowRecordInfo> recordList = flowrecordinfoDao.queryOne(pageView, recordInfo);
-		if (recordList.size() == 0) {
-			return;
-		}
-		recordInfo = recordList.get(0);
-		String url = findTaskFormKeyByTaskId(flowTaskInfo.getTaskId());
 		
 //		if (CollectionUtils.isEmpty(storage.getStorages())) {
 //			return;
@@ -630,12 +613,31 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 //				}
 //			}
 //		}
-		recordInfo.setHandlePerson(strUserName);
+	}
+	
+	public int nextWorkFlow(String handlePerson, FlowTaskInfo flowTaskInfo)
+	{
+		Task task = taskService.createTaskQuery()//
+				.taskId(flowTaskInfo.getTaskId())// 使用任务ID查询
+				.singleResult();
+		FlowRecordInfo recordInfo = flowTaskInfo.getFlowRecordInfo();
+		String excuteId = task.getExecutionId();
+		String proc_def_id = task.getProcessDefinitionId();
+		recordInfo.setExecution_ID(excuteId);
+		recordInfo.setProc_def_id(proc_def_id);
+		PageView pageView = new PageView(1);
+		List<FlowRecordInfo> recordList = flowrecordinfoDao.queryOne(pageView, recordInfo);
+		if (recordList.size() == 0) {
+			return 1;
+		}
+		recordInfo = recordList.get(0);
+		recordInfo.setHandlePerson(handlePerson);
 		flowrecordinfoDao.modify(recordInfo);
 		flowTaskInfo.setFlowRecordInfo(recordInfo);
 		// nextName是页面选择定的,这边测试
-		flowTaskInfo.setNextName(strUserName);
-		saveSubmitTask(flowTaskInfo);
+		flowTaskInfo.setNextName(handlePerson);
+		return saveSubmitTask(flowTaskInfo);
 	}
+	
 	
 }

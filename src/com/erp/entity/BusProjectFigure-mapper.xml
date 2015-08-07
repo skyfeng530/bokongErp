@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="busprojectfigure">
+    <sql id="selectId">
+        pfid,
+        ppid,
+        figureNo,
+        figureName,
+        figureRequest,
+        type,
+        batchNum,
+        `describe`
+    </sql>
+
+    <select id="query" resultType="BusProjectFigure" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from BusProjectFigure
+        <where>
+            <if test="t.pfid != null and t.pfid != ''">
+                pfid=#{pfid}
+            </if>
+        </where>
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="BusProjectFigure" resultType="int">
+        select count(0) from BusProjectFigure
+        <where>
+            <if test="t.pfid != null and t.pfid != ''">
+                pfid=#{pfid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="BusProjectFigure">
+        select * from BusProjectFigure where pfid=#{id}
+    </select>
+    <insert id="add" parameterType="BusProjectFigure">
+        insert into BusProjectFigure(
+        pfid,
+        ppid,
+        figureNo,
+        figureName,
+        figureRequest,
+        type,
+        batchNum,
+        `describe` )
+        values (
+        #{pfid},
+        #{ppid},
+        #{figureNo},
+        #{figureName},
+        #{figureRequest},
+        #{type},
+        #{batchNum},
+        #{describe})
+    </insert>
+    <update id="update" parameterType="BusProjectFigure">
+        update BusProjectFigure
+        <set>
+            ppid=#{ppid},
+            figureNo=#{figureNo},
+            figureName=#{figureName},
+            figureRequest=#{figureRequest},
+            type=#{type},
+            batchNum=#{batchNum},
+            `describe`=#{describe}
+        </set>
+        <where>
+            <if test="t.pfid != null and t.pfid != ''">
+                pfid=#{pfid}
+            </if>
+        </where>
+    </update>
+</mapper>

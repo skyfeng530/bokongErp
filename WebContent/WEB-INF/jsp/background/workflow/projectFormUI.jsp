@@ -7,12 +7,14 @@
 <head>
 	<title>提交申请</title>
     <link type="text/css" rel="stylesheet" href="${pageContext.servletContext.contextPath }/style/blue/pageCommon.css" />
-    <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/states.js"></script>
-    <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/eventFunction.js"></script>
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/projectFormWindow.js"></script>
     <script language="javascript"  src="${pageContext.servletContext.contextPath }/js/workflow/projectFormUI.js"></script>
     <script type="text/javascript">
-     var pdid = '${pd.key}';
+     var pdid = '${pdid}';
+     var taskId = '${taskId}';
+     var flowId = '${flowId}';
+     var projectName = '${projectName}';
+     var productName = '${productName}';
     </script>
 </head>
 <body>

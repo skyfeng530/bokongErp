@@ -106,7 +106,7 @@ function userDepartment(userName){
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">工号</span></td>
+            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
             <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属部门</span></td>
             <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">姓名</td>
             <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">性别</td>
@@ -124,7 +124,7 @@ function userDepartment(userName){
             <td height="20" ><span class="STYLE1">${key.userName}</span></td>
             <td height="20" ><span class="STYLE1" style="color: blue;">
             <c:forEach var="de" items="${key.departments}">
-              	${de.dName };
+              	${de.dName }&nbsp;
               </c:forEach>
             </span></td>
             <td height="20" ><span class="STYLE1">${key.userRealname}</span></td>

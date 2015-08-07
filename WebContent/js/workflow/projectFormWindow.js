@@ -11,20 +11,6 @@ function addGalleryWindow() {
 		frame : true,
 		items : [
 				{
-					columnWidth : 1,
-					layout : 'form',
-					labelWidth : 55,
-					labelAlign : "left",
-					baseCls : "x-plain",
-					labelAlign : "left",
-					items : [ {
-						id : 'galleryName_id',
-						fieldLabel : '图库名称',
-						xtype : 'textfield',
-						anchor : '40%'
-					} ]
-				},
-				{
 					id : 'picName_form_id',
 					columnWidth : .235,
 					layout : 'form',
@@ -33,9 +19,12 @@ function addGalleryWindow() {
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
+						id : 'picName_form_id_0',
 						fieldLabel : '图名称',
 						xtype : 'textfield',
-						anchor : '95%'
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '不能为空'
 					} ]
 				},
 				{
@@ -47,9 +36,12 @@ function addGalleryWindow() {
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
+						id : 'picId_form_id_0',
 						fieldLabel : '图ID',
 						xtype : 'textfield',
-						anchor : '95%'
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '不能为空'
 					} ]
 				},
 				{
@@ -62,9 +54,12 @@ function addGalleryWindow() {
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
+						id : 'picRequire_form_id_0',
 						fieldLabel : '图纸要求',
 						xtype : 'textfield',
-						anchor : '95%'
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '不能为空'
 					} ]
 				},
 				{
@@ -76,9 +71,13 @@ function addGalleryWindow() {
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
+						id : 'total_form_id_0',
 						fieldLabel : '数量(套)',
 						xtype : 'textfield',
-						anchor : '95%'
+						anchor : '95%',
+						regexp : /^\d+$/,
+						allowBlank : false,
+						blankText : '不能为空'
 					} ]
 				},
 				{
@@ -90,12 +89,13 @@ function addGalleryWindow() {
 						width : 20,
 						xtype : 'button',
 						handler : function() {
+							formNum++;
 							addFieldItemToForm(formNum, "picName_form_id");
 							addFieldItemToForm(formNum, "picId_form_id");
 							addFieldItemToForm(formNum, "picRequire_form_id");
-							addFieldItemToForm(formNum, "total_form_id");
+							addFieldItemToForm(formNum, "total_form_id",
+									/^\d+$/);
 							Ext.getCmp("mainPanel_id").doLayout();
-							formNum++;
 						}
 					} ]
 				},
@@ -129,6 +129,7 @@ function addGalleryWindow() {
 	});
 
 	var galleryWindow = new Ext.Window({
+		id : 'galleryWindow_id',
 		title : '添加图库',
 		layout : 'fit',
 		width : 920,
@@ -149,7 +150,7 @@ function addGalleryWindow() {
 		plain : false,
 		buttons : [ {
 			text : '添加',
-			handlere : function() {
+			handler : function() {
 				addWindowDataToGrid(formNum);
 			}
 		}, {
@@ -163,27 +164,74 @@ function addGalleryWindow() {
 	galleryWindow.show();
 }
 
-function addFieldItemToForm(formNum, fromId) {
+function addFieldItemToForm(formNum, fromId, _regexp) {
 	var subItemField = new Ext.form.TextField({
 		id : fromId + "_" + formNum,
-		anchor : '95%'
+		anchor : '95%',
+		allowBlank : false,
+		regexp : _regexp,
+		blankText : '不能为空'
 	});
 
 	Ext.getCmp(fromId).add(subItemField);
 }
 
 function addWindowDataToGrid(formNum) {
-	var _projectValue = Ext.getCmp("project_id").getValue();
-	var _productValue = Ext.getCmp("product_id").getValue();
-	var _galleryValue = Ext.getCmp("galleryName_id").getValue();
+	var _gridStore = Ext.getCmp("_gridPanel_id").getStore();
 
-	for (var i = 0; i < formNum; i++) {
-		
-		var _picName = Ext.getCmp("picName_form_id" + "_" + formNum).getValue();
-		var _picId = Ext.getCmp("picId_form_id" + "_" + formNum).getValue();
-		var _picRequire = Ext.getCmp("picRequire_form_id" + "_" + formNum).getValue();
-		var _picTotal = Ext.getCmp("total_form_id" + "_" + formNum).getValue();
-		
-		
+	var component = _gridStore.recordType;
+
+	for (var i = 0; i <= formNum; i++) {
+
+		if (!Ext.getCmp("picName_form_id" + "_" + i).isValid()
+				|| !Ext.getCmp("picId_form_id" + "_" + i).isValid()
+				|| !Ext.getCmp("picRequire_form_id" + "_" + i).isValid()
+				|| !Ext.getCmp("total_form_id" + "_" + i).isValid()) {
+			return "";
+		}
+
+		var _picName = Ext.getCmp("picName_form_id" + "_" + i).getValue();
+		var _picId = Ext.getCmp("picId_form_id" + "_" + i).getValue();
+		var _picRequire = Ext.getCmp("picRequire_form_id" + "_" + i)
+				.getValue();
+		var _picTotal = Ext.getCmp("total_form_id" + "_" + i).getValue();
+
+		_gridStore.insert(0, new component({
+			projectName : projectName,
+			productName : productName,
+			pictureId : _picId,
+			pictureName : _picName,
+			pictruerequire : _picRequire,
+			total : _picTotal
+		}));
 	}
+
+	Ext.getCmp("galleryWindow_id").close();
+}
+
+function getFigureGridData(_flowId) {
+	var _gridPanel = Ext.getCmp("_gridPanel_id");
+
+	var _gridStore = _gridPanel.getStore();
+
+	var localCount = _gridStore.getCount();
+
+	if (localCount <= 0) {
+		return "";
+	}
+
+	var jsonData = "[";
+
+	for (var i = 0; i < localCount; i++) {
+
+		var record = _gridStore.getAt(i).data;
+
+		jsonData += "{'figureNo':'" + isintNull(record.pictureId) + "', "
+				+ "'figureName':'" + isStrNull(record.pictureName) + "',"
+				+ "'figureRequest':'" + isStrNull(record.pictruerequire)
+				+ "','flowId':'" + _flowId + "','batchNum':'"
+				+ isintNull(record.total) + "'},";
+	}
+
+	return jsonData.substring(0, jsonData.length - 1) + "]";
 }

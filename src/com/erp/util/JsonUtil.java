@@ -75,6 +75,7 @@ public class JsonUtil {
 	 * @param jsonReuslt
 	 */
 	public static void outJson(HttpServletResponse response, String jsonReuslt) {
+		
 		response.setContentType("application/x-json");
 		response.setCharacterEncoding("UTF-8");
 

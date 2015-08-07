@@ -1,8 +1,6 @@
 package com.erp.util;
 
 import org.activiti.bpmn.model.EndEvent;
-import org.activiti.bpmn.model.ExclusiveGateway;
-import org.activiti.bpmn.model.ParallelGateway;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.bpmn.model.UserTask;
@@ -13,7 +11,6 @@ import org.activiti.bpmn.model.UserTask;
  *
  */
 public class TaskModuleUtil {
-	
 	/**
 	 *  创建UserTask
 	 * @param id  id
@@ -47,7 +44,7 @@ public class TaskModuleUtil {
 		flow.setTargetRef(to);
 		if (null != name) {
 			flow.setName(name);
-			flow.setConditionExpression("${outcome=='" + name + "'}");
+			//flow.setConditionExpression("${outcome=='" + name + "'}");
 		}
 		return flow;
 	}
@@ -70,23 +67,5 @@ public class TaskModuleUtil {
 		EndEvent endEvent = new EndEvent();
 		endEvent.setId("end");
 		return endEvent;
-	}
-	
-	/**
-	 * 创建并行网关
-	 * @return
-	 */
-	public static ParallelGateway createParallelGateway(){
-		ParallelGateway parallelGateway = new ParallelGateway();
-		return parallelGateway;
-	}
-	
-	/**
-	 * 创建排他网关
-	 * @return
-	 */
-	public static ExclusiveGateway createExclusiveGateWay(){
-		ExclusiveGateway exclusiveGateway = new ExclusiveGateway();
-		return exclusiveGateway;
 	}
 }

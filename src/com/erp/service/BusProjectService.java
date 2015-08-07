@@ -10,13 +10,16 @@ import com.erp.util.PageView;
 public interface BusProjectService{
     public PageView query(PageView pageView, BusProject busProject);
 
-	public boolean add(BusProject project);
+    public int add(BusProject busProject);
 
-	public void delete(String string);
-	
-	public long getNewProjectId();
+    public void modify(BusProject busProject);
 
-	public void modify(BusProject busProject);
+    public void delete(String id);
 
-	public BusProject getById(String strId);
+    public BusProject getById(String id);
+    
+    public List<BusProject> queryAll(BusProject busProject);
+    
+    public BusProject  getByProjectName(String projectName);
+
 }

@@ -14,7 +14,7 @@ public interface UserService{
 	
 	public void deleteByUsername(String userName);
 	
-	public void modify(User user);
+	public boolean modify(User user);
 	
 	public User getByUsername(String userName);
 	

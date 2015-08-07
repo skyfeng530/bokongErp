@@ -24,8 +24,8 @@ public class BusTaskServiceImpl implements BusTaskService {
     }
 
     @Override
-    public void add(BusTask busTask) {
-        busTaskDao.add(busTask);
+    public int add(BusTask busTask) {
+        return busTaskDao.add(busTask);
     }
 
     @Override

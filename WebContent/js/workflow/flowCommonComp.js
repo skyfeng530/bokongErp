@@ -1,5 +1,9 @@
-function getFlowCommonComp() {
-	return {
+function getFlowCommonComp(_taskId) {
+
+	var _processInfoStore = loadProcessInfo(_taskId);
+	var _processUser = loadProcessUser();
+	
+	return [{
 				id : 'processId',
 				name : "operate",
 				fieldLabel : "选择您要的操作",
@@ -50,7 +54,7 @@ function getFlowCommonComp() {
 				forceSelection : true,
 				valueNotFoundText : '',
 				emptyText : '请选择...',
-				mode : "local",
+				mode : "remote",
 				valueField : 'username',
 				displayField : 'username',
 			}, {
@@ -65,5 +69,5 @@ function getFlowCommonComp() {
 				fieldLabel : "批注",
 				allowBlank : false,
 				blankText : '不能为空'
-			};
+			}];
 }

@@ -1,20 +1,34 @@
 package com.erp.controller;
 
-import java.io.UnsupportedEncodingException;
-
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.erp.base.CommonDao;
+import com.erp.entity.BusTaskFlow;
+import com.erp.entity.BusTaskProductFlow;
+import com.erp.entity.FlowRecordInfo;
+import com.erp.entity.FlowTaskInfo;
+import com.erp.service.BusTaskFlowService;
+import com.erp.service.BusTaskProductFlowService;
+import com.erp.service.IWorkflowService;
+import com.erp.util.JsonUtil;
+import com.erp.util.Log4jUtils;
+import com.erp.util.Log4jUtils.LogLevel;
+import com.erp.util.SessionContext;
+
+import java.io.UnsupportedEncodingException;
+import org.springframework.ui.Model;
 import com.erp.entity.BusTask;
-
 import com.erp.service.BusTaskService;
-
 import com.erp.util.Common;
 import com.erp.util.PageView;
+
 
 /**
  * 
@@ -22,11 +36,99 @@ import com.erp.util.PageView;
 @Controller
 @RequestMapping("/background/project/task/")
 public class BusTaskController {
-    @Autowired
+
+	Log4jUtils logger = new Log4jUtils(BusTaskController.class);
+
+	@Autowired
+	private IWorkflowService workflowService;
+
+	@Autowired
+	private BusTaskProductFlowService bustaskproductflowService;
+
+	@Autowired
+	private BusTaskFlowService bustaskflowService;
+    
+	@Autowired
     private BusTaskService busTaskService;
-    /**
+	@Resource(name = "commonDao")
+	private CommonDao commonDao;
+
+	/**
+	 * 鑾峰彇椤圭洰鍚嶇О
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "saveStorage", method = RequestMethod.POST)
+	public void saveStorage(BusTaskProductFlow busTaskProductFlow, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		boolean result = false;
+
+		String pdid = request.getParameter("pdid");
+
+		FlowRecordInfo recordInfo = new FlowRecordInfo();
+
+		recordInfo.setHandlePerson(SessionContext.get(request).getUserName());
+		recordInfo.setCreatePerson(SessionContext.get(request).getUserName());
+
+		FlowTaskInfo flowTaskInfo = new FlowTaskInfo();
+		flowTaskInfo.setFlowRecordInfo(recordInfo);
+		flowTaskInfo.setPdid(pdid);
+
+		workflowService.saveFlow(flowTaskInfo, pdid);
+
+		busTaskProductFlow.setFlowId(flowTaskInfo.getFlowRecordInfo().getFlowId());
+
+		int addResult = bustaskproductflowService.add(busTaskProductFlow);
+
+		if (addResult > 0) {
+			result = true;
+		}
+
+		JsonUtil.outJson(response, "{success:'" + result + "'}");
+	}
+
+	/**
+	 * 鑾峰彇椤圭洰鍚嶇О
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "submitFormStorage", method = RequestMethod.POST)
+	public void submitFormStorage(FlowTaskInfo flowTaskInfo, BusTaskFlow busTaskFlow, HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.log(LogLevel.INFO, "[BusTaskController] submitForm_storage start");
+
+		String url = workflowService.findTaskFormKeyByTaskId(flowTaskInfo.getTaskId());
+
+		if ("task_input".equals(url)) {
+
+			bustaskflowService.delete(busTaskFlow.getFlowId() + "");
+			bustaskflowService.add(busTaskFlow);
+		}
+
+		boolean result = true;
+
+		flowTaskInfo.setPdid("BusTaskProcess");
+
+		String strUser = SessionContext.get(request).getUserName();
+
+		int iResult = workflowService.nextWorkFlow(strUser, flowTaskInfo);
+
+		if (0 == iResult) {
+			JsonUtil.outJson(response, "{success:'true'}");
+			return;
+		}
+
+		JsonUtil.outJson(response, "{success:'" + result + "'}");
+
+		logger.log(LogLevel.INFO, "[BusTaskController] submitForm_storage end");
+	}
+	
+	/**
     * @param model
-    * 存放返回界面的model
+    * 瀛樻斁杩斿洖鐣岄潰鐨刴odel
     * @return
     */
     @RequestMapping("query")
@@ -43,7 +145,7 @@ public class BusTaskController {
     }
 
     /**
-    * 保存数据
+    * 淇濆瓨鏁版嵁
     *
     * @param model
     * @param videoType
@@ -56,7 +158,7 @@ public class BusTaskController {
     }
 
     /**
-    * 跑到新增界面
+    * 璺戝埌鏂板鐣岄潰
     *
     * @param model
     * @return
@@ -67,7 +169,7 @@ public class BusTaskController {
     }
 
     /**
-    * 删除
+    * 鍒犻櫎
     *
     * @param model
     * @param videoTypeId
@@ -84,7 +186,7 @@ public class BusTaskController {
     }
 
     /**
-    * 修改界面
+    * 淇敼鐣岄潰
     *
     * @param model
     * @param videoTypeIds
@@ -102,7 +204,7 @@ public class BusTaskController {
     }
 
     /**
-    * 更新类型
+    * 鏇存柊绫诲瀷
     * 
     * @param model
     * @return
@@ -112,4 +214,5 @@ public class BusTaskController {
         busTaskService.modify(busTask);
         return "redirect:query.html";
     }
+
 }

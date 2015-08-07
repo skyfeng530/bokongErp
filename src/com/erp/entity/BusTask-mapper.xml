@@ -5,7 +5,6 @@
     <sql id="selectId">
         taskId,
         taskNo,
-        pid,
         ppid,
         totalSetNo,
         taskSource,
@@ -41,7 +40,6 @@
         insert into BusTask(
         taskId,
         taskNo,
-        pid,
         ppid,
         totalSetNo,
         taskSource,
@@ -49,7 +47,6 @@
         values (
         #{taskId},
         #{taskNo},
-        #{pid},
         #{ppid},
         #{totalSetNo},
         #{taskSource},
@@ -59,7 +56,6 @@
         update BusTask
         <set>
             taskNo=#{taskNo},
-            pid=#{pid},
             ppid=#{ppid},
             totalSetNo=#{totalSetNo},
             taskSource=#{taskSource},

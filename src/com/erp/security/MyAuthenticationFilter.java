@@ -17,6 +17,7 @@ import com.erp.dao.UserDao;
 import com.erp.entity.User;
 import com.erp.entity.UserLoginList;
 import com.erp.service.UserLoginListService;
+import com.erp.util.CiphertextUtil;
 import com.erp.util.Common;
 
 /**
@@ -71,8 +72,8 @@ public class MyAuthenticationFilter extends
 
 		String username = obtainUsername(request).trim();
 		String password = obtainPassword(request).trim();
-		// System.out.println(">>>>>>>>>>000<<<<<<<<<< username is " +
-		// username);
+		password = CiphertextUtil.passAlgorithmsCiphering(password, CiphertextUtil.MD5);
+		//System.out.println(">>>>>>>>>>000<<<<<<<<<< username is " + username);
 		if (Common.isEmpty(username) || Common.isEmpty(password)) {
 			BadCredentialsException exception = new BadCredentialsException(
 					"用户名或密码不能为空！");// 在界面输出自定义的信息！！

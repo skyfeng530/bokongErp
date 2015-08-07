@@ -14,8 +14,8 @@ import com.erp.util.PageView;
 @Transactional
 @Service("busprojectService")
 public class BusProjectServiceImpl implements BusProjectService {
-	@Autowired
-	private BusProjectDao busProjectDao;
+    @Autowired
+    private BusProjectDao busProjectDao;
 
     public PageView query(PageView pageView, BusProject busProject) {
         List<BusProject> list = busProjectDao.query(pageView, busProject);
@@ -23,32 +23,38 @@ public class BusProjectServiceImpl implements BusProjectService {
         return pageView;
     }
 
-	public boolean add(BusProject project)
-	{
-		int result = busProjectDao.add(project);
-		return result > 0 ? true : false;
-	}
+    @Override
+    public int add(BusProject busProject) {
+        return busProjectDao.add(busProject);
+    }
 
-	@Override
-	public void delete(String string) {
-		busProjectDao.delete(string);
-	}
+    @Override
+    public void modify(BusProject busProject) {
+        busProjectDao.modify(busProject);
+    }
 
-	@Override
-	public long getNewProjectId() {
-		// TODO Auto-generated method stub
-		return busProjectDao.getNewProjectId();
-	}
-
-	@Override
-	public void modify(BusProject busProject) {
-		busProjectDao.modify(busProject);
-	}
+    @Override
+    public void delete(String id) {
+        // TODO Auto-generated method stub
+        busProjectDao.delete(id);
+    }
 
     @Override
     public BusProject getById(String id) {
         // TODO Auto-generated method stub
         return busProjectDao.getById(id);
     }
+
+	@Override
+	public List<BusProject> queryAll(BusProject busProject) {
+		// TODO Auto-generated method stub
+		return busProjectDao.queryAll(busProject);
+	}
+    
+	@Override
+	public BusProject getByProjectName(String projectName) {
+		// TODO Auto-generated method stub
+		return busProjectDao.getByProjectName(projectName);
+	}
 
 }

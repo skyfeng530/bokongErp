@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
 		return userDao.getByUsername(userName);
 	}
 
-	public void modify(User user) {
-		userDao.modify(user);
+	public boolean modify(User user) {
+		return userDao.modify(user);
 	}
 
 	public int countUser(String userName, String userPassword) {
