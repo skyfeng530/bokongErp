@@ -20,7 +20,7 @@
 				<td height="30"
 					 colspan="2">
 					<div align="center">
-					<font color="blue" size="6" ><b>查看资源</b></font>
+					<font color="blue" size="6" ><b>添加资源</b></font>
 					</div>
 				</td>
 			</tr>
@@ -32,7 +32,7 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-						<select name="parentId">
+						<select name="parentId" readonly="readonly">
 							<option value="1010">顶级菜单</option>
 							<c:forEach var="key" items="${resLists}">
 								<option value="${key.id}" <c:if test="${key.id eq resources.id}">selected="selected"</c:if>>${key.name}</option>
@@ -118,6 +118,7 @@
 				<tr>
 					<td colspan="2" style="padding: 10px">
 						<div align="center">
+			 				<input type="submit" value="　保　存　" class="input_btn_style1"/>　　　　
 			 				<input id="backBt" type="button" value="　返　回　" class="input_btn_style1" onclick="javascript:window.location.href='javascript:history.go(-1)'"/>
 		 				</div>
 					</td>

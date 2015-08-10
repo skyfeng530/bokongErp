@@ -1,6 +1,7 @@
 package com.erp.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,16 @@ public class BusProjectFigureServiceImpl implements BusProjectFigureService {
         // TODO Auto-generated method stub
         return busProjectFigureDao.getById(id);
     }
+
+	@Override
+	public int getCountByCondition(BusProjectFigure busProjectFigure) {
+		// TODO Auto-generated method stub
+		return busProjectFigureDao.getCountByCondition(busProjectFigure);
+	}
+
+	@Override
+	public List<Map<String, String>> getFigureLibByPpid(String ppid) {
+		// TODO Auto-generated method stub
+		return busProjectFigureDao.getFigureLibByPpid(ppid);
+	}
 }

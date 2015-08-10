@@ -1,1 +1,4 @@
 .silk-application-delete { background-image:  url(../images/icon-delete.gif) !important; background-repeat: no-repeat; }
+.silk-application-add { background-image:  url(../images/icon-add.gif) !important; background-repeat: no-repeat; }
+.silk-application-edit { background-image:  url(../images/icon_edit.png) !important; background-repeat: no-repeat; }
+.silk-application-print { background-image:  url(../images/print-blue.png) !important; background-repeat: no-repeat; }

@@ -62,7 +62,7 @@ function mainView() {
 			xtype : 'combo',
 			store : _projecttStore,
 			allowBlank : false,
-			blankText : '不能为空',
+			blankText : '项目名称不能为空。',
 			triggerAction : 'all',
 			selectOnFocus : true,
 			forceSelection : true,
@@ -92,11 +92,19 @@ function mainView() {
 			forceSelection : true,
 			triggerAction : 'all',
 			valueNotFoundText : '',
-			blankText : '不能为空',
+			blankText : '产品名称不能为空。',
 			valueField : 'ppid',
 			displayField : 'productName',
 			store : _productStore,
 		}, {
+			id : 'figureLib_id',
+			name : "figureLib_name",
+			fieldLabel : "图库名称",
+			labelStyle : "margin-left:20px;",
+			xtype : 'textfield',
+			allowBlank : false,
+			blankText : '图库名称不能为空。'
+		},{
 			id : 'remark_id',
 			xtype : "textarea",
 			name : "mask",
@@ -114,14 +122,14 @@ function mainView() {
 						if (!Ext.getCmp("taskForm_id").getForm().isValid()) {
 							return;
 						}
-
-						var _taskNumValue = Ext.getCmp("product_id").getValue();
+						var _productValue = Ext.getCmp("product_id").getValue();
+						var _figureLibValue = Ext.getCmp("figureLib_id").getValue();
 						var _remarkValue = Ext.getCmp("remark_id").getValue();
-
 						Ext.Ajax.request({
 							url : '../project/figure/saveStorage.html',
 							params : {
-								ppid : _taskNumValue,
+								ppid : _productValue,
+								figureLib : _figureLibValue,
 								bak : _remarkValue,
 								pdid : pdid
 							},
@@ -130,14 +138,21 @@ function mainView() {
 								var result = Ext.decode(response.responseText);
 
 								if (result.success) {
-									Ext.Msg.alert("提示", "提交成功",
+									Ext.Msg.alert("提示", "提交成功。",
 											forWardToNextPage);
 								} else {
-									Ext.Msg.alert("提示", "提交失败");
+									if (result.msg=='exist')
+									{
+										Ext.Msg.alert("错误", "该图库已经存在。");
+									}
+									else
+									{
+										Ext.Msg.alert("错误", "提交失败。");
+									}
 								}
 							},
 							failure : function() {
-								Ext.Msg.alert("提示", "提交失败");
+								Ext.Msg.alert("错误", "提交失败。");
 							}
 						});
 

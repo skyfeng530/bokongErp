@@ -34,9 +34,16 @@
             </if>
         </where>
     </select>
+    
+     <select id="getCountByCondition" parameterType="BusProjectFigure" resultType="int">
+        select count(0) from BusProjectFigure where ppid=${ppid} and figureLib=#{figureLib} 
+    </select>
 
     <select id="getById" parameterType="String" resultType="BusProjectFigure">
         select * from BusProjectFigure where pfid=#{id}
+    </select>
+    <select id="getFigureLibByPpid" parameterType="String" resultType="java.util.HashMap">
+        select distinct figureLib  from BusProjectFigure where ppid=#{ppid}
     </select>
     <insert id="add" parameterType="BusProjectFigure">
         insert into BusProjectFigure(

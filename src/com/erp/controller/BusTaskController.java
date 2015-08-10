@@ -50,6 +50,7 @@ public class BusTaskController {
     
 	@Autowired
     private BusTaskService busTaskService;
+	
 	@Resource(name = "commonDao")
 	private CommonDao commonDao;
 
@@ -108,7 +109,7 @@ public class BusTaskController {
 			bustaskflowService.add(busTaskFlow);
 		}
 
-		boolean result = true;
+		boolean result = false;
 
 		flowTaskInfo.setPdid("BusTaskProcess");
 
@@ -116,13 +117,22 @@ public class BusTaskController {
 
 		int iResult = workflowService.nextWorkFlow(strUser, flowTaskInfo);
 
-		if (0 == iResult) {
-			JsonUtil.outJson(response, "{success:'true'}");
-			return;
+		if (0 == iResult)
+		{
+			//插入前缺少重复校验
+			result = bustaskflowService.addAll(busTaskFlow.getFlowId()+"") > 0;
 		}
-
-		JsonUtil.outJson(response, "{success:'" + result + "'}");
-
+		if (2 == iResult || result)
+		{
+			result=true;
+			bustaskflowService.delete(busTaskFlow.getFlowId()+"");
+			bustaskproductflowService.delete(busTaskFlow.getFlowId()+"");
+		}
+		if (iResult == 1)
+		{
+			result = true;
+		}
+		JsonUtil.outJson(response, "{success:"+result+"}");
 		logger.log(LogLevel.INFO, "[BusTaskController] submitForm_storage end");
 	}
 	

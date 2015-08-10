@@ -18,5 +18,11 @@ public class BusProjectFigureProductFlowDaoImpl extends BaseDaoImpl<BusProjectFi
 		return getSqlSession().selectList(this.getClassName() + ".getProductInfoByid", flowId);
 	}
 
+	@Override
+	public List<Map<String, String>> getDeviceAll() {
+		
+		return getSqlSession().selectList(this.getClassName() + ".getDeviceAll");
+	}
+
 	
 }

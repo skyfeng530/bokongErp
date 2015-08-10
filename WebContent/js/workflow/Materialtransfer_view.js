@@ -2,49 +2,82 @@
 var mNumber = 0;
 
 function topView() {
-	// create the Data Store
+
+	var proxy = new Ext.data.HttpProxy({
+		url : '../omInStorage/loadGridData.html',
+		method : 'POST'
+	});
+
+	var render = new Ext.data.JsonReader({
+		root : 'data',
+		totalProperty : 'totalCount'
+	}, [ {
+		name : 'FLOWID',
+		type : 'string'
+	}, {
+		name : 'PFID',
+		type : 'string'
+	}, {
+		name : 'FIGURENO',
+		type : 'string'
+	}, {
+		name : 'FIGURENAME',
+		type : 'string'
+	}, {
+		name : 'FIGUREREQUEST',
+		type : 'string'
+	}, {
+		name : 'DEVBATCHNO',
+		type : 'string'
+	}, {
+		name : 'TOTALNUMBER',
+		type : 'string'
+	}, {
+		name : 'VENDORNO',
+		type : 'string'
+	}, {
+		name : 'CHECKRST',
+		type : 'string'
+	}, {
+		name : 'CHECKNUM',
+		type : 'string'
+	}, {
+		name : 'QUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDGRADE',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDREASON',
+		type : 'string'
+	}, {
+		name : 'REVIEWRST',
+		type : 'string'
+	}, {
+		name : 'REVIEWGRP',
+		type : 'string'
+	}, {
+		name : 'REVIEWNO',
+		type : 'string'
+	}, {
+		name : 'GRAPHICPATH',
+		type : 'string'
+	}, {
+		name : 'BAK',
+		type : 'string'
+	} ]);
 	var store = new Ext.data.Store({
-		autoLoad : {
-			params : {
-				start : 0,
-				limit : 1
-			}
-		},
-		proxy : new Ext.data.PagingMemoryProxy(),
-		reader : new Ext.data.XmlReader({
-			record : 'total',
-			fields : [ {
-				name : 'materialNumber',
-				type : 'string'
-			}, {
-				name : 'idNumber',
-				type : 'int'
-			}, {
-				name : 'name',
-				type : 'string'
-			}, {
-				name : 'materialType',
-				type : 'int'
-			}, {
-				name : 'codeName',
-				type : 'string'
-			}, {
-				name : 'totalNumber',
-				type : 'int'
-			}, {
-				name : 'TestRequirements',
-				type : 'string'
-			}, {
-				name : 'TestResult',
-				type : 'string'
-			}, {
-				name : 'testLevel',
-				type : 'string'
-			}, {
-				name : 'bak',
-				type : 'string'
-			} ]
-		})
+		proxy : proxy,
+		reader : render,
+		autoLoad : true,
+		baseParams : {
+			flowId : flowId,
+			limit : 10,
+			offset : 0
+		}
 	});
 
 	var sm = new Ext.grid.CheckboxSelectionModel();
@@ -57,70 +90,53 @@ function topView() {
 		style : 'margin-left:82px; margin-top:10px; margin-bottom:10px',
 		store : store,
 		columns : [ sm, {
-			header : "序号",
-			align : 'center',
-			width : 82,
-			sortable : false,
-			dataIndex : 'materialNumber',
-			menuDisabled : true
-		}, {
-			header : "图库",
-			align : 'center',
-			width : 82,
-			sortable : false,
-			menuDisabled : true
-		}, {
-			header : "对应厂商名称",
-			align : 'center',
-			width : 82,
-			sortable : false,
-			menuDisabled : true
-		}, {
 			header : "图号",
-			width : 82,
+			width : 120,
 			align : 'center',
 			sortable : false,
-			dataIndex : 'idNumber',
+			dataIndex : 'FIGURENO',
 			menuDisabled : true
 		}, {
-			header : "子图号",
+			header : "对应厂商编号",
 			align : 'center',
-			width : 82,
+			width : 120,
 			sortable : false,
+			dataIndex : 'VENDORNO',
 			menuDisabled : true
 		}, {
 			header : "零件名称",
 			align : 'center',
-			width : 82,
+			width : 120,
 			sortable : false,
-			dataIndex : 'name',
+			dataIndex : 'FIGURENAME',
 			menuDisabled : true
 		}, {
-			header : '对应厂商编号',
+			header : "图纸要求",
 			align : 'center',
-			width : 82,
+			width : 120,
 			sortable : false,
-			menuDisabled : true
-		}, {
-			header : "零件编号",
-			align : 'center',
-			width : 82,
-			sortable : false,
-			dataIndex : 'codeName',
+			dataIndex : 'FIGUREREQUEST',
 			menuDisabled : true
 		}, {
 			header : "数量",
 			align : 'center',
-			width : 82,
+			width : 120,
 			sortable : false,
-			dataIndex : 'totalNumber',
+			dataIndex : 'TOTALNUMBER',
+			menuDisabled : true
+		}, {
+			header : "零件编号",
+			align : 'center',
+			width : 120,
+			sortable : false,
+			dataIndex : 'DEVBATCHNO',
 			menuDisabled : true
 		}, {
 			header : "备注",
 			align : 'center',
-			width : 82,
+			width : 120,
 			sortable : false,
-			dataIndex : 'bak',
+			dataIndex : 'BAK',
 			menuDisabled : true
 		}, {
 			header : "操作",
@@ -149,20 +165,20 @@ function topView() {
 		},
 		sm : sm,
 		autoWidth : true,
-		height : 300,
+		height : 343,
 		stripeRows : true,
 		frame : true,
-		iconCls : 'icon-grid'
-//		tbar : [ {
-//			text : '删除',
-//			iconCls : 'silk-application-delete',
-//			scope : this
-//		}, '-' ],
-//		bbar : new Ext.PagingToolbar({
-//			pageSize : 1,
-//			store : store,
-//			emptyMsg : "无记录"
-//		})
+		iconCls : 'icon-grid',
+		// tbar : [ {
+		// text : '删除',
+		// iconCls : 'silk-application-delete',
+		// scope : this
+		// }, '-' ],
+		bbar : new Ext.PagingToolbar({
+			pageSize : 1,
+			store : store,
+			emptyMsg : "无记录"
+		})
 	};
 
 	var partTransfer = {
@@ -171,190 +187,306 @@ function topView() {
 		autoHeight : true,
 		autoWidth : true,
 		layout : 'column',
-		items : [ {
-			columnWidth : .3,
-			layout : 'form',
-			labelWidth : 55,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				fieldLabel : '项目名称',
-				xtype : 'label',
-				anchor : '85%',
-				html : '<div style="padding-top:3px">' + projectName + '</div>'
-			} ]
-		}, {
-			columnWidth : .3,
-			layout : 'form',
-			labelWidth : 55,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				fieldLabel : '任务编号',
-				anchor : '85%',
-				xtype : 'label',
-				html : '<div style="padding-top:3px">' + taskName + '</div>'
-			} ]
-		}, {
-			columnWidth : .3,
-			layout : 'form',
-			labelWidth : 55,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				fieldLabel : '器件类型',
-				anchor : '85%',
-				xtype : 'label',
-				html : '<div style="padding-top:3px">光学器件（测试数据）</div>'
-			} ]
-		}, {
-			clumnWidth : 1,
-			layout : 'form',
-			labelWidth : 70,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ _gridPanel ]
-		}, {
-			columnWidth : .5,
-			layout : 'form',
-			labelWidth : 80,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				id : 'gallery_id',
-				fieldLabel : '图库',
-				anchor : '85%',
-				xtype : 'combo',
-				allowBlank : false,
-				blankText : '不能为空',
-				enableKeyEvents : true
-			}, {
-				id : 'picid',
-				fieldLabel : '图号',
-				anchor : '85%',
-				xtype : 'combo',
-				allowBlank : false,
-				blankText : '不能为空',
-				enableKeyEvents : true
-			}, {
-				id : 'subpicid',
-				fieldLabel : '子图号',
-				anchor : '85%',
-				xtype : 'combo',
-				allowBlank : false,
-				blankText : '不能为空',
-				enableKeyEvents : true
-			}, {
-				id : 'factoryCode',
-				fieldLabel : '对应厂商编号',
-				anchor : '85%',
-				xtype : 'textfield'
-			}, {
-				id : 'total',
-				fieldLabel : '数量',
-				anchor : '85%',
-				xtype : 'textfield',
-				allowBlank : false,
-				blankText : '不能为空'
-			}, {
-				id : 'add_batch_id',
-				fieldLabel : '批量输入功能',
-				anchor : '85%',
-				xtype : 'panel',
-				layout : 'column',
-				items : [ {
+		items : [
+				{
 					columnWidth : .3,
 					layout : 'form',
-					labelWidth : 35,
+					labelWidth : 55,
 					labelAlign : "left",
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
-						fieldLabel : '批号',
-						xtype : 'textfield',
-						width : 70
+						fieldLabel : '项目名称',
+						xtype : 'label',
+						anchor : '85%',
+						html : '<div style="padding-top:3px">' + projectName
+								+ '</div>'
 					} ]
-				}, {
-					columnWidth : .35,
+				},
+				{
+					columnWidth : .3,
 					layout : 'form',
-					labelWidth : 60,
+					labelWidth : 55,
 					labelAlign : "left",
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
-						fieldLabel : '起始序号',
-						xtype : 'numberfield',
-						width : 70
+						fieldLabel : '任务编号',
+						anchor : '85%',
+						xtype : 'label',
+						html : '<div style="padding-top:3px">' + taskName
+								+ '</div>'
 					} ]
-				}, {
-					columnWidth : .35,
+				},
+				{
+					columnWidth : .3,
 					layout : 'form',
-					labelWidth : 60,
+					labelWidth : 55,
 					labelAlign : "left",
 					baseCls : "x-plain",
 					labelAlign : "left",
 					items : [ {
-						fieldLabel : '结束序号',
+						fieldLabel : '器件类型',
+						anchor : '85%',
+						xtype : 'label',
+						html : '<div style="padding-top:3px">' + deviceType
+								+ '</div>'
+					} ]
+				},
+				{
+					clumnWidth : 1,
+					layout : 'form',
+					labelWidth : 70,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ _gridPanel ]
+				},
+				{
+					columnWidth : .5,
+					layout : 'form',
+					labelWidth : 100,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [
+							{
+								id : 'picid',
+								fieldLabel : '图号',
+								anchor : '85%',
+								xtype : 'combo',
+								mode : "remote",
+								allowBlank : false,
+								editable : false,
+								blankText : '不能为空',
+								emptyText : '请选择...',
+								selectOnFocus : true,
+								forceSelection : true,
+								triggerAction : 'all',
+								valueNotFoundText : '',
+								valueField : 'FIGURENO',
+								displayField : 'FIGURENO',
+								enableKeyEvents : true,
+								store : new Ext.data.Store({
+									autoLoad : true,
+									proxy : new Ext.data.HttpProxy({
+										url : '../omInStorage/loadFigure.html',
+										method : 'POST'
+									}),
+									baseParams : {
+										bustaskId : bustaskId
+									},
+									reader : new Ext.data.JsonReader({
+										root : "data",
+									}, Ext.data.Record.create([ {
+										name : 'FIGURENO'
+									}, {
+										name : 'FIGURENAME'
+									} ]))
+								}),
+								listeners : {
+									'select' : function(i, r) {
+										Ext.getCmp("componentName_id")
+												.setValue(r.data.FIGURENAME);
+
+										var drawingReq = Ext
+												.getCmp("Drawingreq_id");
+										drawingReq.store.baseParams.figureno = this
+												.getValue();
+										drawingReq.setValue();
+										drawingReq.getStore().reload();
+									}
+								}
+							},
+							{
+								id : 'componentName_id',
+								fieldLabel : '零件名称',
+								anchor : '85%',
+								xtype : 'textfield',
+								readOnly : true
+							},
+							{
+								id : 'addComponNo_id',
+								fieldLabel : '零件编号配置方式',
+								anchor : '85%',
+								xtype : 'combo',
+								allowBlank : false,
+								editable : false,
+								blankText : '不能为空',
+								emptyText : '请选择...',
+								selectOnFocus : true,
+								forceSelection : true,
+								triggerAction : 'all',
+								valueNotFoundText : '',
+								value : '1',
+								valueField : 'value',
+								displayField : 'text',
+								enableKeyEvents : true,
+								mode : "local",
+								store : workflow.states.addComponTypeStore,
+								listeners : {
+									'select' : function(i, r) {
+
+										if (this.getValue() == "1") {
+											Ext.getCmp("add_batch_id")
+													.setVisible(false);
+											Ext.getCmp("componentNo_id")
+													.setVisible(true);
+											Ext.getCmp("componentNo_id")
+													.reset();
+										} else {
+											Ext.getCmp("add_batch_id")
+													.setVisible(true);
+											Ext.getCmp("componentNo_id")
+													.setVisible(false);
+											Ext.getCmp("batchNo_id").reset();
+											Ext.getCmp("batch_start_id")
+													.reset();
+											Ext.getCmp("batch_end_id").reset();
+										}
+									}
+								}
+							}, {
+								id : 'componentNo_id',
+								fieldLabel : '零件编号',
+								anchor : '85%',
+								xtype : 'textfield',
+								allowBlank : false,
+								blankText : '不能为空',
+								disable : false,
+								hidden : false
+							}, {
+								id : 'add_batch_id',
+								disable : true,
+								hidden : true,
+								fieldLabel : '批量输入',
+								anchor : '85%',
+								xtype : 'panel',
+								layout : 'column',
+								items : [ {
+									columnWidth : .3,
+									layout : 'form',
+									labelWidth : 35,
+									labelAlign : "left",
+									baseCls : "x-plain",
+									labelAlign : "left",
+									items : [ {
+										id : 'batchNo_id',
+										fieldLabel : '批号',
+										xtype : 'textfield',
+										width : 70
+									} ]
+								}, {
+									columnWidth : .35,
+									layout : 'form',
+									labelWidth : 60,
+									labelAlign : "left",
+									baseCls : "x-plain",
+									labelAlign : "left",
+									items : [ {
+										id : 'batch_start_id',
+										fieldLabel : '起始序号',
+										xtype : 'numberfield',
+										width : 65,
+										decimalPrecision : 0,
+										allowNegative : false,
+										minValue : 1,
+										minText : '只能输入大于1的整数'
+									} ]
+								}, {
+									columnWidth : .35,
+									layout : 'form',
+									labelWidth : 60,
+									labelAlign : "left",
+									baseCls : "x-plain",
+									labelAlign : "left",
+									items : [ {
+										id : 'batch_end_id',
+										fieldLabel : '结束序号',
+										xtype : 'numberfield',
+										width : 70,
+										decimalPrecision : 0,
+										allowNegative : false,
+										minValue : 1,
+										minText : '只能输入大于1的整数'
+									} ]
+								} ]
+							}, {
+								xtype : 'button',
+								text : '增加',
+								width : '80',
+								style : 'margin-left:84px;',
+								handler : function() {
+									mNumber = mNumber + 1;
+									addFormDataToGrid_handler();
+								}
+							} ]
+				}, {
+					columnWidth : .5,
+					layout : 'form',
+					labelWidth : 80,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'factoryCode',
+						fieldLabel : '对应厂商编号',
+						anchor : '85%',
+						xtype : 'textfield'
+					}, {
+						id : 'Drawingreq_id',
+						fieldLabel : '图纸要求',
+						anchor : '85%',
+						enableKeyEvents : true,
+						xtype : 'combo',
+						mode : "remote",
+						allowBlank : false,
+						editable : false,
+						blankText : '不能为空',
+						emptyText : '请选择...',
+						selectOnFocus : true,
+						forceSelection : true,
+						triggerAction : 'all',
+						valueNotFoundText : '',
+						valueField : 'PFID',
+						displayField : 'FIGUREREQUEST',
+						enableKeyEvents : true,
+						store : new Ext.data.Store({
+							autoLoad : true,
+							proxy : new Ext.data.HttpProxy({
+								url : '../omInStorage/loadFigureRequest.html',
+								method : 'POST'
+							}),
+							reader : new Ext.data.JsonReader({
+								root : "data",
+							}, Ext.data.Record.create([ {
+								name : 'PFID'
+							}, {
+								name : 'FIGUREREQUEST'
+							} ]))
+						})
+					}, {
+						id : 'total_id',
+						fieldLabel : '数量',
+						anchor : '85%',
 						xtype : 'numberfield',
-						width : 75
+						allowBlank : false,
+						blankText : '不能为空',
+						decimalPrecision : 0,
+						allowNegative : false,
+						minValue : 1,
+						minText : '只能输入大于1的整数'
+					}, {
+						id : 'remark_id',
+						fieldLabel : '备注',
+						anchor : '85%',
+						xtype : 'textfield'
+					}, {
+						xtype : 'label',
+						html : '&nbsp;',
+						style : 'margin-bottom : 20px;',
 					} ]
 				} ]
-			}, {
-				xtype : 'button',
-				text : '增加',
-				width : '80',
-				style : 'margin-left:84px;',
-				handler : function() {
-					mNumber = mNumber + 1;
-					addFormDataToGrid_handler();
-				}
-			} ]
-		}, {
-			columnWidth : .5,
-			layout : 'form',
-			labelWidth : 80,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				id : 'factoryName',
-				fieldLabel : '对应厂商名称',
-				anchor : '85%',
-				xtype : 'textfield'
-			}, {
-				id : 'componentName',
-				fieldLabel : '零件名称',
-				anchor : '85%',
-				xtype : 'combo'
-			}, {
-				id : 'Drawingreq_id',
-				fieldLabel : '图纸要求',
-				anchor : '85%',
-				xtype : 'combo',
-				enableKeyEvents : true
-			}, {
-				id : 'componentNumber',
-				fieldLabel : '零件编号',
-				anchor : '85%',
-				xtype : 'textfield',
-				allowBlank : false,
-				blankText : '不能为空'
-			}, {
-				id : 'remark_id',
-				fieldLabel : '备注',
-				anchor : '85%',
-				xtype : 'textfield'
-			}, {
-				xtype : 'label',
-				html : '&nbsp;',
-				style : 'margin-bottom : 20px;',
-			} ]
-		} ]
 	};
 
 	return partTransfer;
@@ -362,7 +494,7 @@ function topView() {
 
 function mainView() {
 	var _topPanel = topView();
-	
+
 	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
@@ -379,20 +511,11 @@ function mainView() {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [
-				_topPanel,
-				_flowCommonComp],
+		items : [ _topPanel, _flowCommonComp ],
 		buttons : [
 				{
 					text : "提交",
 					handler : function() {
-
-						var _gridData = getGridData();
-
-						// if (Ext.isEmpty(_gridData)) {
-						// Ext.Msg.alert("提示", "请先配置零件数据。");
-						// return;
-						// }
 
 						if (!Ext.getCmp("processId").isValid()) {
 							return;
@@ -412,14 +535,11 @@ function mainView() {
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../workflow/submitForm_storage.html',
+							url : '../omInStorage/submitForm_storage.html',
 							timeout : 300000,
 							params : {
 								taskId : taskId,
 								comment : commonRemarkValue,
-								data : _gridData,
-								projectName : projectName,
-								taskName : taskName,
 								outcome : outcome,
 								nextName : nextName
 							},
@@ -447,6 +567,14 @@ function mainView() {
 	});
 
 	mainPanel.render("main_id");
+
+	if ("光学" == deviceType) {
+		Ext.getCmp("total_id").setValue(1);
+		Ext.getCmp("total_id").setDisabled(true);
+	} else {
+		Ext.getCmp("total_id").reset();
+		Ext.getCmp("total_id").setDisabled(false);
+	}
 }
 
 function initview() {

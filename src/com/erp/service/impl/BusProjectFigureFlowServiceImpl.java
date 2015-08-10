@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.erp.base.CommonDao;
 import com.erp.dao.BusProjectFigureFlowDao;
 import com.erp.entity.BusProjectFigureFlow;
+import com.erp.entity.BusProjectFigureFlowVo;
 import com.erp.service.BusProjectFigureFlowService;
 import com.erp.util.PageView;
 
@@ -32,12 +33,12 @@ public class BusProjectFigureFlowServiceImpl implements BusProjectFigureFlowServ
 
 	@Override
 	public int add(BusProjectFigureFlow busProjectFigureFlow) {
-		String sql = "INSERT INTO BUSPROJECTFIGUREFLOW(FLOWID, FIGURENO, FIGURENAME, FIGUREREQUEST, BATCHNUM) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO BUSPROJECTFIGUREFLOW(FLOWID, FIGURENO, FIGURENAME, FIGUREREQUEST, BATCHNUM, `TYPE`,`DESCRIBE`) VALUES (?, ?, ?, ?, ?,?,?)";
 
 		return this.commonDao.update(sql,
 				new Object[] { busProjectFigureFlow.getFlowId(), busProjectFigureFlow.getFigureNo(),
 						busProjectFigureFlow.getFigureName(), busProjectFigureFlow.getFigureRequest(),
-						busProjectFigureFlow.getBatchNum()});
+						busProjectFigureFlow.getBatchNum(),busProjectFigureFlow.getType(),busProjectFigureFlow.getDescribe()});
 	}
 
 	@Override
@@ -66,4 +67,31 @@ public class BusProjectFigureFlowServiceImpl implements BusProjectFigureFlowServ
 	public int getFiguretotal() {
 		return busProjectFigureFlowDao.count();
 	}
+
+	@Override
+	public int delete(BusProjectFigureFlow busProjectFigureFlow) {
+		// TODO Auto-generated method stub
+		return busProjectFigureFlowDao.delete(busProjectFigureFlow);
+	}
+
+	@Override
+	public List<Map<String, String>> queryFigureName(
+			BusProjectFigureFlow busProjectFigureFlow) {
+		// TODO Auto-generated method stub
+		return busProjectFigureFlowDao.queryFigureName(busProjectFigureFlow);
+	}
+
+	@Override
+	public int insertALL(String flowId) {
+		// TODO Auto-generated method stub
+		return busProjectFigureFlowDao.insertALL(flowId);
+	}
+
+	@Override
+	public int update(BusProjectFigureFlowVo busProjectFigureFlowVo) {
+		// TODO Auto-generated method stub
+		return busProjectFigureFlowDao.update(busProjectFigureFlowVo);
+	}
+	
+	
 }

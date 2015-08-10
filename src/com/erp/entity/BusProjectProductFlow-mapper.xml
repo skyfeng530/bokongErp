@@ -26,9 +26,13 @@
         select * from BusProjectProductFlow where flowId=${flowid}
     </select>
     
-    <select id="conditionSelect" parameterType="BusProjectProduct" resultType="int">
-        select count(*) from BusProjectProductFlow where productNo = #{productNo} and productName= #{productName} and status= #{status} and flowId 
-        in (select flowid from busprojectproductprojectflow where projectId=#{projectId})
+    <select id="conditionSelect" parameterType="BusProjectProductFlowVo" resultType="int">
+        select sum(a.countt) from (
+        select count(*)  as countt from BusProjectProductFlow where productNo = #{productNo} and productName= #{productName} and status= #{status} and flowId = #{flowId}
+        UNION ALL
+        select count(*) as countt from  busprojectproduct where productNo = #{productNo} and productName= #{productName} and status= #{status} and projectId
+        in (select projectId from busprojectproductprojectflow where flowId=#{flowId}))
+        as a
     </select>
     <insert id="add" parameterType="BusProjectProductFlow">
         insert into BusProjectProductFlow(
@@ -56,7 +60,10 @@
             status=#{statusOld} and productNo=#{productNoOld} and productName=#{productNameOld} and flowId=#{flowId}
          </where>
     </update>
-    <delete id="deleteById" parameterType="BusProjectProductFlow">
-        delete from BusProjectProductFlow where productNo=#{productNo} and productName=#{productName} and flowId=#{flowId}
+    <delete id="deleteByObj" parameterType="BusProjectProductFlow">
+        delete from BusProjectProductFlow where productNo=#{productNo} and productName=#{productName} and status=#{status} and flowId=#{flowId}
+    </delete>
+    <delete id="deleteById"  parameterType="String">
+      delete from  BusProjectProductFlow where flowId = #{id};
     </delete>
 </mapper>

@@ -38,18 +38,22 @@
                 </table></td>
                 <td width="52"><table width="88%">
                   <tr>
+                  <sec:authorize ifAnyGranted="ROLE_sys_res_delete">
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/11.gif" width="14" height="14" /></div></td>
                     <td class="STYLE4">
                     <a href="javascript:void(0);"  onclick="return deleteAll()">
                     	删除
                     </a>
                     	</td>
+                  </sec:authorize>
                   </tr>
                 </table></td>
                 <td width="60"><table width="90%">
                   <tr>
+                  <sec:authorize ifAnyGranted="ROLE_sys_resc_addUI">
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
                     <td class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/resources/addUI.html">新增</a></td>
+                  </sec:authorize>
                   </tr>
                 </table></td>
               </tr>
@@ -116,6 +120,12 @@
             <td height="20" ><span class="STYLE1">${resources.level}</span></td>
             <td height="20" ><span class="STYLE1">${resources.parentName}</span></td>
             <td height="20" ><span class="STYLE4">
+            <sec:authorize ifAnyGranted="ROLE_sys_res_show">
+            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
+            	<a href="${pageContext.servletContext.contextPath }/background/resources/getById.html?resourcesId=${resources.id}&&typeKey=0">
+            	显示详细信息</a>
+            	&nbsp;&nbsp;
+				</sec:authorize>
             <sec:authorize ifAnyGranted="ROLE_sys_res_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
             <a href="${pageContext.servletContext.contextPath }/background/resources/getById.html?resourcesId=${resources.id}&&typeKey=1">

@@ -4,8 +4,16 @@ package com.erp.entity;
 public class BusProjectFigureProductFlow implements java.io.Serializable {
     private long flowId;
     private int ppid;
+    private String figureLib;
     private String bak;
-    public BusProjectFigureProductFlow() {
+    
+    public String getFigureLib() {
+		return figureLib;
+	}
+	public void setFigureLib(String figureLib) {
+		this.figureLib = figureLib;
+	}
+	public BusProjectFigureProductFlow() {
     }
     public long getFlowId() {
         return flowId;

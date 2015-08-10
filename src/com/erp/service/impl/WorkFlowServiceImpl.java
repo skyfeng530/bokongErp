@@ -157,12 +157,6 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 			variables.put("inputUser", leave.getUsername());//表示惟一用户
 		}
 		if ("BusStorage".equals(pdid)) {
-			/*BusStorage storage = storageDao.getById(id + "");
-			//更新请假单的请假状态从0变成1（初始录入-->审核中）
-			storage.setState(1);
-			storageDao.modify(storage);
-			//使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
-			key = storage.getClass().getSimpleName();*/
 			variables.put("nextName", record.getHandlePerson());//表示惟一用户
 		}
 		if ("BusProject".equals(pdid)) {
@@ -577,7 +571,12 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 				.singleResult();
 		// 流程结束了
 		if (pi == null) {
-			return 0;
+			//更新flowrecordinfo   state closePerson  closeTime
+//			recordInfo.setState(0);
+//			recordInfo.setClosePerson(nextName);
+//			recordInfo.setCloseTime(closeTime);
+//			flowrecordinfoDao.modify(recordInfo);
+			return  outcome.equals("撤销") ? 2:0;
 		}
 		return 1;
 	}

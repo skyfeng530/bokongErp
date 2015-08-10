@@ -1,10 +1,13 @@
 package com.erp.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,14 +20,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.erp.dao.UserDao;
+import com.erp.entity.InstrumentDevice;
 import com.erp.entity.Resources;
 import com.erp.entity.User;
 import com.erp.entity.UserLoginList;
+import com.erp.service.IWorkflowService;
+import com.erp.service.InstrumentDeviceService;
 import com.erp.service.ResourcesService;
 import com.erp.service.UserLoginListService;
 import com.erp.util.CiphertextUtil;
 import com.erp.util.Common;
+import com.erp.util.DateUtil;
 import com.erp.util.Log4jUtils;
+import com.erp.util.PageView;
+import com.erp.util.SessionContext;
 import com.erp.util.Log4jUtils.LogLevel;
 
 /**
@@ -44,6 +53,11 @@ public class BackgroundController
 	private ResourcesService resourcesService;
 	@Autowired
 	private AuthenticationManager myAuthenticationManager;
+	@Autowired
+	private InstrumentDeviceService instrumentdeviceService;
+	
+	@Autowired
+	private IWorkflowService workflowService;
 	/**
 	 * @return
 	 */
@@ -85,7 +99,7 @@ public class BackgroundController
 			request.getSession().setAttribute("userSession", users);
 			// 记录登录信息
 			UserLoginList userLoginList = new UserLoginList();
-			userLoginList.setUserName(users.getUserName());
+			userLoginList.setUserId(users.getUserId());
 			userLoginList.setLoginIp(Common.toIpAddr(request));
 			userLoginListService.add(userLoginList);
 		} catch (AuthenticationException ae) {  
@@ -126,9 +140,34 @@ public class BackgroundController
 	}
 	
 	@RequestMapping ("tab")
-	public String tab(Model model)
+	public String tab(Model model, HttpServletRequest request)
 	{
-		return "/background/framework/tab/tab";
+		PageView pageView =  new PageView(1);
+		pageView.setPageCount(5);
+		pageView.setPageSize(5);
+		// 从Session中获取当前用户名
+		String name = SessionContext.get(request).getUserName();
+		// 使用当前用户名查询正在执行的任务表，获取当前任务的集合List<Task>
+		List<Task> tasks = workflowService.findTaskListByName(pageView, name);
+		pageView.setRecords(tasks);
+		model.addAttribute("pageView", pageView);
+		
+		PageView pageView1 =  new PageView(1);
+		pageView1 = instrumentdeviceService.query(pageView1, new InstrumentDevice());
+		List<InstrumentDevice> list1 = pageView1.getRecords();
+		List<InstrumentDevice> list2 = new ArrayList<InstrumentDevice>();
+		int temp = 0;
+		for (int i = list1.size() - 1; i > 0; i--) {
+			InstrumentDevice device = list1.get(i);
+			Date enableDate = DateUtil.parse(device.getEnableDate(), DateUtil.FORMAT_LONG);
+			Date disableTime = DateUtil.addDay(enableDate, -device.getHintVerifyDays());
+			if (DateUtil.getMillis(new Date()) > disableTime.getTime() && temp < 5) {
+				list2.add(device);
+				temp++;
+			}
+		}
+		model.addAttribute("deviceTips", list2);
+		return "/background/framework/tab/tabMsg";
 	}
 	
 	@RequestMapping ("center")

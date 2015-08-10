@@ -10,12 +10,14 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class UserLoginList implements java.io.Serializable {
 	private int loginId;
+	private int userId;
 	private String userName;
 	private Date loginTime;
 	private String loginIp;
 	public UserLoginList(){}
-	public UserLoginList(int loginId,Date loginTime,String loginIp,String userName){
+	public UserLoginList(int loginId,int userId,Date loginTime,String loginIp,String userName){
 		this.loginId = loginId;
+		this.userId = userId;
 		this.loginTime = loginTime;
 		this.loginIp = loginIp;
 		this.userName = userName;
@@ -26,6 +28,12 @@ public class UserLoginList implements java.io.Serializable {
 	}
 	public void setLoginId(int loginId) {
 		this.loginId = loginId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public Date getLoginTime() {
 		return loginTime;

@@ -1,3 +1,5 @@
+
+
 Ext.namespace('workflow.states');
 
 workflow.states.categoryStore = new Ext.data.SimpleStore({
@@ -33,4 +35,24 @@ workflow.states.trialResultsStore = new Ext.data.SimpleStore({
 workflow.states.trialOrgStore = new Ext.data.SimpleStore({
 	fields : [ 'value', 'text' ],
 	data : [ [ '1', '审理小组' ], [ '2', '审理委员会' ]]
+});
+
+workflow.states.scrapStore = new Ext.data.SimpleStore({
+	fields : [ 'value', 'text' ],
+	data : [ [ '1', '不合格审理' ], [ '2', '研制过程相关问题报告' ]]
+});
+
+workflow.states.problemStore = new Ext.data.SimpleStore({
+	fields : [ 'value', 'text' ],
+	data : [ [ '1', '设计' ], [ '2', '工艺' ], [ '3', '条件' ], [ '4', '操作' ], [ '5', '其他' ]]
+});
+
+workflow.states.omdiscardReviewStore = new Ext.data.SimpleStore({
+	fields : [ 'value', 'text' ],
+	data : [ [ '1', '可报废' ], [ '2', '不可报废' ]]
+});
+
+workflow.states.addComponTypeStore = new Ext.data.SimpleStore({
+	fields : [ 'value', 'text' ],
+	data : [ [ '1', '逐条插入' ], [ '2', '批量插入' ]]
 });

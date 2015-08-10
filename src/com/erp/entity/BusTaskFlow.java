@@ -4,7 +4,7 @@ package com.erp.entity;
 public class BusTaskFlow implements java.io.Serializable {
     private Long flowId;
     private String taskNo;
-    private Integer totalSetNo;
+    private Integer totalSetNum;
     private String taskSource;
     private String bak;
     public BusTaskFlow() {
@@ -21,12 +21,6 @@ public class BusTaskFlow implements java.io.Serializable {
     public void setTaskNo(String taskNo) {
         this.taskNo =taskNo;
     }
-    public Integer getTotalSetNo() {
-        return totalSetNo;
-    }
-    public void setTotalSetNo(Integer totalSetNo) {
-        this.totalSetNo =totalSetNo;
-    }
     public String getTaskSource() {
         return taskSource;
     }
@@ -39,4 +33,11 @@ public class BusTaskFlow implements java.io.Serializable {
     public void setBak(String bak) {
         this.bak =bak;
     }
+	public Integer getTotalSetNum() {
+		return totalSetNum;
+	}
+	public void setTotalSetNum(Integer totalSetNum) {
+		this.totalSetNum = totalSetNum;
+	}
+    
 }

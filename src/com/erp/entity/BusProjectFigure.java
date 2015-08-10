@@ -4,13 +4,21 @@ package com.erp.entity;
 public class BusProjectFigure implements java.io.Serializable {
     private int pfid;
     private int ppid;
+    private String figureLib;
     private String figureNo;
     private String figureName;
     private String figureRequest;
     private int type;
     private int batchNum;
     private String describe;
-    public BusProjectFigure() {
+    
+    public String getFigureLib() {
+		return figureLib;
+	}
+	public void setFigureLib(String figureLib) {
+		this.figureLib = figureLib;
+	}
+	public BusProjectFigure() {
     }
     public int getPfid() {
         return pfid;

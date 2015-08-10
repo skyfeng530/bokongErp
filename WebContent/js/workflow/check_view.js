@@ -1,47 +1,69 @@
 function topView() {
 
 	var proxy = new Ext.data.HttpProxy({
-		url : '../workflow/loadFormGridData.html',
+		url : '../omInStorage/loadGridData.html',
 		method : 'POST'
 	});
+
 	var render = new Ext.data.JsonReader({
 		root : 'data',
 		totalProperty : 'totalCount'
 	}, [ {
-		name : 'materialNumber',
+		name : 'FLOWID',
 		type : 'string'
 	}, {
-		name : 'idNumber',
-		type : 'int'
-	}, {
-		name : 'name',
+		name : 'PFID',
 		type : 'string'
 	}, {
-		name : 'materialType',
-		type : 'int'
-	}, {
-		name : 'codeName',
+		name : 'FIGURENO',
 		type : 'string'
 	}, {
-		name : 'totalNumber',
-		type : 'int'
-	}, {
-		name : 'TestRequirements',
+		name : 'FIGURENAME',
 		type : 'string'
 	}, {
-		name : 'TestResult',
+		name : 'FIGUREREQUEST',
 		type : 'string'
 	}, {
-		name : 'inspectionMode',
+		name : 'DEVBATCHNO',
 		type : 'string'
 	}, {
-		name : 'savePos',
+		name : 'TOTALNUMBER',
 		type : 'string'
 	}, {
-		name : 'testLevel',
+		name : 'VENDORNO',
 		type : 'string'
 	}, {
-		name : 'bak',
+		name : 'CHECKRST',
+		type : 'string'
+	}, {
+		name : 'CHECKNUM',
+		type : 'string'
+	}, {
+		name : 'QUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDGRADE',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDREASON',
+		type : 'string'
+	}, {
+		name : 'REVIEWRST',
+		type : 'string'
+	}, {
+		name : 'REVIEWGRP',
+		type : 'string'
+	}, {
+		name : 'REVIEWNO',
+		type : 'string'
+	}, {
+		name : 'GRAPHICPATH',
+		type : 'string'
+	}, {
+		name : 'BAK',
 		type : 'string'
 	} ]);
 	var store = new Ext.data.Store({
@@ -49,12 +71,23 @@ function topView() {
 		reader : render,
 		autoLoad : true,
 		baseParams : {
-			flowId : flowId
+			flowId : flowId,
+			limit : 10,
+			offset : 0
 		}
 	});
 
+	function renderer_handler(value) {
+		if (Ext.isEmpty(value)) {
+			return "";
+		}
+
+		return '<div ext:qtitle="" ext:qtip="' + value + '">' + value
+				+ '</div>';
+	}
+
 	var sm = new Ext.grid.CheckboxSelectionModel({
-		singleSelect : true
+		singleSelect : false
 	});
 
 	var _gridPanel = {
@@ -64,112 +97,110 @@ function topView() {
 		style : 'margin-left:102px; margin-top:10px; margin-bottom:10px',
 		store : store,
 		columns : [ sm, {
-			header : "序号",
-			width : 55,
-			sortable : false,
-			align : 'center',
-			dataIndex : 'materialNumber',
-			menuDisabled : true
-		}, {
-			header : "图库",
-			width : 55,
-			sortable : false,
-			align : 'center',
-			menuDisabled : true
-		}, {
-			header : "对应厂商名称",
-			width : 55,
-			sortable : false,
-			menuDisabled : true
-		}, {
 			header : "图号",
-			width : 55,
-			sortable : false,
+			width : 60,
 			align : 'center',
-			dataIndex : 'idNumber',
+			sortable : false,
+			dataIndex : 'FIGURENO',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
-			header : "子图号",
-			width : 55,
-			sortable : false,
+			header : "对应厂商编号",
 			align : 'center',
+			width : 90,
+			sortable : false,
+			dataIndex : 'VENDORNO',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "零件名称",
-			width : 55,
-			sortable : false,
 			align : 'center',
-			dataIndex : 'name',
+			width : 65,
+			sortable : false,
+			dataIndex : 'FIGURENAME',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
-			header : '对应厂商编号',
-			width : 55,
-			sortable : false,
+			header : "图纸要求",
 			align : 'center',
-			menuDisabled : true
-		}, {
-			header : "零件编号",
-			width : 55,
+			width : 65,
 			sortable : false,
-			dataIndex : 'codeName',
-			align : 'center',
+			dataIndex : 'FIGUREREQUEST',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "数量",
-			width : 55,
-			sortable : false,
-			dataIndex : 'totalNumber',
 			align : 'center',
+			width : 40,
+			sortable : false,
+			dataIndex : 'TOTALNUMBER',
+			renderer : renderer_handler,
+			menuDisabled : true
+		}, {
+			header : "零件编号",
+			align : 'center',
+			width : 65,
+			sortable : false,
+			dataIndex : 'DEVBATCHNO',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "检验结果",
-			width : 55,
+			width : 65,
 			sortable : false,
-			align : 'center',
+			dataIndex : 'CHECKRST',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "检验数量",
-			width : 55,
+			width : 65,
 			sortable : false,
-			align : 'center',
+			dataIndex : 'CHECKNUM',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "合格数量",
-			width : 55,
-			align : 'center',
+			width : 65,
 			sortable : false,
+			dataIndex : 'QUALIFIEDNUM',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "不合格数量",
-			width : 55,
+			width : 75,
 			sortable : false,
-			align : 'center',
-			menuDisabled : true
-		}, {
-			header : "不合格原因",
-			width : 55,
-			sortable : false,
-			align : 'center',
+			dataIndex : 'UNQUALIFIEDNUM',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "合格等级",
-			width : 55,
+			width : 65,
 			sortable : false,
-			align : 'center',
+			dataIndex : 'UNQUALIFIEDGRADE',
+			renderer : renderer_handler,
+			menuDisabled : true
+		}, {
+			header : "不合格原因",
+			width : 75,
+			sortable : false,
+			dataIndex : 'UNQUALIFIEDREASON',
+			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "备注",
-			width : 55,
 			align : 'center',
+			width : 65,
 			sortable : false,
+			dataIndex : 'BAK',
+			renderer : renderer_handler,
 			menuDisabled : true
-		}, ],
+		} ],
 		viewConfig : {
 			forceFit : true
 		},
 		sm : sm,
 		autoWidth : true,
-		height : 300,
+		height : 343,
 		stripeRows : true,
 		frame : true,
 		iconCls : 'icon-grid',
@@ -228,7 +259,8 @@ function topView() {
 						fieldLabel : '器件类型',
 						anchor : '85%',
 						xtype : 'label',
-						html : '<div style="padding-top:3px">光学器件（测试数据）</div>'
+						html : '<div style="padding-top:3px">' + deviceType
+						+ '</div>'
 					} ]
 				},
 				{
@@ -249,64 +281,15 @@ function topView() {
 					labelAlign : "left",
 					baseCls : "x-plain",
 					labelAlign : "left",
-					items : [ {
-						id : 'Require_id',
-						fieldLabel : '检验结果',
-						anchor : '85%',
-						xtype : 'textfield',
-						maxLength : 10,
-						allowBlank : false,
-						blankText : '不能为空'
-					}, {
-						fieldLabel : '合格数量',
-						anchor : '85%',
-						xtype : 'textfield',
-						allowBlank : false,
-						blankText : '不能为空'
-					}, {
-						fieldLabel : '不合格原因',
-						anchor : '85%',
-						xtype : 'textfield',
-						allowBlank : false,
-						blankText : '不能为空'
-					}, {
-						id : 'remark_id',
-						fieldLabel : ' 备注',
-						anchor : '85%',
-						xtype : 'textfield',
-						maxLength : 10,
-						allowBlank : true
-					}, {
-						xtype : 'button',
-						text : '修改',
-						width : '80',
-						style : 'margin-left:104px;',
-						handler : checkPage_dataGrid_handler
-					} ]
-				},
-				{
-					columnWidth : .5,
-					layout : 'form',
-					labelWidth : 100,
-					labelAlign : "left",
-					baseCls : "x-plain",
-					labelAlign : "left",
 					items : [
 							{
-								id : 'componentType',
-								fieldLabel : '检验数量',
+								id : 'Require_id',
+								fieldLabel : '检验结果',
 								anchor : '85%',
 								xtype : 'textfield',
 								maxLength : 10,
 								allowBlank : false,
 								blankText : '不能为空'
-							},
-							{
-								fieldLabel : ' 不合格数量',
-								anchor : '85%',
-								xtype : 'textfield',
-								maxLength : 10,
-								allowBlank : true
 							},
 							{
 								id : 'unqualifiedType_id',
@@ -340,6 +323,18 @@ function topView() {
 											Ext.getCmp("processId").setValue(
 													firstValue);
 											Ext.getCmp("processId").readOnly = true;
+											Ext.getCmp("unqualiReson_id")
+													.reset();
+											Ext.getCmp("unqualiReson_id")
+													.setDisabled(false);
+
+											Ext.getCmp("unqualiTotal_id")
+													.reset();
+											Ext.getCmp("unqualiTotal_id")
+													.setDisabled(false);
+											Ext.getCmp("qualiTotal_id").reset();
+											Ext.getCmp("qualiTotal_id")
+													.setDisabled(true);
 										} else {
 											var firstValue = Ext
 													.getCmp("processId").store
@@ -347,6 +342,17 @@ function topView() {
 											Ext.getCmp("processId").setValue(
 													firstValue);
 											Ext.getCmp("processId").readOnly = true;
+											Ext.getCmp("unqualiReson_id")
+													.reset();
+											Ext.getCmp("unqualiReson_id")
+													.setDisabled(true);
+											Ext.getCmp("unqualiTotal_id")
+													.reset();
+											Ext.getCmp("unqualiTotal_id")
+													.setDisabled(true);
+											Ext.getCmp("qualiTotal_id").reset();
+											Ext.getCmp("qualiTotal_id")
+													.setDisabled(false);
 										}
 									},
 									'select' : function() {
@@ -360,6 +366,18 @@ function topView() {
 											Ext.getCmp("processId").setValue(
 													firstValue);
 											Ext.getCmp("processId").readOnly = true;
+											Ext.getCmp("unqualiReson_id")
+													.reset();
+											Ext.getCmp("unqualiReson_id")
+													.setDisabled(false);
+
+											Ext.getCmp("unqualiTotal_id")
+													.reset();
+											Ext.getCmp("unqualiTotal_id")
+													.setDisabled(false);
+											Ext.getCmp("qualiTotal_id").reset();
+											Ext.getCmp("qualiTotal_id")
+													.setDisabled(true);
 										} else {
 											var firstValue = Ext
 													.getCmp("processId").store
@@ -367,10 +385,70 @@ function topView() {
 											Ext.getCmp("processId").setValue(
 													firstValue);
 											Ext.getCmp("processId").readOnly = true;
+											Ext.getCmp("unqualiReson_id")
+													.reset();
+											Ext.getCmp("unqualiReson_id")
+													.setDisabled(true);
+											Ext.getCmp("unqualiTotal_id")
+													.reset();
+											Ext.getCmp("unqualiTotal_id")
+													.setDisabled(true);
+											Ext.getCmp("qualiTotal_id").reset();
+											Ext.getCmp("qualiTotal_id")
+													.setDisabled(false);
 										}
 									}
 								}
+							}, {
+								id : 'qualiTotal_id',
+								fieldLabel : '合格数量',
+								anchor : '85%',
+								xtype : 'numberfield',
+								allowBlank : false,
+								blankText : '不能为空'
+							}, {
+								id : 'remark_id',
+								fieldLabel : ' 备注',
+								anchor : '85%',
+								xtype : 'textfield',
+								allowBlank : true
+							}, {
+								xtype : 'button',
+								text : '修改',
+								width : '80',
+								style : 'margin-left:104px;',
+								handler : checkPage_dataGrid_handler
 							} ]
+				}, {
+					columnWidth : .5,
+					layout : 'form',
+					labelWidth : 100,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'componentType',
+						fieldLabel : '检验数量',
+						anchor : '85%',
+						xtype : 'numberfield',
+						maxLength : 10,
+						allowBlank : false,
+						blankText : '不能为空'
+					}, {
+						id : 'unqualiReson_id',
+						fieldLabel : '不合格原因',
+						anchor : '85%',
+						xtype : 'textfield',
+						allowBlank : false,
+						blankText : '不能为空'
+					}, {
+						id : 'unqualiTotal_id',
+						fieldLabel : ' 不合格数量',
+						anchor : '85%',
+						xtype : 'numberfield',
+						maxLength : 10,
+						allowBlank : true
+					} ]
 				} ]
 	};
 
@@ -382,6 +460,8 @@ function mainView() {
 
 	var _processInfoStore = loadProcessInfo(taskId);
 	var _processUser = loadProcessUser();
+	
+	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
 		title : "检验",
@@ -396,51 +476,7 @@ function mainView() {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [ _topPanel, {
-			id : 'processId',
-			name : "operate",
-			fieldLabel : "选择您要的操作",
-			xtype : 'combo',
-			store : _processInfoStore,
-			allowBlank : false,
-			blankText : '不能为空',
-			selectOnFocus : true,
-			forceSelection : true,
-			triggerAction : 'all',
-			valueNotFoundText : '',
-			emptyText : '请选择...',
-			mode : "local",
-			valueField : 'value',
-			displayField : 'text'
-		}, {
-			id : 'processUserId',
-			name : "operateUser",
-			fieldLabel : "处理人员",
-			xtype : 'combo',
-			store : _processUser,
-			allowBlank : false,
-			triggerAction : 'all',
-			blankText : '不能为空',
-			selectOnFocus : true,
-			forceSelection : true,
-			valueNotFoundText : '',
-			emptyText : '请选择...',
-			mode : "local",
-			valueField : 'userName',
-			displayField : 'userName'
-		}, {
-			name : "copyUser",
-			fieldLabel : "抄送人员",
-			xtype : 'combo'
-		}, {
-			id : 'commonMask_id',
-			xtype : "textarea",
-			name : "mask",
-			height : 50,
-			fieldLabel : "批注",
-			allowBlank : false,
-			blankText : '不能为空'
-		} ],
+		items : [ _topPanel, _flowCommonComp],
 		buttons : [
 				{
 					text : "提交",
@@ -466,7 +502,7 @@ function mainView() {
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../workflow/submitForm_storage.html',
+							url : '../omInStorage/submitForm_storage.html',
 							params : {
 								taskId : taskId,
 								comment : commonRemarkValue,

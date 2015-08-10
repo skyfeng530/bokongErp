@@ -1,7 +1,3 @@
- var pictureNoOldValue = "";
- var productNameOldValue = "";
- var statusOldValue = "";
- var bakOldValue = "";
 function topView() {
 	// create the Data Store
 	var page_size = 10;
@@ -100,10 +96,7 @@ function topView() {
              cls: 'x-btn-text-icon details',
              icon:"../../style/images/icon-add.gif",
         	 handler:function(){
-        		 reset()
-        		// Ext.getCmp('pictureNoId').setDisabled(false);
-        		 //Ext.getCmp('productNameId').setDisabled(false);
-        		 showDialog("添加");
+        		 addGalleryWindow("添加");
              }
          },
          "-",
@@ -144,7 +137,6 @@ function topView() {
         						 Ext.Msg.alert("提示", "删除成功。",
         								 function(){
         							 Ext.getCmp("greidId").store.reload();
-        							 Ext.getCmp('topFormId').hide();
         						 });
         					 } else {
         						 Ext.Msg.alert("错误", "删除失败。");
@@ -166,20 +158,8 @@ function topView() {
         	 handler:function(){
         		 var row = Ext.getCmp("greidId").getSelectionModel().getSelections();
         		 if (row.length ==1) {  
-        			 reset()
-            		 showDialog("修改");
         			 var objRow = row[0].data;
-        			// Ext.getCmp('pictureNoId').setDisabled(true);
-        			 //Ext.getCmp('productNameId').setDisabled(true);
-        			 flowIdOldValue=objRow.flowId;
-        			 pictureNoOldValue = objRow.productNo;
-        			 productNameOldValue = objRow.productName;
-        			 statusOldValue = objRow.status;
-        			 bakOldValue = objRow.bak;
-        			 Ext.getCmp('pictureNoId').setValue(objRow.productNo);
-        			 Ext.getCmp('productNameId').setValue(objRow.productName);
-        			 Ext.getCmp('statusId').setValue(objRow.status);
-        			 Ext.getCmp('bakId').setValue(objRow.bak);
+        			 addGalleryWindow("修改",objRow);
         		 }  
         		 if (row.length > 1 || row.length == 0)
         		 {
@@ -264,7 +244,6 @@ function mainView() {
 				{
 					text : "提交",
 					handler : function() {
-
 						if (!Ext.getCmp("processId").isValid()) {
 							return;
 						}
@@ -279,6 +258,14 @@ function mainView() {
 
 						var commonRemarkValue = Ext.getCmp("commonMask_id").getValue();
 						var outcome = Ext.getCmp("processId").getValue();
+						if (outcome !== '撤销')
+						{
+							var total = Ext.getCmp("greidId").store.getCount();
+							if (total < 1) {
+								Ext.Msg.alert("提示", "请先配置产品数据。");
+								return;
+							}
+						}
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
@@ -290,7 +277,8 @@ function mainView() {
 								projectName : projectName,
 								outcome : outcome,
 								nextName : nextName,
-								projectId:projectId
+								projectId:projectId,
+								flowId:flowId
 							},
 							method : 'POST',
 							success : function(response) {
@@ -316,192 +304,236 @@ function mainView() {
 	});
 
 	mainPanel.render("main_id");
-	 var _window = new Ext.Window({  
-         title: "登陆窗体",  
-         id:"topFormId",
-         frame:true,  
-         height:240,  
-         width:410,  
-         layout:"form",  
-         labelWidth:55,  
-         /* 样式控制 */  
-         plain:true,  
-         /* 控制窗口大小 */  
-         resizable:false,  
-         /* 自定义Window内部 CSS 样式 */  
-         bodyStyle:"padding:15px",  
-         /* button 定位 */  
-         buttonAlign:"center",  
-         /* 是否可关闭 */  
-         closable:true,  
-         modal: true, 
-         defaults:{xtype:"textfield", width:200},  
-         items:[  
-                 {fieldLabel:"产品编号", id:"pictureNoId",xtype:'numberfield',width:300},  
-                 {fieldLabel:"产品名称",id:"productNameId", width:300},
-                 {fieldLabel:"状态",id:"statusId", width:300},
-                 {fieldLabel:"备注",id:"bakId", xtype:'textarea', width:300}  
-             ],  
- 		    
-         buttons:[  
-                 {
-                	 text:"确定",
-                	 handler:function(){
-                		 var pictureNoObj = Ext.getCmp("pictureNoId");
-                		 var pictureNoValue = pictureNoObj.getValue();
-                		 var productNameObj = Ext.getCmp("productNameId");
-                		 var productNameValue = productNameObj.getValue();
-                		 var statusObj = Ext.getCmp("statusId");
-                		 var statusValue = statusObj.getValue();
-                		 var bakObj = Ext.getCmp("bakId");
-                		 var bakValue = bakObj.getValue();
-                		 var error=0;
-                		 if (pictureNoValue == null || pictureNoValue == '')
-         				 {
-                			 pictureNoObj.markInvalid("产品编号不能为空。");
-         					error+=1;
-         				 }
-                		 if (productNameValue == null || productNameValue == '')
-         				 {
-                			 productNameObj.markInvalid("产品名称不能为空。");
-         					 error+=1;
-         				 }
-                		 if (statusValue == null || statusValue == '')
-         				 {
-                			 statusObj.markInvalid("状态不能为空。");
-         					 error+=1;
-         				 }
-                		 if (statusValue.length > 3)
-                		 {
-                			 statusObj.markInvalid("状态最多三个字符。");
-         					 error+=1;
-                		 }
-                		 if (bakValue.length > 50)
-         				 {
-                			 bakObj.markInvalid("备注不能超过50个字符。");
-         					 error+=1;
-         				 }
-                		 if (error > 0)
-                		 {
-                			 return;
-                		 }
-                		 if (_window.title==='添加')
-                		 {
-                			 Ext.Ajax.request({
-                				 url : '../../background/project/product/flow/add.html',
-                				 timeout : 300000,
-                				 params : {
-                					 projectId:projectId,
-                					 flowId : flowId,
-                					 productNo : pictureNoValue,
-                					 productName : productNameValue,
-                					 status : statusValue,
-                					 bak : bakValue
-                				 },
-                				 method : 'POST',
-                				 success : function(response) {
-                					 var result = Ext.decode(response.responseText);
-                					 
-                					 if (result.success) {
-                						 Ext.Msg.alert("提示", "添加成功。",
-                								 function(){
-                							 Ext.getCmp("greidId").store.reload();
-                							 _window.hide();
-                						 });
-                					 }
-                					 else 
-                					 {
-                						 if (result.msg==="exist")
-                						 {
-                							 Ext.Msg.alert("错误", "该产品已经存在。");
-                						 }
-                						 else
-                						 {
-                							 Ext.Msg.alert("错误", "添加失败。");
-                						 }
-                					 }
-                				 },
-                				 failure : function() {
-                					 Ext.Msg.alert("错误", "添加失败。");
-                				 }
-                			 });
-                		 }
-                		 else
-                		 {
-                			if(pictureNoOldValue == pictureNoValue && productNameOldValue === productNameValue && statusOldValue === statusValue && bakOldValue === bakValue)
-                			{
-                				Ext.Msg.alert("提示", "内容没有改变。");
-                				return;
-                			}
-                			else
-                			{
-                				Ext.Ajax.request({
-                   				 url : '../../background/project/product/flow/update.html',
-                   				 timeout : 300000,
-                   				 params : {
-                   					 flowId : flowIdOldValue,
-                   					 productNo : pictureNoValue,
-                   					 productName : productNameValue,
-                   					 status : statusValue,
-                   					 bak : bakValue,
-                   					 projectId:projectId,
-                   					 productNoOld:pictureNoOldValue,
-                   					 productNameOld:productNameOldValue,
-                   					 statusOld:statusOldValue
-                   				 },
-                   				 method : 'POST',
-                   				 success : function(response) {
-                   					 var result = Ext.decode(response.responseText);
-                   					 
-                   					 if (result.success) {
-                   						 Ext.Msg.alert("提示", "修改成功。",
-                   								 function(){
-                   							 Ext.getCmp("greidId").store.reload();
-                   							 _window.hide();
-                   						 });
-                   					 } else {
-                   						 if (result.msg==="exist")
-	               						 {
-	               							 Ext.Msg.alert("错误", "该产品已经存在。");
-	               						 }
-	               						 else
-	               						 {
-	               							Ext.Msg.alert("错误", "修改失败。");
-	               						 }
-                   					 }
-                   				 },
-                   				 failure : function() {
-                   					 Ext.Msg.alert("错误", "修改失败。");
-                   				 }
-                   			 });
-                			}
-                		 }
-                     }  
-                 },  
-                 {  
-                     text:"取消",  
-                     handler:function(){  
-                             _window.hide();                           
-                         }  
-                 }  
-             ]  
-     });  
+}
+function addGalleryWindow(titleStr,objRow) {
+
+	var mainPanel = new Ext.Panel({
+		id : 'mainPanel_id',
+		autoHeight : true,
+		autoWidth : true,
+		bodyStyle : 'margin-left : 25px;',
+		frame : true,
+		items : [
+				{
+					layout : 'form',
+					labelWidth : 55,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'pictureNoId',
+						fieldLabel : '产品编号',
+						xtype : 'textfield',
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '产品编号不能为空',
+						maxLength:32,
+						maxLengthText:'最多32个字符'
+					} ]
+				},
+				{
+					layout : 'form',
+					labelWidth : 55,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'productNameId',
+						fieldLabel : '产品名称',
+						xtype : 'textfield',
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '产品编号不能为空',
+						maxLength:32,
+						maxLengthText:'最多32个字符'
+					} ]
+				},
+				{
+					layout : 'form',
+					labelWidth : 55,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'statusId',
+						fieldLabel : '状态',
+						xtype : 'textfield',
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '状态不能为空',
+						maxLength:3,
+						maxLengthText:'最多3个字符'
+					} ]
+				},
+				{
+					layout : 'form',
+					labelWidth : 55,
+					labelAlign : "left",
+					baseCls : "x-plain",
+					labelAlign : "left",
+					items : [ {
+						id : 'bakId',
+						fieldLabel : '备注',
+						xtype : 'textarea',
+						anchor : '95%',
+						allowBlank : false,
+						blankText : '备注',
+						maxLength:250,
+						maxLengthText:'最多250个字符'
+					} ]
+				}
+		         ]
+	});
+	
+	var galleryWindow = new Ext.Window({
+		id : 'galleryWindow_id',
+		title : titleStr,
+		layout : 'fit',
+		width : 400,
+		autoHeight : true,
+		closeAction : 'close',
+		buttonAlign : 'center',
+		modal : true,
+		animateTarget : 'greidId',
+		draggable : true,
+		closable : true,
+		constrain : true,
+		frame : true,
+		border : true,
+		bodyBorder : true,
+		resizable : false,
+		constrainHeader : true,
+		items : [ mainPanel ],
+		plain : false,
+		buttons : [ {
+			text : '确定',
+			handler : function() {
+
+       		 var pictureNoObj = Ext.getCmp("pictureNoId");
+       		 var pictureNoValue = pictureNoObj.getValue();
+       		 var productNameObj = Ext.getCmp("productNameId");
+       		 var productNameValue = productNameObj.getValue();
+       		 var statusObj = Ext.getCmp("statusId");
+       		 var statusValue = statusObj.getValue();
+       		 var bakObj = Ext.getCmp("bakId");
+       		 var bakValue = bakObj.getValue();
+       		if (!pictureNoObj.isValid() || !productNameObj.isValid() || !statusObj.isValid()
+       				|| !bakObj.isValid())
+       		{
+       			return;
+       		}
+       		 if (titleStr==='添加')
+       		 {
+       			 Ext.Ajax.request({
+       				 url : '../../background/project/product/flow/add.html',
+       				 timeout : 300000,
+       				 params : {
+       					 projectId:projectId,
+       					 flowId : flowId,
+       					 productNo : pictureNoValue,
+       					 productName : productNameValue,
+       					 status : statusValue,
+       					 bak : bakValue
+       				 },
+       				 method : 'POST',
+       				 success : function(response) {
+       					 var result = Ext.decode(response.responseText);
+       					 
+       					 if (result.success) {
+       						 Ext.Msg.alert("提示", "添加成功。",
+       								 function(){
+       							 Ext.getCmp("greidId").store.reload();
+       							 galleryWindow.close();
+       						 });
+       					 }
+       					 else 
+       					 {
+       						 if (result.msg==="exist")
+       						 {
+       							 Ext.Msg.alert("错误", "该产品已经存在。");
+       						 }
+       						 else
+       						 {
+       							 Ext.Msg.alert("错误", "添加失败。");
+       						 }
+       					 }
+       				 },
+       				 failure : function() {
+       					 Ext.Msg.alert("错误", "添加失败。");
+       				 }
+       			 });
+       		 }
+       		 else
+       		 {
+       			if(objRow.productNo == pictureNoValue && objRow.productName === productNameValue && objRow.status === statusValue && objRow.bak === bakValue)
+       			{
+       				Ext.Msg.alert("提示", "内容没有改变。");
+       				return;
+       			}
+       			else
+       			{
+       				Ext.Ajax.request({
+          				 url : '../../background/project/product/flow/update.html',
+          				 timeout : 300000,
+          				 params : {
+          					 flowId : flowId,
+          					 productNo : pictureNoValue,
+          					 productName : productNameValue,
+          					 status : statusValue,
+          					 bak : bakValue,
+          					 projectId:projectId,
+          					 productNoOld:objRow.productNo,
+          					 productNameOld:objRow.productName,
+          					 statusOld:objRow.status
+          				 },
+          				 method : 'POST',
+          				 success : function(response) {
+          					 var result = Ext.decode(response.responseText);
+          					 
+          					 if (result.success) {
+          						 Ext.Msg.alert("提示", "修改成功。",
+          								 function(){
+          							 Ext.getCmp("greidId").store.reload();
+          							galleryWindow.close();
+          						 });
+          					 } else {
+          						 if (result.msg==="exist")
+          						 {
+          							 Ext.Msg.alert("错误", "该产品已经存在。");
+          						 }
+          						 else
+          						 {
+          							Ext.Msg.alert("错误", "修改失败。");
+          						 }
+          					 }
+          				 },
+          				 failure : function() {
+          					 Ext.Msg.alert("错误", "修改失败。");
+          				 }
+          			 });
+       			}
+       		 }
+			}
+		}, {
+			text : '取消',
+			handler : function() {
+				galleryWindow.close();
+			}
+		} ]
+	});
+
+	galleryWindow.show();
+	if (titleStr === '修改')
+	{
+		 Ext.getCmp('pictureNoId').setValue(objRow.productNo);
+		 Ext.getCmp('productNameId').setValue(objRow.productName);
+		 Ext.getCmp('statusId').setValue(objRow.status);
+		 Ext.getCmp('bakId').setValue(objRow.bak);
+	}
 }
 function forWardToNextPage() 
 {
 	window.location.href = "../workflow/myTaskList.html";
-}
-function reset()
-{
-	Ext.getCmp("pictureNoId").reset();
-	Ext.getCmp("productNameId").reset();
-	Ext.getCmp("statusId").reset();
-	Ext.getCmp("bakId").reset();
-}
-function showDialog(title)
-{
-	Ext.getCmp('topFormId').setTitle(title);
-	Ext.getCmp('topFormId').show();
 }
 
 function initview() {

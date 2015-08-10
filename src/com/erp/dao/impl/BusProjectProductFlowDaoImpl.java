@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.erp.base.impl.BaseDaoImpl;
 import com.erp.dao.BusProjectProductFlowDao;
-import com.erp.entity.BusProjectProduct;
 import com.erp.entity.BusProjectProductFlow;
 import com.erp.entity.BusProjectProductFlowVo;
 import com.erp.util.PageView;
@@ -33,19 +32,14 @@ public class BusProjectProductFlowDaoImpl extends BaseDaoImpl<BusProjectProductF
 
 	@Override
 	public int conditionSelect(BusProjectProductFlowVo busProjectProductFlowVo) {
-		BusProjectProduct busProjectProduct = new BusProjectProduct();
-		busProjectProduct.setProjectId(busProjectProductFlowVo.getProjectId());
-		busProjectProduct.setProductName(busProjectProductFlowVo.getProductName());
-		busProjectProduct.setProductNo(busProjectProductFlowVo.getProductNo());
-		busProjectProduct.setStatus(busProjectProductFlowVo.getStatus());
 		// TODO Auto-generated method stub
-		return this.getSqlSession().selectOne(this.getClassName() + ".conditionSelect", busProjectProduct);
+		return this.getSqlSession().selectOne(this.getClassName() + ".conditionSelect", busProjectProductFlowVo);
 	}
 
 	@Override
 	public int delete(BusProjectProductFlow busProjectProductFlow) {
 		// TODO Auto-generated method stub
-		return this.getSqlSession().delete(this.getClassName() + ".deleteById", busProjectProductFlow);
+		return this.getSqlSession().delete(this.getClassName() + ".deleteByObj", busProjectProductFlow);
 	}
 
 	@Override

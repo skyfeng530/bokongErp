@@ -25,16 +25,18 @@
     </select>
     
     <select id="getProductInfoByid" parameterType="String" resultType="java.util.HashMap">
-        select projectname, productname from busprojectfigureproductflow f left join busprojectproduct d on d.ppid = f.ppid left join busproject p on d.projectid = p.pid where f.flowid = #{flowId}
+        select figureLib,projectname, productname from busprojectfigureproductflow f left join busprojectproduct d on d.ppid = f.ppid left join busproject p on d.projectid = p.pid where f.flowid = #{flowId}
     </select>
     
     <insert id="add" parameterType="BusProjectFigureProductFlow">
         insert into BusProjectFigureProductFlow(
         flowId,
+        figureLib,
         ppid,
         bak )
         values (
         #{flowId},
+        #{figureLib},
         #{ppid},
         #{bak})
     </insert>
@@ -46,4 +48,10 @@
             bak=#{bak}
         </set>
     </update>
+    <select id="getDeviceAll" resultType="java.util.HashMap">
+      select devid,devName from devicetype
+    </select>
+    <delete id="deleteById"  parameterType="String">
+      delete from  BusProjectFigureProductFlow where flowId = #{id};
+    </delete>
 </mapper>

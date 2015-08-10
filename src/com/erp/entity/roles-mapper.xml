@@ -68,13 +68,6 @@
 		</set>
 		where id=#{id}
 	</update>
-	<select id="findbyDepartmentRole" parameterType="String" resultType="Roles">
-		select
-		<include refid="selectId" />
-		FROM role WHERE id IN (SELECT role_id FROM user_role
-		WHERE departid=(SELECT departid FROM departmentinfo WHERE dname = #{dName}))
-	</select>
-	
 	<select id="findbyUserRole" parameterType="String" resultType="Roles">
 		select
 		<include refid="selectId" />
@@ -84,14 +77,14 @@
 	
 	<!-- 增加角色和用户 -->
 	<insert id="saveUserRole" parameterType="UserRoles">
-	insert into user_role(departId,role_id) values (#{departId},#{roleId})
+	insert into user_role(user_id,role_id) values (#{userId},#{roleId})
 	</insert>
 	
 	<delete id="deleteUserRole" parameterType="String">
-	delete from user_role where departId=#{departId}
+	delete from user_role where user_id=#{userId}
 	</delete>
 	
 	<update id="updateUserRole" parameterType="String">
-	update user_role set departId=#{departId}
+	update user_role set user_id=#{userId}
 	</update>
 </mapper>

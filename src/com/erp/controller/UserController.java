@@ -26,6 +26,7 @@ import com.erp.service.UserService;
 import com.erp.util.CiphertextUtil;
 import com.erp.util.Common;
 import com.erp.util.PageView;
+import com.erp.util.SessionContext;
 
 /**
  * 
@@ -57,24 +58,6 @@ public class UserController {
 		pageView = userService.query(pageView, user);
 		model.addAttribute("pageView", pageView);
 		return "/background/user/list";
-	}
-	
-	@RequestMapping("queryUserName")
-	@ResponseBody
-	public List<Map<String, String>> queryUserName()
-	{
-		List<User> users = userService.queryAll(new User());
-		List<Map<String, String>> userNames = new ArrayList<Map<String, String>>();
-		if (users != null)
-		{
-			for (User user : users)
-			{
-				Map<String, String> map = new HashMap<String,String>();
-				map.put("username", user.getUserName());
-				userNames.add(map);
-			}
-		}
-		return userNames;
 	}
 
 	/**
@@ -112,8 +95,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("deleteById")
-	public String deleteById(Model model, String userName) {
-		userService.deleteByUsername(userName);
+	public String deleteById(Model model, String userId) {
+		userService.delete(userId);
 		return "redirect:query.html";
 	}
 
@@ -125,12 +108,13 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("getById")
-	public String getById(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
-		String userName =request.getParameter("userName");  
-		byte b[] =userName.getBytes("ISO-8859-1");  
-		userName = new String(b, "utf-8");
-		int type = Integer.parseInt(request.getParameter("type"));
-		User user = userService.getByUsername(userName);
+	public String getById(Model model, String userId, int type ,HttpServletRequest request) {
+		User user = null;
+		if (null != userId) {
+			user = userService.getById(userId);
+		}else{
+			user = userService.querySingleUser(SessionContext.get(request).getUserName());
+		}
 		model.addAttribute("user", user);
 		List<Roles> roles=rolesService.findAll();
 		model.addAttribute("roles", roles);
@@ -181,7 +165,7 @@ public class UserController {
 			if (!newpwd1.equals(newpwd2)) {
 				return "1001";
 			}
-			User user = userService.getByUsername(userName);
+			User user = userService.querySingleUser(userName);
 			if (!oldpwd.equals(user.getUserPassword())) {
 				return "1001";
 			}
@@ -210,7 +194,7 @@ public class UserController {
 	@RequestMapping("deleteAll")
 	public String deleteAll(Model model, String[] check) {
 		for (String string : check) {
-			userService.deleteByUsername(string);
+			userService.delete(string);
 		}
 		return "redirect:query.html";
 	}
@@ -220,8 +204,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("userRole")
-	public String userRole(Model model,String userName){
-		User user = userService.getByUsername(userName);
+	public String userRole(Model model,String userId){
+		User user = userService.getById(userId);
 		model.addAttribute("user", user);
 		List<Roles> roles = rolesService.findAll();
 		model.addAttribute("roles", roles);
@@ -238,7 +222,7 @@ public class UserController {
 		String userName =request.getParameter("userName");  
 		byte b[] =userName.getBytes("ISO-8859-1");  
 		userName = new String(b, "utf-8");
-		User user = userService.getByUsername(userName);
+		User user = userService.getById(userName);
 		model.addAttribute("user", user);
 		List<Department> departments = departmentService.findAll();
 		model.addAttribute("departments", departments);
@@ -292,10 +276,28 @@ public class UserController {
 	public String checkUserName(Model model, HttpServletRequest request){
 		String errorCode = "1000";
 		String userName = request.getParameter("userName");
-		User user = userService.getByUsername(userName);
+		User user = userService.querySingleUser(userName);
 		if (null != user) {
 			errorCode="1001";
 		}
 		return errorCode;
+	}
+	
+	@RequestMapping("queryUserName")
+	@ResponseBody
+	public List<Map<String, String>> queryUserName()
+	{
+		List<User> users = userService.queryAll(new User());
+		List<Map<String, String>> userNames = new ArrayList<Map<String, String>>();
+		if (users != null)
+		{
+			for (User user : users)
+			{
+				Map<String, String> map = new HashMap<String,String>();
+				map.put("username", user.getUserName());
+				userNames.add(map);
+			}
+		}
+		return userNames;
 	}
 }

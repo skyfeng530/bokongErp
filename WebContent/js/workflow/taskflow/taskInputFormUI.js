@@ -25,7 +25,13 @@ function topView() {
 				anchor : '85%',
 				xtype : 'label',
 				html : '<div style="padding-top:3px">' + productName + '</div>'
-			}, {
+			},  {
+				id : 'figureLib_id',
+				fieldLabel : '图库名称',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + figureLib + '</div>'
+			},{
 				id : 'taskNo_id',
 				fieldLabel : '任务编号',
 				xtype : 'textfield',
@@ -42,11 +48,12 @@ function topView() {
 			}, {
 				id : 'taskTotal_id',
 				fieldLabel : '总套数（任务量）',
-				xtype : 'textfield',
-				regexp : /^\d+$/,
-				regexText : '输入值只能为数字',
+				xtype : 'numberfield',
+				allowDecimals:false,
 				allowBlank : false,
 				blankText : '不能为空',
+				minValue:1,  
+				minText:'最小值为1。',
 				width : 300
 			} ]
 		} ]
@@ -124,7 +131,7 @@ function mainView() {
 								outcome : outcome,
 								nextName : nextName,
 								taskNo : taskNoValue,
-								totalSetNo : tasktotalValue,
+								totalSetNum : tasktotalValue,
 								taskSource : taskSourceValue,
 								flowId : flowId
 							},

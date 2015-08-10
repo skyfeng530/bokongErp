@@ -1,37 +1,61 @@
 function topView() {
 	// create the Data Store
-	var store = new Ext.data.Store({
-		autoLoad : {
-			params : {
-				start : 0,
-				limit : 1
-			}
-		},
-		proxy : new Ext.data.PagingMemoryProxy(),
-		reader : new Ext.data.XmlReader({
-			record : 'total',
-			fields : [ {
-				name : 'projectName',
-				type : 'string'
-			}, {
-				name : 'productName',
-				type : 'string'
-			}, {
-				name : 'pictureId',
-				type : 'string'
-			}, {
-				name : 'pictureName',
-				type : 'string'
-			}, {
-				name : 'pictruerequire',
-				type : 'string'
-			}, {
-				name : 'total',
-				type : 'int'
-			} ]
-		})
+	var page_size = 10;
+	var gridStore = new Ext.data.Store({ 
+		autoLoad: false,
+        proxy: new Ext.data.HttpProxy({ url: "../../background/project/figure/loadFigureData.html"}),  
+        reader: new Ext.data.JsonReader(  
+                      {
+                    	  totalProperty:'totalCount',
+                          root:'data'
+                      },  
+                      [
+                       {name:'flowId'},
+                       {name:'figureNo'},
+                       {name:'figureName'},
+                       {name:'figureRequest'},
+                       {name:'type'},
+                       {name:'batchNum'},
+                       {name:'describe'},
+                       {name:'devid'}
+                       ]
+                      ),
+	      listeners: {  
+	          'beforeload': function (store, op, options) {  
+	              var params = {  
+	          		    flowId:flowId,
+	              };  
+	              Ext.apply(store.proxy.extraParams, params);   
+	          }  
+	      } 
+    });  
+	gridStore.load({
+		   params : {
+		    start : 0,  
+		    limit : page_size,
+		    flowId:flowId,
+		   } 
 	});
 
+	var bbar=new Ext.PagingToolbar({
+        pageSize:page_size,
+        store:gridStore,
+        displayInfo:true,
+        lastText:"尾页",
+        nextText:"下一页",
+        beforePageText:"当前",
+        refreshText:"刷新",
+        afterPageText:"页，共{0}页",
+        displayMsg: '显示 {0} - {1} 共 {2}条&nbsp&nbsp&nbsp&nbsp',
+        emptyMsg:"对不起，没有您查询的信息&nbsp&nbsp&nbsp&nbsp"
+       });
+    bbar.on("beforechange", 
+    		function(_p, _o)
+    		{
+		       Ext.apply(_o, { flowId:flowId });//增加自定义参数
+			   return true;
+			}, 
+            this);
 	var sm = new Ext.grid.CheckboxSelectionModel();
 
 	var _gridPanel = {
@@ -39,49 +63,57 @@ function topView() {
 		xtype : 'grid',
 		anchor : '105%',
 		autoWidth : true,
-		style : 'margin-left:82px; margin-top:10px; margin-bottom:10px',
-		store : store,
-		columns : [ sm, {
-			header : "项目名称",
-			align : 'center',
-			width : 130,
-			dataIndex : 'projectName',
-			sortable : false,
-			menuDisabled : true
-		}, {
-			header : "产品名称",
-			align : 'center',
-			width : 130,
-			sortable : false,
-			dataIndex : 'productName',
-			menuDisabled : true
-		}, {
+		style : 'margin-left:60px; margin-top:10px; margin-bottom:10px',
+		store : gridStore,
+		columns : [ sm,{
 			header : "图ID",
-			width : 130,
+			width : 100,
 			align : 'center',
 			sortable : false,
-			dataIndex : 'pictureId',
+			dataIndex : 'figureNo',
 			menuDisabled : true
 		}, {
 			header : "图名称",
 			align : 'center',
-			width : 130,
+			width : 150,
 			sortable : false,
-			dataIndex : 'pictureName',
+			dataIndex : 'figureName',
 			menuDisabled : true
 		}, {
 			header : "图纸要求",
 			align : 'center',
-			width : 130,
+			width : 250,
 			sortable : false,
-			dataIndex : 'pictruerequire',
+			dataIndex : 'figureRequest',
+			menuDisabled : true
+		}, {
+			header : "类型",
+			align : 'center',
+			width : 100,
+			sortable : false,
+			dataIndex : 'type',
 			menuDisabled : true
 		}, {
 			header : '数量（套）',
 			align : 'center',
-			width : 130,
+			width : 100,
 			sortable : false,
-			dataIndex : 'total',
+			dataIndex : 'batchNum',
+			menuDisabled : true
+		} , {
+			header : '描述',
+			align : 'center',
+			width : 250,
+			sortable : false,
+			dataIndex : 'describe',
+			menuDisabled : true
+		} ,{
+			header : 'devid',
+			hidden:true,
+			align : 'center',
+			width : 50,
+			sortable : false,
+			dataIndex : 'devid',
 			menuDisabled : true
 		} ],
 		viewConfig : {
@@ -89,7 +121,7 @@ function topView() {
 		},
 		sm : sm,
 		autoWidth : true,
-		height : 300,
+		height : 380,
 		stripeRows : true,
 		frame : true,
 		iconCls : 'icon-grid',
@@ -97,23 +129,76 @@ function topView() {
 			text : '添加',
 			iconCls : 'silk-application-add',
 			scope : this,
-			handler : addGalleryWindow
+			handler : function(){addGalleryWindow("添加")}
 		}, '-', {
 			text : '删除',
 			iconCls : 'silk-application-delete',
-			scope : this
+			scope : this,
+			handler : function(){
+       		 var row = Ext.getCmp("_gridPanel_id").getSelectionModel().getSelections();
+       		 if (row.length == 0)
+       		 {
+       			 Ext.Msg.alert("提示","请选择一条记录进行删除。")
+       		 }
+       		 else
+       	     {
+       			 var flowObjs=[];
+       			 for (var i=0; i<row.length; i++)
+       			 {
+       				 var flowObj = {
+       						'flowId':row[i].data.flowId,
+       	                    'figureNo':row[i].data.figureNo,
+       	                    'figureName':row[i].data.figureName,
+       	                    'figureRequest':row[i].data.figureRequest,
+       	                    'type':row[i].data.devid,
+       	                    'batchNum':row[i].data.batchNum,
+       	                    'describe':row[i].data.describe,
+       				 }
+       				flowObjs.push(flowObj);
+       			 }
+       			 Ext.Ajax.request({
+       				 url : '../../background/project/figure/delete.html',
+       				 timeout : 300000,
+       				 params : {delJson:JSON.stringify(flowObjs)},
+       				 method : 'post',
+       				 success : function(response) {
+       					 var result = Ext.decode(response.responseText);
+       					 
+       					 if (result.success) {
+       						 Ext.Msg.alert("提示", "删除成功。",
+       								 function(){
+       							 Ext.getCmp("_gridPanel_id").store.reload();
+       						 });
+       					 } else {
+       						 Ext.Msg.alert("错误", "删除失败。");
+       					 }
+       				 },
+       				 failure : function() {
+       					 Ext.Msg.alert("错误", "删除失败。");
+       				 }
+       			 });
+       	     }
+            
+			}
 		}, '-', {
 			text : '修改',
 			iconCls : 'silk-application-edit',
-			scope : this
+			scope : this,
+			handler : function(){
+       		 var row = Ext.getCmp("_gridPanel_id").getSelectionModel().getSelections();
+    		 if (row.length ==1) {  
+    			 var objRow = row[0].data;
+    			 addGalleryWindow("修改",objRow)
+    		 }  
+    		 if (row.length > 1 || row.length == 0)
+    		 {
+    			 Ext.Msg.alert("提示","请选择一条记录进行修改。")
+    		 }
+         }
 		} ],
-		bbar : new Ext.PagingToolbar({
-			pageSize : 1,
-			store : store,
-			emptyMsg : "无记录"
-		})
+		bbar : bbar
 	};
-
+     
 	var partTransfer = {
 		xtype : 'fieldset',
 		title : '图库',
@@ -121,7 +206,7 @@ function topView() {
 		autoWidth : true,
 		layout : 'column',
 		items : [ {
-			columnWidth : .5,
+			columnWidth : .33,
 			layout : 'form',
 			labelWidth : 55,
 			labelAlign : "left",
@@ -135,7 +220,7 @@ function topView() {
 				html : '<div style="padding-top:3px">' + projectName + '</div>'
 			} ]
 		}, {
-			columnWidth : .5,
+			columnWidth : .33,
 			layout : 'form',
 			labelWidth : 55,
 			labelAlign : "left",
@@ -148,7 +233,21 @@ function topView() {
 				xtype : 'label',
 				html : '<div style="padding-top:3px">' + productName + '</div>'
 			} ]
-		}, {
+		},{
+			columnWidth : .33,
+			layout : 'form',
+			labelWidth : 55,
+			labelAlign : "left",
+			baseCls : "x-plain",
+			labelAlign : "left",
+			items : [ {
+				id : 'figurelib_id',
+				fieldLabel : '图库名称',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + figureLib + '</div>'
+			} ]
+		},  {
 			clumnWidth : 1,
 			layout : 'form',
 			labelWidth : 70,
@@ -189,13 +288,6 @@ function mainView() {
 					text : "提交",
 					handler : function() {
 
-						var _gridData = getFigureGridData(flowId);
-
-						if (Ext.isEmpty(_gridData)) {
-							Ext.Msg.alert("提示", "请先配置图库数据。");
-							return;
-						}
-
 						if (!Ext.getCmp("processId").isValid()) {
 							return;
 						}
@@ -208,20 +300,27 @@ function mainView() {
 							return;
 						}
 
-						var commonRemarkValue = Ext.getCmp("commonMask_id")
-								.getValue();
+						var commonRemarkValue = Ext.getCmp("commonMask_id").getValue();
 						var outcome = Ext.getCmp("processId").getValue();
+						if (outcome !== '撤销')
+						{
+							var total = Ext.getCmp("_gridPanel_id").store.getCount();
+							if (total < 1) {
+								Ext.Msg.alert("提示", "请先配置图库数据。");
+								return;
+							}
+						}
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../project/figure/submitFormStorage.html',
+							url : '../project/figure/submitFormFigure.html',
 							timeout : 300000,
 							params : {
+								flowId:flowId,
 								taskId : taskId,
 								comment : commonRemarkValue,
 								outcome : outcome,
-								nextName : nextName,
-								data : _gridData
+								nextName : nextName
 							},
 							method : 'POST',
 							success : function(response) {

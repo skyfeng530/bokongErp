@@ -52,5 +52,11 @@ public class BusProjectFigureProductFlowServiceImpl implements BusProjectFigureP
 		return busProjectFigureProductFlowDao.getProductInfoByid(flowId);
 	}
 
+	@Override
+	public List<Map<String, String>> getDeviceAll() {
+		// TODO Auto-generated method stub
+		return busProjectFigureProductFlowDao.getDeviceAll();
+	}
+
     
 }

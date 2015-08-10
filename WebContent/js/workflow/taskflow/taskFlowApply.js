@@ -20,6 +20,14 @@ function mainView() {
 		root : "data",
 	}, busProduct);
 
+	var busFigureLib = Ext.data.Record.create([ {
+		name : 'figureLib'
+	}]);
+
+	var busFigureLibReader = new Ext.data.JsonReader({
+		root : "data",
+	}, busFigureLib);
+	
 	var _projecttStore = new Ext.data.Store({
 		autoLoad : true,
 		proxy : new Ext.data.HttpProxy({
@@ -36,6 +44,15 @@ function mainView() {
 			method : 'POST'
 		}),
 		reader : busProductReader
+	});
+	
+	var _figureLibStore = new Ext.data.Store({
+		autoLoad : true,
+		proxy : new Ext.data.HttpProxy({
+			url : '../project/figure/queryfigureLib.html',
+			method : 'POST'
+		}),
+		reader : busFigureLibReader
 	});
 
 	var mainPanel = new Ext.form.FormPanel({
@@ -96,6 +113,31 @@ function mainView() {
 			valueField : 'ppid',
 			displayField : 'productName',
 			store : _productStore,
+			listeners : {
+				'select' : function() {
+					var taskComp = Ext.getCmp("figurelib_id");
+					taskComp.store.baseParams.productId = this.getValue();
+					taskComp.setValue();
+					_figureLibStore.reload();
+				}
+			}
+		},{
+			id : 'figurelib_id',
+			name : "figurelib_name",
+			fieldLabel : "图库名称",
+			labelStyle : "margin-left:20px;",
+			xtype : 'combo',
+			emptyText : '请选择...',
+			mode : "local",
+			allowBlank : false,
+			selectOnFocus : true,
+			forceSelection : true,
+			triggerAction : 'all',
+			valueNotFoundText : '',
+			blankText : '不能为空',
+			valueField : 'figureLib',
+			displayField : 'figureLib',
+			store : _figureLibStore,
 		} ],
 		buttons : [
 				{
@@ -107,12 +149,14 @@ function mainView() {
 						}
 
 						var _taskNumValue = Ext.getCmp("product_id").getValue();
+						var _figureLibValue = Ext.getCmp("figurelib_id").getValue();
 
 						Ext.Ajax.request({
 							url : '../project/task/saveStorage.html',
 							params : {
 								ppid : _taskNumValue,
-								pdid : pdid
+								pdid : pdid,
+								figureLib:_figureLibValue
 							},
 							method : 'POST',
 							success : function(response) {

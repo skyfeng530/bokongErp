@@ -4,7 +4,10 @@
 <mapper namespace="user">
 	<!-- 以下与实体类的中字段一致 -->
 	<sql id="selectId">
+		userId,
 		userName,
+		(select r.name from role r where id in (SELECT ur.role_id FROM user_role ur
+		WHERE ur.user_id=userId)) roleName,
 		userPassword,
 		userRealname,
 		userBirthday,
@@ -52,14 +55,14 @@
 		#{userPhone})
 	</insert>
 
-	<delete id="deleteByUsername" parameterType="String">
+	<delete id="deleteById" parameterType="String">
 		delete from user where
-		userName=#{userName}
+		userId=#{userId}
 	</delete>
-	<select id="getByUsername" parameterType="String" resultType="User">
+	<select id="getById" parameterType="String" resultType="User">
 		select
 		<include refid="selectId" />
-		from user where userName=#{userName}
+		from user where userId=#{userId}
 	</select>
 	<update id="update" parameterType="User">
 		update user
@@ -86,7 +89,7 @@
 				userPhone=#{userPhone},
 			</if>
 		</set>
-		where userName=#{userName}
+		where userId=#{userId}
 	</update>
 	
 	<!-- 验证用户登陆 -->

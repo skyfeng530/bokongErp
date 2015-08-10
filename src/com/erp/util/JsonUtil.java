@@ -58,13 +58,13 @@ public class JsonUtil {
 	public static <T> List<T> parseJsonToList(String json, Class<T> clzss) {
 
 		List<T> list = null;
-		
+
 		try {
 			list = JSON.parseArray(json, clzss);
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "[JsonUtil] parseJsonToList has exception:" + e);
 		}
-		
+
 		return list;
 	}
 
@@ -75,7 +75,7 @@ public class JsonUtil {
 	 * @param jsonReuslt
 	 */
 	public static void outJson(HttpServletResponse response, String jsonReuslt) {
-		
+
 		response.setContentType("application/x-json");
 		response.setCharacterEncoding("UTF-8");
 
@@ -92,5 +92,13 @@ public class JsonUtil {
 				writer.close();
 			}
 		}
+	}
+
+	public static String getJsonResultMessage(boolean resultFlag, String message) {
+		return "{success:" + resultFlag + ",msg:'" + message + "'}";
+	}
+
+	public static String getJsonResultMessage(boolean resultFlag) {
+		return "{success:" + resultFlag + "}";
 	}
 }

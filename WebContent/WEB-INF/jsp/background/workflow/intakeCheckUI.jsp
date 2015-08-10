@@ -16,6 +16,8 @@
 	    var projectName = '${projectName}';
 	    var taskName = '${taskName}';
 	    var flowId = '${flowId}';
+	    var deviceType = '${deviceType}';
+	    var bustaskId = '${bustaskId}';
     </script>
 </head>
 <body>

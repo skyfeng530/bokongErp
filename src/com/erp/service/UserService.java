@@ -12,11 +12,11 @@ public interface UserService{
 	
 	public void add(User user);
 	
-	public void deleteByUsername(String userName);
+	public void delete(String id);
 	
 	public boolean modify(User user);
 	
-	public User getByUsername(String userName);
+	public User getById(String id);
 	
 	public int countUser(String userName,String userPassword);
 	

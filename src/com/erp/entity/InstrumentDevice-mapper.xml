@@ -21,6 +21,7 @@
         validDate,
         equipmentPosition,
         calibrationVerify,
+        hintVerifyDays,
         bak
     </sql>
 
@@ -68,6 +69,7 @@
         validDate,
         equipmentPosition,
         calibrationVerify,
+        hintVerifyDays,
         bak )
         values (
         #{name},
@@ -87,6 +89,7 @@
         #{validDate},
         #{equipmentPosition},
         #{calibrationVerify},
+        #{hintVerifyDays},
         #{bak})
     </insert>
     <update id="update" parameterType="InstrumentDevice">
@@ -109,6 +112,7 @@
             validDate=#{validDate},
             equipmentPosition=#{equipmentPosition},
             calibrationVerify=#{calibrationVerify},
+            hintVerifyDays=#{hintVerifyDays},
             bak=#{bak}
         </set>
         <where>

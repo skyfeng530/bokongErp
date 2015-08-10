@@ -1,47 +1,69 @@
 function topView() {
 
 	var proxy = new Ext.data.HttpProxy({
-		url : '../workflow/loadFormGridData.html',
+		url : '../omInStorage/loadGridData.html',
 		method : 'POST'
 	});
+
 	var render = new Ext.data.JsonReader({
 		root : 'data',
 		totalProperty : 'totalCount'
 	}, [ {
-		name : 'materialNumber',
+		name : 'FLOWID',
 		type : 'string'
 	}, {
-		name : 'idNumber',
-		type : 'int'
-	}, {
-		name : 'name',
+		name : 'PFID',
 		type : 'string'
 	}, {
-		name : 'materialType',
-		type : 'int'
-	}, {
-		name : 'codeName',
+		name : 'FIGURENO',
 		type : 'string'
 	}, {
-		name : 'totalNumber',
-		type : 'int'
-	}, {
-		name : 'TestRequirements',
+		name : 'FIGURENAME',
 		type : 'string'
 	}, {
-		name : 'TestResult',
+		name : 'FIGUREREQUEST',
 		type : 'string'
 	}, {
-		name : 'inspectionMode',
+		name : 'DEVBATCHNO',
 		type : 'string'
 	}, {
-		name : 'savePos',
+		name : 'TOTALNUMBER',
 		type : 'string'
 	}, {
-		name : 'testLevel',
+		name : 'VENDORNO',
 		type : 'string'
 	}, {
-		name : 'bak',
+		name : 'CHECKRST',
+		type : 'string'
+	}, {
+		name : 'CHECKNUM',
+		type : 'string'
+	}, {
+		name : 'QUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDNUM',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDGRADE',
+		type : 'string'
+	}, {
+		name : 'UNQUALIFIEDREASON',
+		type : 'string'
+	}, {
+		name : 'REVIEWRST',
+		type : 'string'
+	}, {
+		name : 'REVIEWGRP',
+		type : 'string'
+	}, {
+		name : 'REVIEWNO',
+		type : 'string'
+	}, {
+		name : 'GRAPHICPATH',
+		type : 'string'
+	}, {
+		name : 'BAK',
 		type : 'string'
 	} ]);
 	var store = new Ext.data.Store({
@@ -49,16 +71,10 @@ function topView() {
 		reader : render,
 		autoLoad : true,
 		baseParams : {
-			flowId : flowId
-		},
-		sortInfo : {
-			field : 'idNumber',
-			direction : 'ASC'
+			flowId : flowId,
+			limit : 10,
+			offset : 0
 		}
-	});
-
-	var sm = new Ext.grid.CheckboxSelectionModel({
-		singleSelect : false
 	});
 
 	var _gridPanel = {
@@ -70,85 +86,63 @@ function topView() {
 			msg : '正在加载数据,请稍等...'
 		},
 		store : store,
-		columns : [ sm, {
-			header : "序号",
-			width : 120,
-			sortable : false,
-			dataIndex : 'materialNumber',
-			menuDisabled : true
-		}, {
+		columns : [ {
 			header : "图号",
 			width : 120,
+			align : 'center',
 			sortable : false,
-			dataIndex : 'idNumber',
+			dataIndex : 'FIGURENO',
+			menuDisabled : true
+		}, {
+			header : "对应厂商编号",
+			align : 'center',
+			width : 120,
+			sortable : false,
+			dataIndex : 'VENDORNO',
 			menuDisabled : true
 		}, {
 			header : "零件名称",
+			align : 'center',
 			width : 120,
 			sortable : false,
-			dataIndex : 'name',
-			menuDisabled : true
-		}, {
-			header : "类别",
-			width : 120,
-			sortable : false,
-			dataIndex : 'materialType',
-			menuDisabled : true,
-			renderer : category_rendererFunc
-		}, {
-			header : "零件编号",
-			width : 120,
-			sortable : false,
-			dataIndex : 'codeName',
-			menuDisabled : true,
-			renderer : workinprocess_rendererFunc
-		}, {
-			header : "数量",
-			width : 120,
-			sortable : false,
-			dataIndex : 'totalNumber',
+			dataIndex : 'FIGURENAME',
 			menuDisabled : true
 		}, {
 			header : "图纸要求",
-			hidden : true,
-			dataIndex : 'TestRequirements',
-			menuDisabled : true
-		}, {
-			header : "检验结果",
-			hidden : true,
-			dataIndex : 'TestResult',
-			menuDisabled : true
-		}, {
-			header : "合格程度",
-			hidden : true,
-			dataIndex : 'testLevel',
-			menuDisabled : true
-		}, {
-			header : "存储位置",
-			dataIndex : 'savePos',
+			align : 'center',
 			width : 120,
 			sortable : false,
+			dataIndex : 'FIGUREREQUEST',
+			menuDisabled : true
+		}, {
+			header : "数量",
+			align : 'center',
+			width : 120,
+			sortable : false,
+			dataIndex : 'TOTALNUMBER',
+			menuDisabled : true
+		}, {
+			header : "零件编号",
+			align : 'center',
+			width : 120,
+			sortable : false,
+			dataIndex : 'DEVBATCHNO',
 			menuDisabled : true
 		}, {
 			header : "备注",
+			align : 'center',
 			width : 120,
 			sortable : false,
-			dataIndex : 'bak',
+			dataIndex : 'BAK',
 			menuDisabled : true
 		} ],
 		viewConfig : {
 			forceFit : true
 		},
-		sm : sm,
 		autoWidth : true,
-		height : 300,
+		height : 343,
 		frame : true,
 		iconCls : 'icon-grid',
-		tbar : [ {
-			text : '删除',
-			iconCls : 'silk-delete',
-			scope : this
-		} ],
 		bbar : new Ext.PagingToolbar({
 			pageSize : 10,
 			store : store,
@@ -199,7 +193,7 @@ function topView() {
 				fieldLabel : '器件类型',
 				anchor : '85%',
 				xtype : 'label',
-				html : '<div style="padding-top:3px">光学器件（测试数据）</div>'
+				html : '<div style="padding-top:3px">' + deviceType + '</div>'
 			} ]
 		}, {
 			clumnWidth : 1,
@@ -211,25 +205,6 @@ function topView() {
 			baseCls : "x-plain",
 			labelAlign : "left",
 			items : [ _gridPanel ]
-		}, {
-			columnWidth : .5,
-			layout : 'form',
-			labelWidth : 100,
-			labelAlign : "left",
-			baseCls : "x-plain",
-			labelAlign : "left",
-			items : [ {
-				id : 'saveLocaton_Id',
-				fieldLabel : '存储位置',
-				anchor : '85%',
-				xtype : 'textfield'
-			}, {
-				xtype : 'button',
-				text : '修改',
-				width : '80',
-				style : 'margin-left:104px;',
-				handler : manageApproval_dataGrid_handler
-			} ]
 		} ]
 	};
 
@@ -241,6 +216,8 @@ function mainView() {
 
 	var _processInfoStore = loadProcessInfo(taskId);
 	var _processUser = loadProcessUser();
+
+	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
 		title : "库管审核",
@@ -255,58 +232,19 @@ function mainView() {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [
-				_topPanel,
-				{
-					id : 'processId',
-					name : "operate",
-					fieldLabel : "选择您要的操作",
-					xtype : 'combo',
-					store : _processInfoStore,
-					allowBlank : false,
-					blankText : '不能为空',
-					selectOnFocus : true,
-					forceSelection : true,
-					triggerAction : 'all',
-					valueNotFoundText : '',
-					emptyText : '请选择...',
-					mode : "local",
-					valueField : 'value',
-					displayField : 'text',
-					listeners : {
-						'render' : function() {
-							Ext.getCmp("processId").store.reload({
-								callback : function() {
-									if (Ext.getCmp("processId").store
-											.getTotalCount() == 1) {
-										var firstValue = Ext
-												.getCmp("processId").store
-												.getRange()[0].data.value;
-
-										Ext.getCmp("processId").setValue(
-												firstValue);
-									}
-
-								}
-							});
-
-						}
-					}
-				}, {
-					id : 'commonMask_id',
-					xtype : "textarea",
-					name : "mask",
-					height : 50,
-					fieldLabel : "批注",
-					allowBlank : false,
-					blankText : '不能为空'
-				} ],
+		items : [ _topPanel, _flowCommonComp ],
 		buttons : [
 				{
 					text : "提交",
 					handler : function() {
 
-						var _gridData = getGridData();
+						if (!Ext.getCmp("processId").isValid()) {
+							return;
+						}
+
+						if (!Ext.getCmp("processUserId").isValid()) {
+							return;
+						}
 
 						if (!Ext.getCmp("commonMask_id").isValid()) {
 							return;
@@ -314,17 +252,18 @@ function mainView() {
 
 						var commonRemarkValue = Ext.getCmp("commonMask_id")
 								.getValue();
+						var outcome = Ext.getCmp("processId").getValue();
+						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../workflow/submitForm_storage.html',
+							url : '../omInStorage/submitForm_storage.html',
 							params : {
+								flowId : flowId,
 								taskId : taskId,
 								comment : commonRemarkValue,
-								data : _gridData,
-								projectName : projectName,
-								taskName : taskName,
-								outcome : "",
-								nextName : ""
+								outcome : outcome,
+								nextName : nextName,
+								bustaskId : bustaskId
 							},
 							method : 'POST',
 							success : function(response) {

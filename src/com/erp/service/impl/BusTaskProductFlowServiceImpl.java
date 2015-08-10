@@ -34,9 +34,11 @@ public class BusTaskProductFlowServiceImpl implements BusTaskProductFlowService 
     @Override
     public int add(BusTaskProductFlow busTaskProductFlow) {
     	
-    	String addSql = "INSERT INTO BUSTASKPRODUCTFLOW(FLOWID, PPID) VALUES(?, ?)";
+    	String addSql = "INSERT INTO BUSTASKPRODUCTFLOW(FLOWID, PPID,FIGURELIB,ARTID) VALUES(?, ?, ?,?)";
     	
-    	return commonDao.update(addSql, new Object[]{busTaskProductFlow.getFlowId(), busTaskProductFlow.getPpid()});
+    	return commonDao.update(addSql, new Object[]{busTaskProductFlow.getFlowId(), 
+    			busTaskProductFlow.getPpid(),busTaskProductFlow.getFigureLib(),
+    			busTaskProductFlow.getArtId()});
     }
 
     @Override
@@ -59,7 +61,7 @@ public class BusTaskProductFlowServiceImpl implements BusTaskProductFlowService 
 	@Override
 	public List<Map<String, Object>> queryTaskInfoByFlowId(String flowId) {
 		
-		String querySql = "SELECT PROJECTNAME, PRODUCTNAME FROM BUSTASKPRODUCTFLOW F LEFT JOIN BUSPROJECTPRODUCT D ON D.PPID = F.PPID LEFT JOIN BUSPROJECT P ON D.PROJECTID = P.PID WHERE F.FLOWID = ?";
+		String querySql = "SELECT distinct PROJECTNAME, PRODUCTNAME,f.figureLib FROM BUSTASKPRODUCTFLOW F LEFT JOIN BUSPROJECTPRODUCT D ON D.PPID = F.PPID LEFT JOIN BUSPROJECT P ON D.PROJECTID = P.PID LEFT JOIN busprojectfigure b ON b.ppid = D.PPID WHERE F.FLOWID = ?";
 		
 		return commonDao.queryToList(querySql, flowId);
 	}

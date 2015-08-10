@@ -37,4 +37,7 @@
             ppid=#{ppid}
         </set>
     </update>
+    <delete id="deleteById"  parameterType="String">
+      delete from  BusTaskProductFlow where flowId = #{id};
+    </delete>
 </mapper>

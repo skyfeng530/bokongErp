@@ -6,7 +6,7 @@
         taskId,
         taskNo,
         ppid,
-        totalSetNo,
+        totalSetNum,
         taskSource,
         bak
     </sql>
@@ -41,7 +41,7 @@
         taskId,
         taskNo,
         ppid,
-        totalSetNo,
+        totalSetNum,
         taskSource,
         bak )
         values (
@@ -57,7 +57,7 @@
         <set>
             taskNo=#{taskNo},
             ppid=#{ppid},
-            totalSetNo=#{totalSetNo},
+            totalSetNo=#{totalSetNum},
             taskSource=#{taskSource},
             bak=#{bak}
         </set>

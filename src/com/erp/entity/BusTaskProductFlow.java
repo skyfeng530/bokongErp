@@ -4,7 +4,22 @@ package com.erp.entity;
 public class BusTaskProductFlow implements java.io.Serializable {
     private long flowId;
     private int ppid;
-    public BusTaskProductFlow() {
+    private String figureLib;
+    private int artId;
+    
+	public int getArtId() {
+		return artId;
+	}
+	public void setArtId(int artId) {
+		this.artId = artId;
+	}
+	public String getFigureLib() {
+		return figureLib;
+	}
+	public void setFigureLib(String figureLib) {
+		this.figureLib = figureLib;
+	}
+	public BusTaskProductFlow() {
     }
     public long getFlowId() {
         return flowId;

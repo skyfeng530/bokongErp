@@ -11,7 +11,7 @@
 <br/>
 <br/>  
 <form action="${pageContext.servletContext.contextPath }/background/user/update.html" method="post">
-<input type="hidden" name="userId" value="${user.userName}">
+<input type="hidden" name="userId" value="${user.userId}">
 		<table class="ttab" height="100" width="85%" border="0" cellpadding="0" cellspacing="1" align="center">
 				<tr>
 					<td height="30" colspan="4">

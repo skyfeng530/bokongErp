@@ -31,4 +31,6 @@ public interface CommonDao {
 	public int update(String sql, Object[] object);
 
 	public int[] batchUpdate(String sql, List<Object[]> objectList);
+	
+	public <T> T queryToObject(String querySql, Class<T> t);
 }

@@ -1,68 +1,72 @@
 function topView() {
-	var proxy = new Ext.data.HttpProxy({
-		url : '../project/figure/loadFigureData.html',
-		method : 'POST'
+	// create the Data Store
+	var page_size = 10;
+	var gridStore = new Ext.data.Store({ 
+		autoLoad: false,
+        proxy: new Ext.data.HttpProxy({ url: "../../background/project/figure/loadFigureData.html"}),  
+        reader: new Ext.data.JsonReader(  
+                      {
+                    	  totalProperty:'totalCount',
+                          root:'data'
+                      },  
+                      [
+                       {name:'flowId'},
+                       {name:'figureNo'},
+                       {name:'figureName'},
+                       {name:'figureRequest'},
+                       {name:'type'},
+                       {name:'batchNum'},
+                       {name:'describe'}
+                       ]
+                      ),
+	      listeners: {  
+	          'beforeload': function (store, op, options) {  
+	              var params = {  
+	          		    flowId:flowId,
+	              };  
+	              Ext.apply(store.proxy.extraParams, params);   
+	          }  
+	      } 
+    });  
+	gridStore.load({
+		   params : {
+		    start : 0,  
+		    limit : page_size,
+		    flowId:flowId,
+		   } 
 	});
-	var render = new Ext.data.JsonReader({
-		root : 'data',
-		totalProperty : 'totalCount'
-	}, [ {
-		name : 'projectName',
-		type : 'string'
-	}, {
-		name : 'productName',
-		type : 'string'
-	}, {
-		name : 'figureName',
-		type : 'string'
-	}, {
-		name : 'figureNo',
-		type : 'string'
-	}, {
-		name : 'pictureName',
-		type : 'string'
-	}, {
-		name : 'figureRequest',
-		type : 'string'
-	}, {
-		name : 'batchNum',
-		type : 'string'
-	} ]);
-	var store = new Ext.data.Store({
-		proxy : proxy,
-		reader : render,
-		autoLoad : true,
-		baseParams : {
-			flowId : flowId,
-			limit : 10,
-			offset : 0
-		}
-	});
+
+	var bbar=new Ext.PagingToolbar({
+        pageSize:page_size,
+        store:gridStore,
+        displayInfo:true,
+        lastText:"尾页",
+        nextText:"下一页",
+        beforePageText:"当前",
+        refreshText:"刷新",
+        afterPageText:"页，共{0}页",
+        displayMsg: '显示 {0} - {1} 共 {2}条&nbsp&nbsp&nbsp&nbsp',
+        emptyMsg:"对不起，没有您查询的信息&nbsp&nbsp&nbsp&nbsp"
+       });
+    bbar.on("beforechange", 
+    		function(_p, _o)
+    		{
+		       Ext.apply(_o, { flowId:flowId });//增加自定义参数
+			   return true;
+			}, 
+            this);
+	var sm = new Ext.grid.CheckboxSelectionModel();
 
 	var _gridPanel = {
 		id : '_gridPanel_id',
 		xtype : 'grid',
 		anchor : '105%',
 		autoWidth : true,
-		style : 'margin-left:82px; margin-top:10px; margin-bottom:10px',
-		store : store,
-		columns : [ {
-			header : "项目名称",
-			align : 'center',
-			width : 125,
-			dataIndex : 'projectName',
-			sortable : false,
-			menuDisabled : true
-		}, {
-			header : "产品名称",
-			align : 'center',
-			width : 125,
-			sortable : false,
-			dataIndex : 'productName',
-			menuDisabled : true
-		}, {
+		style : 'margin-left:60px; margin-top:10px; margin-bottom:10px',
+		store : gridStore,
+		columns : [ sm,{
 			header : "图ID",
-			width : 125,
+			width : 100,
 			align : 'center',
 			sortable : false,
 			dataIndex : 'figureNo',
@@ -70,40 +74,51 @@ function topView() {
 		}, {
 			header : "图名称",
 			align : 'center',
-			width : 125,
+			width : 150,
 			sortable : false,
 			dataIndex : 'figureName',
 			menuDisabled : true
 		}, {
 			header : "图纸要求",
 			align : 'center',
-			width : 125,
+			width : 250,
 			sortable : false,
 			dataIndex : 'figureRequest',
 			menuDisabled : true
 		}, {
+			header : "类型",
+			align : 'center',
+			width : 100,
+			sortable : false,
+			dataIndex : 'type',
+			menuDisabled : true
+		}, {
 			header : '数量（套）',
 			align : 'center',
-			width : 125,
+			width : 100,
 			sortable : false,
 			dataIndex : 'batchNum',
+			menuDisabled : true
+		} , {
+			header : '描述',
+			align : 'center',
+			width : 250,
+			sortable : false,
+			dataIndex : 'describe',
 			menuDisabled : true
 		} ],
 		viewConfig : {
 			forceFit : true
 		},
+		sm : sm,
 		autoWidth : true,
-		height : 300,
+		height : 380,
 		stripeRows : true,
 		frame : true,
 		iconCls : 'icon-grid',
-		bbar : new Ext.PagingToolbar({
-			pageSize : 10,
-			store : store,
-			emptyMsg : "无记录"
-		})
+		bbar : bbar
 	};
-
+     
 	var partTransfer = {
 		xtype : 'fieldset',
 		title : '图库',
@@ -111,7 +126,7 @@ function topView() {
 		autoWidth : true,
 		layout : 'column',
 		items : [ {
-			columnWidth : .5,
+			columnWidth : .33,
 			layout : 'form',
 			labelWidth : 55,
 			labelAlign : "left",
@@ -125,7 +140,7 @@ function topView() {
 				html : '<div style="padding-top:3px">' + projectName + '</div>'
 			} ]
 		}, {
-			columnWidth : .5,
+			columnWidth : .33,
 			layout : 'form',
 			labelWidth : 55,
 			labelAlign : "left",
@@ -138,7 +153,21 @@ function topView() {
 				xtype : 'label',
 				html : '<div style="padding-top:3px">' + productName + '</div>'
 			} ]
-		}, {
+		},{
+			columnWidth : .33,
+			layout : 'form',
+			labelWidth : 55,
+			labelAlign : "left",
+			baseCls : "x-plain",
+			labelAlign : "left",
+			items : [ {
+				id : 'figurelib_id',
+				fieldLabel : '图库名称',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + figureLib + '</div>'
+			} ]
+		},  {
 			clumnWidth : 1,
 			layout : 'form',
 			labelWidth : 70,
@@ -197,9 +226,10 @@ function mainView() {
 						var nextName = Ext.getCmp("processUserId").getValue();
 
 						Ext.Ajax.request({
-							url : '../project/figure/submitFormStorage.html',
+							url : '../project/figure/submitFormFigure.html',
 							timeout : 300000,
 							params : {
+								flowId:flowId,
 								taskId : taskId,
 								comment : commonRemarkValue,
 								outcome : outcome,

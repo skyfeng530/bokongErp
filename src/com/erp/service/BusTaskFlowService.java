@@ -19,5 +19,7 @@ public interface BusTaskFlowService{
     public BusTaskFlow getById(String id);
     
     public List<Map<String, Object>> queryBusTaskFlowByFlowId(String flowId);
+    
+    public int addAll(String flowId);
 
 }

@@ -14,8 +14,9 @@
      var flowId = '${flowId}';
      var projectName = '${projectName}';
      var productName = '${productName}';
+     var figureLib= '${figureLib}';
      var taskno = '${taskno}';
-     var totalsetno = '${totalsetno}';
+     var totalSetNum = '${totalSetNum}';
      var tasksource = '${tasksource}';
     </script>
 </head>

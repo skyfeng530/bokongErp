@@ -20,7 +20,7 @@
 				<td height="30"
 					 colspan="2">
 					<div align="center">
-					<font color="blue" size="6" ><b>修改资源</b></font>
+					<font color="blue" size="6" ><b>添加资源</b></font>
 					</div>
 				</td>
 			</tr>

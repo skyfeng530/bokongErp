@@ -20,6 +20,7 @@ public class InstrumentDevice implements java.io.Serializable {
     private String validDate;
     private String equipmentPosition;
     private String calibrationVerify;
+    private int hintVerifyDays;
     private String bak;
     public InstrumentDevice() {
     }
@@ -131,7 +132,13 @@ public class InstrumentDevice implements java.io.Serializable {
     public void setCalibrationVerify(String calibrationVerify) {
         this.calibrationVerify =calibrationVerify;
     }
-    public String getBak() {
+    public int getHintVerifyDays() {
+		return hintVerifyDays;
+	}
+	public void setHintVerifyDays(int hintVerifyDays) {
+		this.hintVerifyDays = hintVerifyDays;
+	}
+	public String getBak() {
         return bak;
     }
     public void setBak(String bak) {

@@ -29,7 +29,7 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-							 <input style="height: 20px;width: 200px" name="name" type="text" value="${role.name}"/>
+							 <input style="height: 20px;width: 200px" name="name" type="text" readonly="readonly" value="${role.name}"/>
 						</div>
 					</td>
 				</tr>
@@ -41,7 +41,7 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-							 <input style="height: 20px;width: 200px" name="roleKey" type="text" value="${role.roleKey}"/>
+							 <input style="height: 20px;width: 200px" name="roleKey" type="text" readonly="readonly" value="${role.roleKey}"/>
 						</div>
 					</td>
 				</tr>
@@ -53,8 +53,8 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-						<input name="enable" type="radio" <c:if test="${role.enable eq '0'}">checked="checked"</c:if> value="0"/>:禁用　　
-						<input name="enable" type="radio" <c:if test="${role.enable eq '1'}">checked="checked"</c:if> value="1"/>:正常
+						<input name="enable" type="radio" readonly="readonly" <c:if test="${role.enable eq '0'}">checked="checked"</c:if> value="0"/>:禁用　　
+						<input name="enable" type="radio" readonly="readonly" <c:if test="${role.enable eq '1'}">checked="checked"</c:if> value="1"/>:正常
 						</div>
 					</td>
 				</tr>
@@ -66,14 +66,13 @@
 	</td>
 	<td >
 		<div align="left" class="STYLE1"  style="padding-left:10px;">
-			<input style="height: 20px;width: 200px" name="description" type="text" value="${role.description}"/>
+			<input style="height: 20px;width: 200px" name="description" type="text" readonly="readonly" value="${role.description}"/>
 		</div>
 	</td>
 </tr>
 				<tr>
 					<td colspan="2" style="padding: 10px">
 						<div align="center">
-			 				<input type="submit" value="　保　存　" class="input_btn_style1"/>　　　　
 			 				<input id="backBt" type="button" value="　返　回　" class="input_btn_style1" onclick="javascript:window.location.href='javascript:history.go(-1)'"/>
 		 				</div>
 					</td>

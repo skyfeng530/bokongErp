@@ -86,7 +86,7 @@ public class LogAopAction {
 			log.setAction(opertype);
 			log.setActionTime(time.toString());
 			log.setUserIP(ip);
-			//logDao.add(log);
+			logDao.add(log);
 		}
 		return result;
 	}

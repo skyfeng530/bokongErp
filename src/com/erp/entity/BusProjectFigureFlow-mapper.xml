@@ -45,20 +45,51 @@
         #{figureNo},
         #{figureName},
         #{figureRequest},
-        #{type},
+        ${type},
         #{batchNum},
         #{describe})
     </insert>
-    <update id="update" parameterType="BusProjectFigureFlow">
+    <update id="update" parameterType="BusProjectFigureFlowVo">
         update BusProjectFigureFlow
         <set>
-            flowId=#{flowId},
             figureNo=#{figureNo},
             figureName=#{figureName},
             figureRequest=#{figureRequest},
-            type=#{type},
+            `type`=#{type},
             batchNum=#{batchNum},
-            describe=#{describe}
+            `describe`=#{describe}
         </set>
+        <where>
+            flowId=#{flowId} and figureNo=#{figureNoOld} and figureName=#{figureNameOld} and figureRequest=#{figureRequestOld}
+         </where>
     </update>
+    <delete id="deleteByKey" parameterType="BusProjectFigureFlow">
+      delete from BusProjectFigureFlow where 
+            flowId=#{flowId} and 
+            figureNo=#{figureNo} and
+            figureName=#{figureName} and
+            figureRequest=#{figureRequest}
+    </delete>
+    <delete id="deleteById"  parameterType="String">
+      delete from  BusProjectFigureFlow where flowId = #{id};
+    </delete>
+    <select id="queryFigureName" parameterType="BusProjectFigureFlow" resultType="java.util.HashMap">
+        select figureNo,figureName,figureRequest from 
+		 (select figureName ,figureNo,figureRequest from busprojectfigure where ppid =  (select ppid from busprojectfigureproductflow where flowid=#{flowId})
+		 and  figureLib   =  (select figureLib from busprojectfigureproductflow where flowid=#{flowId})
+		 union
+		 select figureName ,figureNo,figureRequest from busprojectfigureflow where flowId = #{flowId}) as a where a.figureNo = #{figureNo}
+    </select>
+    <insert id="insertALL">
+        insert into busprojectfigure(
+        ppid,
+        figureLib,
+        figureNo,
+        figureName,
+        figureRequest,
+        `type`,
+        `batchNum`,
+        `describe` )
+        select a.ppid,a.figureLib,c.figureNo,c.figureName,c.figureRequest,c.type,c.batchNum,c.describe from busprojectfigureflow c left join busprojectfigureproductflow a on a.flowId=c.flowId where a.flowId = #{flowId}
+    </insert>
 </mapper>

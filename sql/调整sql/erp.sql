@@ -1,11 +1,89 @@
-DROP TABLE IF EXISTS userloginlist;
-CREATE TABLE IF NOT EXISTS userloginlist (
-	loginId INTEGER NOT NULL AUTO_INCREMENT,
-	userName VARCHAR ( 20 ) NOT NULL,
-	loginTime TIMESTAMP NOT NULL,
-	loginIP VARCHAR ( 40 ) NOT NULL,
-	CONSTRAINT PK_userloginlist PRIMARY KEY (loginId)
+DROP TABLE IF EXISTS resources;	
+CREATE TABLE IF NOT EXISTS resources (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 50 ) NOT NULL,
+	parentId INTEGER NOT NULL,
+	resKey VARCHAR ( 50 ) NOT NULL,
+	type VARCHAR ( 10 ) NOT NULL,
+	resUrl VARCHAR ( 200 ) NOT NULL,
+	level INTEGER NOT NULL,
+	description VARCHAR ( 200 ) NOT NULL,
+	CONSTRAINT PK_RESOURCES PRIMARY KEY (id)
+	)ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+		
+DROP TABLE IF EXISTS role;	
+CREATE TABLE IF NOT EXISTS role (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	name VARCHAR ( 50 ) NOT NULL,
+	roleKey VARCHAR ( 50 ) NOT NULL,
+	description VARCHAR ( 200 ) NOT NULL,
+	enable INTEGER NOT NULL,
+	CONSTRAINT PK_ROLE PRIMARY KEY (id)
 	)ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS user;	
+CREATE TABLE user (
+  userId int(11) NOT NULL AUTO_INCREMENT,
+  userName varchar(20) NOT NULL,
+  userPassword varchar(100) NOT NULL,
+  userRealname varchar(20) DEFAULT NULL,
+  userBirthday varchar(20) DEFAULT NULL,
+  userSex varchar(10) DEFAULT NULL,
+  idCard varchar(100) DEFAULT NULL,
+  userPhone varchar(30) DEFAULT NULL,
+  PRIMARY KEY (userId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS user_role;	
+CREATE TABLE user_role (
+  user_id bigint(20) NOT NULL DEFAULT '0',
+  role_id bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (user_id,role_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS resources_role;	
+CREATE TABLE IF NOT EXISTS resources_role (
+	resc_id INTEGER NOT NULL,
+	role_id INTEGER NOT NULL,
+	CONSTRAINT PK_RESOURE_ROLE PRIMARY KEY (resc_id, role_id)
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS DepartmentMember;	
+CREATE TABLE IF NOT EXISTS DepartmentMember (
+	DepartId INTEGER NOT NULL,
+	userName VARCHAR ( 20 ) NOT NULL,
+	Position VARCHAR ( 21 ),
+	resc_enable SMALLINT,
+	discribe VARCHAR ( 51 ),
+	CONSTRAINT PK_DepartmentMember PRIMARY KEY (userName, DepartId)
+	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS DepartmentInfo;	
+CREATE TABLE IF NOT EXISTS DepartmentInfo (
+	DepartId INTEGER NOT NULL AUTO_INCREMENT,
+	dName VARCHAR ( 51 ) NOT NULL,
+	DepartType INTEGER,
+	Discribe VARCHAR ( 101 ),
+	CONSTRAINT PK_DepartInfo PRIMARY KEY (DepartId)
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS department_user;
+CREATE TABLE IF NOT EXISTS department_user (
+    department_id bigint(20) NOT NULL DEFAULT '0',
+    user_id bigint(20) NOT NULL DEFAULT '0',
+    PRIMARY KEY (department_id,user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS userloginlist;
+CREATE TABLE userloginlist (
+    loginId int(11) NOT NULL AUTO_INCREMENT,
+    userId int(11) DEFAULT NULL,
+    loginTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    loginIP varchar(40) DEFAULT NULL,
+    PRIMARY KEY (loginId),
+    KEY FK_userloginlist (userId)
+) ENGINE=InnoDB AUTO_INCREMENT=451 DEFAULT CHARSET=utf8;
+
 	
 DROP TABLE IF EXISTS busleave;
 CREATE TABLE IF NOT EXISTS `busleave` (
@@ -23,15 +101,34 @@ DROP TABLE IF EXISTS busprojectfigure;
 CREATE TABLE `busprojectfigure` (
   `pfid` INT(11) NOT NULL AUTO_INCREMENT,
   `ppid` INT(11) DEFAULT NULL,
-  `figureLibName` VARCHAR(64) NOT NULL,
-  `figureID` VARCHAR(32) NOT NULL,
+  `figureLib` VARCHAR(32) NOT NULL,
+  `figureNo` VARCHAR(32) NOT NULL,
   `figureName` VARCHAR(32) NOT NULL,
   `figureRequest` VARCHAR(256) DEFAULT NULL,
   `type` INT(11) NOT NULL,
   `batchNum` INT(11) NOT NULL,
   `describe` VARCHAR(256) DEFAULT NULL,
   PRIMARY KEY (`pfid`)
-) ENGINE=INNODB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS busprojectfigureproductflow;	
+CREATE TABLE `busprojectfigureproductflow` (
+  `flowId` bigint NOT NULL,
+   ppid int(11),
+  `figureLib` VARCHAR(32) NOT NULL,
+   bak varchar(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS busprojectfigureflow;	
+CREATE TABLE `busprojectfigureflow` (
+  `flowId` bigint NOT NULL,
+  `figureNo` VARCHAR(32) NOT NULL,
+  `figureName` VARCHAR(32) NOT NULL,
+  `figureRequest` VARCHAR(256) DEFAULT NULL,	
+  `type` INT(11),
+  `batchNum` INT(11) NOT NULL,
+  `describe` VARCHAR(256) DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS busproject;
 CREATE TABLE `busproject` (
@@ -39,27 +136,52 @@ CREATE TABLE `busproject` (
   `projectName` varchar(64) NOT NULL,
   `projectDescribe` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS busprojectflow;
+CREATE TABLE `busprojectflow` (
+  `flowId` bigint NOT NULL,
+  `projectName` varchar(64) NOT NULL,
+  `projectDescribe` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 
 
 DROP TABLE IF EXISTS `busprojectproduct`;
 CREATE TABLE `busprojectproduct` (
-  ppid int(11) NOT NULL AUTO_INCREMENT,
-  projectId  int(11) NOT NULL,
-  productNo varchar(16) NOT NULL,
-  productName varchar(32) DEFAULT NULL,
-  status varchar(3) DEFAULT NULL,
-  bak varchar(128) DEFAULT NULL,
+  `ppid` int(11) NOT NULL AUTO_INCREMENT,
+  `projectId`  int(11) NOT NULL,
+  `productNo` varchar(16) NOT NULL,
+  `productName` varchar(32) DEFAULT NULL,
+  `status` varchar(3) DEFAULT NULL,
+  `bak` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`ppid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `busprojectproductflow`;
+CREATE TABLE `busprojectproductflow` (
+  `flowId` bigint NOT NULL,
+  `productNo` varchar(16) NOT NULL,
+  `productName` varchar(32) DEFAULT NULL,
+  `status` varchar(3) DEFAULT NULL,
+  `bak` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `busprojectproductprojectflow`;
+CREATE TABLE `busprojectproductprojectflow` (
+  `flowId` bigint NOT NULL,
+  `projectId`  int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `bustask`;
 CREATE TABLE `bustask` (
   `taskId` int(11) NOT NULL AUTO_INCREMENT,
   `taskNo`  varchar(32) NOT NULL,
-  `pid` int(11) NOT NULL,
   `ppid` int(11) NOT NULL,
-  `totalSetNo` int(11) NOT NULL,
+  `figureLib` varchar(32) NOT NULL,
+  `artId` int(11) NOT NULL,
+  `totalSetNum` int(11) NOT NULL,
   `taskSource` varchar(32) DEFAULT NULL,
   `bak` varchar(128) DEFAULT NULL,
   PRIMARY KEY PK_bustask(`taskId`)
@@ -68,15 +190,20 @@ CREATE TABLE `bustask` (
 DROP TABLE IF EXISTS `bustaskFlow`;
 CREATE TABLE `bustaskFlow` (
   `flowId` bigint NOT NULL,
-  `taskId` int(11) NOT NULL ,
   `taskNo`  varchar(32) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `ppid` int(11) NOT NULL,
-  `totalSetNo` int(11) NOT NULL,
+  `totalSetNum` int(11) NOT NULL,
   `taskSource` varchar(32) DEFAULT NULL,
-  `bak` varchar(128) DEFAULT NULL,
-  PRIMARY KEY PK_bustaskFlow(`taskId`, `flowId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `bak` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `bustaskProductFlow`;
+CREATE TABLE `bustaskProductFlow` (
+  `flowId` bigint NOT NULL,
+  `ppid` int(11) NOT NULL,
+  `figureLib` varchar(32) NOT NULL,
+  `artId` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS Member_info;
 CREATE TABLE IF NOT EXISTS Member_info (
@@ -99,16 +226,6 @@ CREATE TABLE IF NOT EXISTS Member_info (
 	GraDate DATE,
 	CONSTRAINT PK_MemberBaseInfo PRIMARY KEY (UserNumber)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;	
-	
-DROP TABLE IF EXISTS role;	
-CREATE TABLE IF NOT EXISTS role (
-	id INTEGER NOT NULL AUTO_INCREMENT,
-	name VARCHAR ( 50 ) NOT NULL,
-	roleKey VARCHAR ( 50 ) NOT NULL,
-	description VARCHAR ( 200 ) NOT NULL,
-	enable INTEGER NOT NULL,
-	CONSTRAINT PK_ROLE PRIMARY KEY (id)
-	)ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;	
 
 DROP TABLE IF EXISTS ProductionManagement;
 CREATE TABLE IF NOT EXISTS ProductionManagement (
@@ -171,19 +288,6 @@ CREATE TABLE IF NOT EXISTS StorageFlowResult (
 	bak VARCHAR ( 100 ),
 	CONSTRAINT PK_StorageFlowResult1 PRIMARY KEY (projectName, taskName, flowId, MaterialNumber)
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-	
-DROP TABLE IF EXISTS resources;		
-CREATE TABLE IF NOT EXISTS resources (
-	id INTEGER NOT NULL AUTO_INCREMENT,
-	name VARCHAR ( 50 ) NOT NULL,
-	parentId INTEGER NOT NULL,
-	resKey VARCHAR ( 50 ) NOT NULL,
-	type VARCHAR ( 10 ) NOT NULL,
-	resUrl VARCHAR ( 200 ) NOT NULL,
-	level INTEGER NOT NULL,
-	description VARCHAR ( 200 ) NOT NULL,
-	CONSTRAINT PK_RESOURCES PRIMARY KEY (id)
-	)ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS ProductionProcessInfo;		
 CREATE TABLE IF NOT EXISTS ProductionProcessInfo (
@@ -257,25 +361,6 @@ CREATE TABLE IF NOT EXISTS TaskProcessRelationship (
 	CONSTRAINT PK_TaskProcessRelationship PRIMARY KEY (ProcessId, TaskId)
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
-DROP TABLE IF EXISTS user;	
-CREATE TABLE `user` (
-  `userName` varchar(20) NOT NULL,
-  `userPassword` varchar(100) NOT NULL,
-  `userRealname` varchar(20) DEFAULT NULL,
-  `userBirthday` varchar(20) DEFAULT NULL,
-  `userSex` varchar(10) DEFAULT NULL,
-  `idCard` varchar(100) DEFAULT NULL,
-  `userPhone` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`userName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	
-DROP TABLE IF EXISTS user_role;	
-CREATE TABLE IF NOT EXISTS user_role (
-	DepartId INTEGER NOT NULL,
-	role_id INTEGER NOT NULL,
-	CONSTRAINT PK_USER_ROLE PRIMARY KEY (DepartId, role_id)
-	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-	
 DROP TABLE IF EXISTS PersonLimitInfo;	
 CREATE TABLE IF NOT EXISTS PersonLimitInfo (
 	UserNumber VARCHAR ( 30 ) NOT NULL,
@@ -298,15 +383,6 @@ CREATE TABLE IF NOT EXISTS ProjectInfo (
 	CONSTRAINT PK_ProjectInfo PRIMARY KEY (ProjectName, TaskNumber)
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
-DROP TABLE IF EXISTS DepartmentInfo;	
-CREATE TABLE IF NOT EXISTS DepartmentInfo (
-	DepartId INTEGER NOT NULL AUTO_INCREMENT,
-	dName VARCHAR ( 51 ) NOT NULL,
-	DepartType INTEGER,
-	Discribe VARCHAR ( 101 ),
-	CONSTRAINT PK_DepartInfo PRIMARY KEY (DepartId)
-	)ENGINE=InnoDB  AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-	
 DROP TABLE IF EXISTS ProcessRule;	
 CREATE TABLE IF NOT EXISTS ProcessRule (
 	ProcessId VARCHAR ( 51 ) NOT NULL,
@@ -316,6 +392,60 @@ CREATE TABLE IF NOT EXISTS ProcessRule (
 	context VARCHAR ( 201 ) NOT NULL,
 	CONSTRAINT PK_ProcessRule PRIMARY KEY (ProcessId, PeriodId, ParentPeriodId, RuleId)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+	
+DROP TABLE IF EXISTS omInStorage;	
+CREATE TABLE IF NOT EXISTS omInStorage (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	taskId INT(11) NOT NULL,
+	pfid INT(11) NOT NULL,
+	devBatchNo VARCHAR(21) NOT NULL,
+	totalNumber INTEGER DEFAULT 1 NOT NULL,
+	vendorNo VARCHAR(64) DEFAULT NULL,
+	checkRst VARCHAR(256) DEFAULT NULL,
+	checkNum INT(11),
+	qualifiedNum INT(11),
+	unqualifiedNum INT(11),
+	unqualifiedGrade INT(11),
+	unqualifiedReason VARCHAR(128),
+	reviewRst INT(11),
+	reviewGrp INT(11),
+	reviewNo VARCHAR(32),
+	graphicPath VARCHAR(128),	
+	bak VARCHAR(100),
+	CONSTRAINT omInStorage PRIMARY KEY (id)
+	)ENGINE=INNODB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS omInStorageFlow;	
+CREATE TABLE IF NOT EXISTS omInStorageFlow (
+   flowId bigint NOT NULL,
+	pfid INT(11) NOT NULL,
+	devBatchNo VARCHAR(21) NOT NULL,
+	totalNumber INTEGER DEFAULT 1 NOT NULL,
+	vendorNo VARCHAR(64) DEFAULT NULL,
+	checkRst VARCHAR(256) DEFAULT NULL,
+	checkNum INT(11),
+	qualifiedNum INT(11),
+	unqualifiedNum INT(11),
+	unqualifiedGrade INT(11),
+	unqualifiedReason VARCHAR(128),
+	reviewRst INT(11),
+	reviewGrp INT(11),
+	reviewNo VARCHAR(32),
+	graphicPath VARCHAR(128),	
+	bak VARCHAR(100)
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+	
+
+DROP TABLE IF EXISTS omInStorageTaskFlow;	
+CREATE TABLE IF NOT EXISTS omInStorageTaskFlow (
+    `flowId`   bigint NOT NULL,
+	`projectid` INT(11) NOT NULL,
+	`taskId`   INT(11) NOT NULL,
+	`devtypeid`  INT(11) NOT NULL,
+	 bak VARCHAR(100)
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;	
+
 	
 DROP TABLE IF EXISTS BasicMaterialInfo;	
 CREATE TABLE IF NOT EXISTS BasicMaterialInfo (
@@ -367,23 +497,6 @@ CREATE TABLE IF NOT EXISTS ProcessManagement (
 	CONSTRAINT PK_ProcessManagement PRIMARY KEY (ProcessId)
 	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 	
-DROP TABLE IF EXISTS DepartmentMember;	
-CREATE TABLE IF NOT EXISTS DepartmentMember (
-	DepartId INTEGER NOT NULL,
-	userName VARCHAR ( 20 ) NOT NULL,
-	Position VARCHAR ( 21 ),
-	resc_enable SMALLINT,
-	discribe VARCHAR ( 51 ),
-	CONSTRAINT PK_DepartmentMember PRIMARY KEY (userName, DepartId)
-	)ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-	
-DROP TABLE IF EXISTS resources_role;	
-CREATE TABLE IF NOT EXISTS resources_role (
-	resc_id INTEGER NOT NULL,
-	role_id INTEGER NOT NULL,
-	CONSTRAINT PK_RESOURE_ROLE PRIMARY KEY (resc_id, role_id)
-	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	
 DROP TABLE IF EXISTS device;	
 create table IF NOT EXISTS `device` (
 	`id` int (11),
@@ -407,13 +520,12 @@ CREATE TABLE devicetype (
 	`devNick` VARCHAR(16) NOT NULL,
 	`reserverd1` INT(11) NOT NULL,
 	`reserverd2` INT(11) NOT NULL,
-	CONSTRAINT PK_omOutStorage PRIMARY KEY (devid)
+	CONSTRAINT PK_devicetype PRIMARY KEY (devid)
 	)ENGINE=INNODB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS omOutStorage;
 CREATE TABLE omOutStorage (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-	`pid` INT(11) NOT NULL,
 	`taskId` INT(11) NOT NULL,
 	`componentType` INT(11) NOT NULL,
 	`setNum` INT(11) DEFAULT NULL,
@@ -428,14 +540,12 @@ CREATE TABLE omOutStorage (
 	`reserverd1` INT(11) NOT NULL,
 	`reserverd2` INT(11) NOT NULL,
 	CONSTRAINT PK_omOutStorage PRIMARY KEY (`id`)
-	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+	)ENGINE=INNODB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 	
 	
 DROP TABLE IF EXISTS omOutStorageFlow;
 CREATE TABLE omOutStorageFlow (
-        `flowId` bigint(20) NOT NULL,
-	`pid` INT(11) NOT NULL,
-	`taskId` INT(11) NOT NULL,
+    `flowId` bigint(20) NOT NULL,
 	`componentType` INT(11) NOT NULL,
 	`setNum` INT(11) DEFAULT NULL,
 	`fetchType` INT(11) NOT NULL,
@@ -448,6 +558,54 @@ CREATE TABLE omOutStorageFlow (
 	`factNum` INT(11) NOT NULL,
 	`reserverd1` INT(11) NOT NULL,
 	`reserverd2` INT(11) NOT NULL
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS omOutStorageTastFlow;
+CREATE TABLE omOutStorageTastFlow (
+    `flowId` bigint(20) NOT NULL,
+	`taskId` INT(11) NOT NULL
+	)ENGINE=INNODB  DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS omDiscardStorage;
+CREATE TABLE omDiscardStorage (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+	`taskId` INT(11) NOT NULL,
+	`devType` INT(11) NOT NULL,
+	`discardType` INT(11) NOT NULL,
+	`figureName` VARCHAR(32) NOT NULL,
+	`devNo`  VARCHAR(32) NOT NULL,
+	`figureId` VARCHAR(32)	NOT NULL,
+	`num` INT(11) NOT NULL,
+	`discardReason`  VARCHAR(256) DEFAULT NULL,
+	`questionType` INT(11) NOT NULL,
+	`checkRst`  INT(11) NOT NULL,
+	`reviewRst`  INT(11) NOT NULL,
+	`reviewNo`  VARCHAR(32) NOT NULL,
+	`reviewPicture`  VARCHAR(256) NOT NULL,
+	CONSTRAINT PK_omOutStorage PRIMARY KEY (`id`)
+	)ENGINE=INNODB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+	
+DROP TABLE IF EXISTS omDiscardStorageTaskFlow;
+CREATE TABLE omDiscardStorageTaskFlow (
+    `flowid` bigint(20) NOT NULL,
+	`taskId` INT(11) NOT NULL,
+	`devType` INT(11) NOT NULL,
+	`discardType` INT(11) NOT NULL
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
+		
+DROP TABLE IF EXISTS omDiscardStorageFlow;
+CREATE TABLE omDiscardStorageFlow (
+    `flowid` bigint(20) NOT NULL,
+	`figureName` VARCHAR(32) NOT NULL,
+	`devNo` VARCHAR(32) NOT NULL,
+	`figureId` VARCHAR(32)	NOT NULL,
+	`num` INT(11) NOT NULL,
+	`discardReason` VARCHAR(256) DEFAULT NULL,
+	`questionType` INT(11) NOT NULL,
+	`checkRst` INT(11) NULL,
+	`reviewRst` INT(11) NULL,
+	`reviewNo` VARCHAR(32) NULL,
+    `reviewPicture` VARCHAR(256) NULL
 	)ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
@@ -468,10 +626,10 @@ CREATE TABLE instrumentDevice (
 	enableDate TIMESTAMP,
 	tagNumber VARCHAR ( 31 ),
 	verifyCycle INTEGER,
-	verifyCycleUnit SMALLINT,
 	validDate TIMESTAMP,
 	equipmentPosition VARCHAR ( 51 ),
-	calibrationVerify VARCHAR ( 100 ),
+	calibrationVerify VARCHAR ( 31 ),
+	hintVerifyDays INTEGER,
 	bak VARCHAR ( 100 ),
 	CONSTRAINT PK_instrumentDevice PRIMARY KEY (id)
 	)ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
@@ -494,19 +652,14 @@ CREATE TABLE fixedAsset (
 	remark VARCHAR ( 100 ),
 	CONSTRAINT PK_fixedAsset PRIMARY KEY (id)
 	)ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+	
+	
+DROP TABLE IF EXISTS busStorageAssistance;
+CREATE TABLE busStorageAssistance (
+    `id` SMALLINT NOT NULL,
+    `name` VARCHAR(64) NOT NULL,
+    `describe` VARCHAR(64) NOT NULL
+	)ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-ALTER TABLE TaskProcessRelationship ADD CONSTRAINT FK_TaskProcessRelationship FOREIGN KEY (TaskId) REFERENCES TaskContractManagement (project_id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE TaskProcessRelationship ADD CONSTRAINT FK_TaskProcessRelationship1 FOREIGN KEY (ProcessId) REFERENCES ProcessManagement (ProcessId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE user_role ADD CONSTRAINT FK_user_role02 FOREIGN KEY (DepartId) REFERENCES DepartmentInfo (DepartId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE user_role ADD CONSTRAINT FK_USER_KEY FOREIGN KEY (role_id) REFERENCES role (id)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE ProductionManagement ADD CONSTRAINT FK_ProductionManagement FOREIGN KEY (ProcessIndex, TaskIndex) REFERENCES TaskProcessRelationship (ProcessId, TaskId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE PersonLimitInfo ADD CONSTRAINT FK_MemberLimitInfo FOREIGN KEY (UserNumber) REFERENCES Member_info (UserNumber)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE ProcessRule ADD CONSTRAINT FK_ProcessRule FOREIGN KEY (ProcessId, PeriodId, ParentPeriodId) REFERENCES TechnologicalProcess (TechnologicalIndex, ProcessIndex, ParentProcesIndex)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE ProductionProcessInfo ADD CONSTRAINT FK_ProductionProcessInfo FOREIGN KEY (ProcessIndex, TaskId) REFERENCES ProductionManagement (ProcessIndex, TaskIndex)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE flowProejctInfo ADD CONSTRAINT FK_flowProejctInfo FOREIGN KEY (projectName, taskName) REFERENCES ProjectInfo (ProjectName, TaskNumber)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE StorageFlowResult ADD CONSTRAINT FK_StorageFlowResult FOREIGN KEY (projectName, taskName, flowId) REFERENCES flowProejctInfo (projectName, taskName, flowId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE DepartmentMember ADD CONSTRAINT FK_DepartmentMember FOREIGN KEY (DepartId) REFERENCES DepartmentInfo (DepartId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE DepartmentMember ADD CONSTRAINT FK_DepartmentMember02 FOREIGN KEY (userName) REFERENCES user (userName)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE ProductionProcessInspection ADD CONSTRAINT FK_ProductionProcessInspection FOREIGN KEY (ProcessIndex, TaskId, ParentId, PeriodId, ProductionProcessID) REFERENCES ProductionProcessInfo (ProcessIndex, TaskId, ParentId, PeriodId, ProductionProcessID)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE TechnologicalProcess ADD CONSTRAINT FK_TechnologicalProcess FOREIGN KEY (TechnologicalIndex) REFERENCES ProcessManagement (ProcessId)  ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+	
+	

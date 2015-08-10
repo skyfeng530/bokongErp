@@ -93,8 +93,8 @@ public class MyAuthenticationFilter extends
 		request.getSession().setAttribute("userSession", users);
 		// 记录登录信息
 		UserLoginList userLoginList = new UserLoginList();
-		userLoginList.setUserName(users.getUserName());
-		System.out.println("userName----" + users.getUserName() + "---ip--"
+		userLoginList.setUserId(users.getUserId());
+		System.out.println("userId----" + users.getUserId() + "---ip--"
 				+ Common.toIpAddr(request));
 		userLoginList.setLoginIp(Common.toIpAddr(request));
 		userLoginListService.add(userLoginList);

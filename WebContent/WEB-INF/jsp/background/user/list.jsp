@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.servletContext.contextPath }/css/fenyecss.css" />
 <script type="text/javascript">
-function permissio(userName){
-	 var url = "${pageContext.servletContext.contextPath }/background/resources/permissioUser.html?userName="+userName;
+function permissio(id){
+	 var url = "${pageContext.servletContext.contextPath }/background/resources/permissioUser.html?userId="+id;
 	 var h_sp1 = 400;
 	 var w_sp1 = 350;
 	//兼容IE，firefox,google.模态窗口居中问题
@@ -19,8 +19,8 @@ function permissio(userName){
 	 window.showModalDialog(url, window, params);
 	 //location.href=url;
 }
-function userDepartment(userName){
-	 var url = "${pageContext.servletContext.contextPath }/background/user/userDepartment.html?userName="+userName;
+function userRole(id){
+	 var url = "${pageContext.servletContext.contextPath }/background/user/userRole.html?userId="+id;
 	 var h_sp1 = 420;
 	 var w_sp1 = 600;
 	//兼容IE，firefox,google.模态窗口居中问题
@@ -59,18 +59,24 @@ function userDepartment(userName){
                 </table></td>
                 <td width="52"><table width="88%">
                   <tr>
-                    <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/11.gif" width="14" height="14" /></div></td>
-                    <td class="STYLE4">
-                    <a href="javascript:void(0);"  onclick="return deleteAll()">
-                    	删除
-                    </a>
+                    <sec:authorize ifAnyGranted="ROLE_sys_user_delete">
+	                    <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/11.gif" width="14" height="14" /></div></td>
+	                    <td class="STYLE4">
+	                    <a href="javascript:void(0);"  onclick="return deleteAll()">
+	                    	删除
+	                    </a>
                     	</td>
+                    </sec:authorize>
                   </tr>
                 </table></td>
                 <td width="60"><table width="90%">
                   <tr>
-                    <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
-                    <td class="STYLE1"><div align="center"><a href="${pageContext.servletContext.contextPath }/background/user/addUI.html">新增</a></div></td>
+                    <sec:authorize ifAnyGranted="ROLE_sys_user_addUI">
+	                    <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
+	                    <td class="STYLE1"><div align="center">
+		                    <a href="${pageContext.servletContext.contextPath }/background/user/addUI.html">新增</a>
+	                    </div></td>
+           			</sec:authorize>
                   </tr>
                 </table></td>
               </tr>
@@ -106,27 +112,29 @@ function userDepartment(userName){
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属部门</span></td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">姓名</td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属部门</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">拥有角色</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">姓名</td>
             <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">性别</td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">生日</td>
-            <td width="12%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">联系方式</td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">生日</td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">联系方式</td>
             <td width="35%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
           <c:forEach var="key" items="${pageView.records}">
           <tr>
             <td height="20" >
-              <input type="checkbox" name="check" value="${key.userName}" />
+              <input type="checkbox" name="check" value="${key.userId}" />
             </td>
             
             <td height="20" ><span class="STYLE1">${key.userName}</span></td>
             <td height="20" ><span class="STYLE1" style="color: blue;">
-            <c:forEach var="de" items="${key.departments}">
+            <%-- <c:forEach var="de" items="${key.departments}">
               	${de.dName }&nbsp;
-              </c:forEach>
+              </c:forEach> --%>
             </span></td>
+            <td height="20" ><span class="STYLE1">${key.roleName}</span></td>
             <td height="20" ><span class="STYLE1">${key.userRealname}</span></td>
             <td height="20" ><span class="STYLE1">${key.userSex}</span></td>
             <td height="20" ><span class="STYLE1">
@@ -138,19 +146,23 @@ function userDepartment(userName){
             <td height="20" ><span class="STYLE4">
              <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
              <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="userDepartment('${key.userName}')">
-            	分配部门</a>
+            	<a href="javascript:void(0);" onclick="userRole('${key.userId}')">
+            	分配角色</a>
+            </sec:authorize>
+            <sec:authorize ifAnyGranted="ROLE_sys_user_permissions">
+            <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
+            	<a href="javascript:void(0);" onclick="permissio('${key.userId}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
             </sec:authorize>
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
-            <a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userName=${key.userName}&&type=1">
+            <a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userId=${key.userId}&type=1">
                                      编辑
             </a>
             &nbsp; &nbsp;
            </sec:authorize>
            <sec:authorize ifAnyGranted="ROLE_sys_user_delete">
             <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="deleteId('${pageContext.servletContext.contextPath }/background/user/deleteById.html?userName=${key.userName}');">
+            	<a href="javascript:void(0);" onclick="deleteId('${pageContext.servletContext.contextPath }/background/user/deleteById.html?userId=${key.userId}');">
             	删除</a>
             	</sec:authorize>
             	</span></td>

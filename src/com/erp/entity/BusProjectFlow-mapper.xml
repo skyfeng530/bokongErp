@@ -44,4 +44,7 @@
             projectDescribe=#{projectDescribe}
         </set>
     </update>
+    <delete id="deleteById"  parameterType="String">
+      delete from  BusProjectFlow where flowId = #{id};
+    </delete>
 </mapper>

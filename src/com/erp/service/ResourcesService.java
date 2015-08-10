@@ -21,8 +21,6 @@ public interface ResourcesService{
 	
 	//<!-- 根据用户Id获取该用户的权限-->
 	public List<Resources> getUserResources(String userId);
-	//<!-- 根据部门Id获取该用户的权限-->
-	public List<Resources> getDepartmentResources(String dName);
 	//<!-- 根据用户Id获取该用户的权限-->
 	public List<Resources> getRoleResources(String roleId);
 	//<!-- 根据用户名获取该用户的权限-->

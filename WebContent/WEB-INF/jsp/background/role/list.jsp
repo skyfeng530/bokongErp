@@ -51,18 +51,22 @@ function permissio(id){
                 </table></td>
                 <td width="52"><table width="88%">
                   <tr>
+                  <sec:authorize ifAnyGranted="ROLE_sys_role_delete">
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/11.gif" width="14" height="14" /></div></td>
                     <td class="STYLE4">
                     <a href="javascript:void(0);"  onclick="return deleteAll()">
                     	删除
                     </a>
                     	</td>
+                   </sec:authorize>
                   </tr>
                 </table></td>
                 <td width="60"><table width="90%">
                   <tr>
+                  <sec:authorize ifAnyGranted="ROLE_sys_role_add">
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
                     <td class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/role/addUI.html">新增</a></td>
+                  </sec:authorize>
                   </tr>
                 </table></td>
               </tr>
@@ -124,6 +128,11 @@ function permissio(id){
             <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
             	<a href="javascript:void(0);" onclick="permissio('${role.id}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
             </sec:authorize>
+            <%-- <sec:authorize ifAnyGranted="ROLE_sys_role_show">
+            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
+            	<a href="${pageContext.servletContext.contextPath }/background/role/getById.html?roleId=${role.id}&&typeKey=0">
+            	显示详细信息</a>
+            	&nbsp;&nbsp;</sec:authorize> --%>
             <sec:authorize ifAnyGranted="ROLE_sys_role_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
             <a href="${pageContext.servletContext.contextPath }/background/role/getById.html?roleId=${role.id}&&typeKey=1">

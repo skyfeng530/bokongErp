@@ -26,6 +26,12 @@ function topView() {
 				xtype : 'label',
 				html : '<div style="padding-top:3px">' + productName + '</div>'
 			}, {
+				id : 'figureLib_id',
+				fieldLabel : '图库名称',
+				anchor : '85%',
+				xtype : 'label',
+				html : '<div style="padding-top:3px">' + figureLib + '</div>'
+			}, {
 				id : 'taskNo_id',
 				fieldLabel : '任务编号',
 				anchor : '85%',
@@ -42,7 +48,7 @@ function topView() {
 				fieldLabel : '总套数（任务量）',
 				anchor : '85%',
 				xtype : 'label',
-				html : '<div style="padding-top:3px">' + totalsetno + '</div>'
+				html : '<div style="padding-top:3px">' + totalSetNum + '</div>'
 			} ]
 		} ]
 	};
@@ -100,7 +106,8 @@ function mainView() {
 								taskId : taskId,
 								comment : commonRemarkValue,
 								outcome : outcome,
-								nextName : nextName
+								nextName : nextName,
+								flowId:flowId
 							},
 							method : 'POST',
 							success : function(response) {

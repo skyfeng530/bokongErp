@@ -49,21 +49,7 @@
 		SELECT resc_id FROM
 		resources_role WHERE role_id in(
 		SELECT role_id FROM user_role
-		WHERE DepartId in(
-		select DepartId from DepartmentMember
-		WHERE userName=#{username})))
-	</select>
-	<!-- 根据部门Id获取该用户的权限-->
-	<select id="getDepartmentResources" parameterType="String" resultType="Resources">
-		SELECT 
-		<include refid="selectId" />
-		FROM resources WHERE id in(
-		SELECT resc_id FROM
-		resources_role WHERE role_id in(
-		SELECT role_id FROM user_role
-		WHERE DepartId in(
-		select DepartId from Departmentinfo
-		WHERE dName=#{dName})))
+		WHERE user_id=#{id}))
 	</select>
 	<!-- 根据角色Id获取该角色的权限-->
 	<select id="getResourcesByUserName" parameterType="String" resultType="Resources">
@@ -72,10 +58,16 @@
 		FROM resources WHERE id in(
 		SELECT resc_id FROM
 		resources_role WHERE role_id in(
-		SELECT role_id FROM user_role
-		WHERE DepartId in(
-		select DepartId from DepartmentMember
-		WHERE userName=#{username})))
+		SELECT role_id FROM user_role,user
+		WHERE user_id=userId and username=#{username}))
+	</select>
+	<!-- 根据角色Id获取该用户的权限 -->
+	<select id="getRoleResources" parameterType="String" resultType="Resources">
+		SELECT 
+		<include refid="selectId" />
+		FROM resources WHERE id in(
+		SELECT resc_id FROM
+		resources_role WHERE role_id = #{roleId})
 	</select>
 	<!-- 新增 -->
 	<insert id="add" parameterType="Resources">

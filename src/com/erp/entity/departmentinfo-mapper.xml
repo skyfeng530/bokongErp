@@ -11,16 +11,9 @@
 	</sql>
 	<!--resultType="Department" 每返回一条结果封装到Department里 -->
 	<select id="query" resultType="Department" parameterType="java.util.HashMap">
-		SELECT 
-		d.departId, 
-		d.dName , 
-		r.name roleName, 
-		d.DepartType, 
-		d.Discribe 
-		FROM departmentinfo d LEFT JOIN role r
-		ON r.id = 
-		(SELECT ur.role_id FROM user_role ur WHERE ur.departId=d.departId) 
-		WHERE d.DepartType != 2 
+		select
+		<include refid="selectId" />
+		from departmentinfo where DepartType != 2
 		<if test="dName != null and dName != ''">
 			dName = #{dName}
 		</if>

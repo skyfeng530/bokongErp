@@ -1,10 +1,7 @@
 package com.erp.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.entity.Resources;
 import com.erp.entity.Roles;
-import com.erp.service.DepartmentService;
 import com.erp.service.ResourcesService;
 import com.erp.service.UserService;
 import com.erp.util.Common;
@@ -30,9 +26,6 @@ public class ResourcesController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private DepartmentService departmentService;
 	
 	/**
 	 * 跳到新增页面
@@ -129,16 +122,12 @@ public class ResourcesController {
 		return "redirect:query.html";
 	}
 	/**
-	 * 某个部门拥有的权限
+	 * 某个用户拥有的权限
 	 * @return
-	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="permissioUser")
-	public String permissioUser(HttpServletRequest request, Model model) throws UnsupportedEncodingException{
-		String dName =request.getParameter("dName");  
-		byte b[] =dName.getBytes("ISO-8859-1");  
-		dName = new String(b, "utf-8");  
-		List<Resources> resources = resourcesService.getDepartmentResources(dName);
+	public String permissioUser(Model model,String userId){
+		List<Resources> resources = resourcesService.getUserResources(userId);
 		List<Resources> allRes = resourcesService.findAll();
 		StringBuffer sb = new StringBuffer();
 		sb.append("var data = [];");
@@ -168,7 +157,7 @@ public class ResourcesController {
 				}
 			}
 		}
-		Roles roles = departmentService.findbyDepartmentRole(dName);
+		Roles roles = userService.findbyUserRole(userId);
 		if(roles!=null){
 			model.addAttribute("roleId", roles.getId());
 		}

@@ -33,13 +33,10 @@
 		<typeAlias type="com.erp.entity.BusProjectFigureFlow" alias="BusProjectFigureFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectFigureProductFlow" alias="BusProjectFigureProductFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectFlow" alias="BusProjectFlow"/>
-		<typeAlias type="com.erp.entity.BusMaterialInfo" alias="BusMaterialInfo"/>
-		<typeAlias type="com.erp.entity.BusMaterialInfoFlow" alias="BusMaterialInfoFlow"/>
 		<typeAlias type="com.erp.entity.BusTaskProductFlow" alias="BusTaskProductFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectProductFlow" alias="BusProjectProductFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectProductProjectFlow" alias="BusProjectProductProjectFlow"/>
-		<typeAlias type="com.erp.entity.BusMaterialInfoTaskFlow" alias="BusMaterialInfoTaskFlow"/>
-		<typeAlias type="com.erp.entity.BusMaterialInfoFlow" alias="BusMaterialInfoFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectProductFlowVo" alias="BusProjectProductFlowVo"/>
+		<typeAlias type="com.erp.entity.BusProjectFigureFlowVo" alias="BusProjectFigureFlowVo"/>
 	</typeAliases>
 </configuration>

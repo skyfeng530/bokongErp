@@ -20,5 +20,6 @@ public interface BusProjectFigureProductFlowService{
     public BusProjectFigureProductFlow getById(String id);
     
     public List<Map<String, String>> getProductInfoByid(String ppid);
-
+    
+    public List<Map<String, String>> getDeviceAll();
 }

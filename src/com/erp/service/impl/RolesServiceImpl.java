@@ -47,7 +47,7 @@ public class RolesServiceImpl implements RolesService {
 	}
 
 	public void saveUserRole(UserRoles userRoles) {
-		rolesDao.deleteUserRole(userRoles.getDepartId().toString());
+		rolesDao.deleteUserRole(userRoles.getUserId().toString());
 		rolesDao.saveUserRole(userRoles);
 	}
 

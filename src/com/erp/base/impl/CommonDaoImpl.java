@@ -44,16 +44,19 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
 		return this.getJdbcTemplate().queryForList(querySql, object);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int queryToint(String querySql) {
 		return this.getJdbcTemplate().queryForInt(querySql);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int queryToint(String querySql, Object object) {
 		return this.getJdbcTemplate().queryForInt(querySql, object);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int queryToint(String querySql, Object[] object) {
 		return this.getJdbcTemplate().queryForInt(querySql, object);
@@ -78,4 +81,11 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao {
 	public int[] batchUpdate(String sql, List<Object[]> batchArgs) {
 		return this.getJdbcTemplate().batchUpdate(sql, batchArgs);
 	}
+
+	@Override
+	public <T> T queryToObject(String querySql, Class<T> t) {
+		return (T) this.getJdbcTemplate().queryForObject(querySql, t);
+	}
+	
+	
 }

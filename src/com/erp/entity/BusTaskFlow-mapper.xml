@@ -5,7 +5,7 @@
     <sql id="selectId">
         flowId,
         taskNo,
-        totalSetNo,
+        totalSetNum,
         taskSource,
         bak
     </sql>
@@ -26,13 +26,13 @@
         insert into BusTaskFlow(
         flowId,
         taskNo,
-        totalSetNo,
+        totalSetNum,
         taskSource,
         bak )
         values (
         #{flowId},
         #{taskNo},
-        #{totalSetNo},
+        #{totalSetNum},
         #{taskSource},
         #{bak})
     </insert>
@@ -41,7 +41,7 @@
         <set>
             flowId=#{flowId},
             taskNo=#{taskNo},
-            totalSetNo=#{totalSetNo},
+            totalSetNo=#{totalSetNum},
             taskSource=#{taskSource},
             bak=#{bak}
         </set>

@@ -9,4 +9,6 @@ import com.erp.entity.BusProjectFigureProductFlow;
 public interface BusProjectFigureProductFlowDao extends BaseDao<BusProjectFigureProductFlow>{
 	
 	public List<Map<String, String>> getProductInfoByid(String flowId); 
+	
+	public List<Map<String,String>> getDeviceAll();
 }

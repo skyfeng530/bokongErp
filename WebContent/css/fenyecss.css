@@ -12,7 +12,7 @@ DIV.green-black A {
 	PADDING-RIGHT: 5px;
 	BORDER-TOP: #2c2c2c 1px solid;
 	PADDING-LEFT: 5px;
-	BACKGROUND: url(image1.gif) #2c2c2c;
+	BACKGROUND: #2c2c2c;
 	PADDING-BOTTOM: 2px;
 	BORDER-LEFT: #2c2c2c 1px solid;
 	COLOR: #fff;
@@ -26,7 +26,7 @@ DIV.green-black A {
 DIV.green-black A:hover {
 	BORDER-RIGHT: #aad83e 1px solid;
 	BORDER-TOP: #aad83e 1px solid;
-	BACKGROUND: url(image2.gif) #aad83e;
+	BACKGROUND: #aad83e;
 	BORDER-LEFT: #aad83e 1px solid;
 	COLOR: #fff;
 	BORDER-BOTTOM: #aad83e 1px solid
@@ -35,7 +35,7 @@ DIV.green-black A:hover {
 DIV.green-black A:active {
 	BORDER-RIGHT: #aad83e 1px solid;
 	BORDER-TOP: #aad83e 1px solid;
-	BACKGROUND: url(image2.gif) #aad83e;
+	BACKGROUND: #aad83e;
 	BORDER-LEFT: #aad83e 1px solid;
 	COLOR: #fff;
 	BORDER-BOTTOM: #aad83e 1px solid
@@ -47,7 +47,7 @@ DIV.green-black SPAN.current {
 	BORDER-TOP: #aad83e 1px solid;
 	PADDING-LEFT: 5px;
 	FONT-WEIGHT: bold;
-	BACKGROUND: url(image2.gif) #aad83e;
+	BACKGROUND: #aad83e;
 	PADDING-BOTTOM: 2px;
 	BORDER-LEFT: #aad83e 1px solid;
 	COLOR: #fff;

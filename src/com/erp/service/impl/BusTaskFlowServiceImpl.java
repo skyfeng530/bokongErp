@@ -33,10 +33,10 @@ public class BusTaskFlowServiceImpl implements BusTaskFlowService {
 	@Override
 	public int add(BusTaskFlow busTaskFlow) {
 
-		String addSql = "INSERT INTO BUSTASKFLOW(FLOWID, TASKNO, TASKSOURCE, TOTALSETNO) VALUES(?, ?, ?, ?)";
+		String addSql = "INSERT INTO BUSTASKFLOW(FLOWID, TASKNO, TASKSOURCE, totalSetNum) VALUES(?, ?, ?, ?)";
 
 		return commonDao.update(addSql, new Object[] { busTaskFlow.getFlowId(), busTaskFlow.getTaskNo(),
-				busTaskFlow.getTaskSource(), busTaskFlow.getTotalSetNo() });
+				busTaskFlow.getTaskSource(), busTaskFlow.getTotalSetNum() });
 	}
 
 	@Override
@@ -60,9 +60,17 @@ public class BusTaskFlowServiceImpl implements BusTaskFlowService {
 	@Override
 	public List<Map<String, Object>> queryBusTaskFlowByFlowId(String flowId) {
 
-		String querySql = "SELECT TASKNO, TOTALSETNO, TASKSOURCE FROM BUSTASKFLOW WHERE FLOWID = ?";
+		String querySql = "SELECT TASKNO, totalSetNum, TASKSOURCE FROM BUSTASKFLOW WHERE FLOWID = ?";
 
 		return commonDao.queryToList(querySql, flowId);
+	}
+
+	@Override
+	public int addAll(String flowId) {
+		// TODO Auto-generated method stub
+		String insertSql = "insert into bustask(taskNo,totalSetNum,taskSource,bak,ppid,figureLib,artId)"+
+                            "select a.taskNo,a.totalSetNum,a.taskSource,a.bak,b.ppid,b.figureLib, b.artId from  bustaskFlow a left join bustaskProductFlow b  on a.flowId = b.flowId where a.flowId = ?";
+		return commonDao.update(insertSql, new Object[] {flowId});
 	}
 
 }

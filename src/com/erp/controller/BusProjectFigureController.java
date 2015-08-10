@@ -20,13 +20,13 @@ import com.erp.util.PageView;
  * 
  */
 @Controller
-@RequestMapping("/background/project/figure/")
+@RequestMapping("/background/project/figureLib/")
 public class BusProjectFigureController {
     @Autowired
     private BusProjectFigureService busProjectFigureService;
     /**
     * @param model
-    * ´æ·Å·µ»Ø½çÃæµÄmodel
+    * ï¿½ï¿½Å·ï¿½ï¿½Ø½ï¿½ï¿½ï¿½ï¿½model
     * @return
     */
     @RequestMapping("query")
@@ -43,7 +43,7 @@ public class BusProjectFigureController {
     }
 
     /**
-    * ±£´æÊý¾Ý
+    * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     *
     * @param model
     * @param videoType
@@ -56,7 +56,7 @@ public class BusProjectFigureController {
     }
 
     /**
-    * ÅÜµ½ÐÂÔö½çÃæ
+    * ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     *
     * @param model
     * @return
@@ -67,7 +67,7 @@ public class BusProjectFigureController {
     }
 
     /**
-    * É¾³ý
+    * É¾ï¿½ï¿½
     *
     * @param model
     * @param videoTypeId
@@ -84,7 +84,7 @@ public class BusProjectFigureController {
     }
 
     /**
-    * ÐÞ¸Ä½çÃæ
+    * ï¿½Þ¸Ä½ï¿½ï¿½ï¿½
     *
     * @param model
     * @param videoTypeIds
@@ -102,7 +102,7 @@ public class BusProjectFigureController {
     }
 
     /**
-    * ¸üÐÂÀàÐÍ
+    * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     * 
     * @param model
     * @return

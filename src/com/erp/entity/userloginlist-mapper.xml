@@ -5,16 +5,13 @@
    <!-- 以下与实体类的中字段一致 -->
    <sql id="selectId">
        loginId,
-       userName,
+       userId,
        loginTime,
        loginIp
    </sql>
    <!-- 查询 -->
    <select id="query" resultType="UserLoginList" parameterType="UserLoginList">
-   	   select
-		<include refid="selectId" />
-		from userloginlist  
-		order By loginId desc
+   	   select u.userName,l.* from userloginlist l,user u where u.userId = l.userId
    </select>
    
    <!-- 总页数 -->
@@ -24,7 +21,7 @@
    
    <!-- 新增用户登陆记录 -->
    <insert id="add" parameterType="UserLoginList">
-     insert into userloginlist(userName,loginIp)
-     values(#{userName},#{loginIp})
+     insert into userloginlist(userId,loginIp)
+     values(#{userId},#{loginIp})
    </insert>
 </mapper>

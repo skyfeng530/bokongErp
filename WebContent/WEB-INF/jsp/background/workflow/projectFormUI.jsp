@@ -15,6 +15,7 @@
      var flowId = '${flowId}';
      var projectName = '${projectName}';
      var productName = '${productName}';
+     var figureLib = '${figureLib}';
     </script>
 </head>
 <body>
