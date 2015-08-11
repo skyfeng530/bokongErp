@@ -44,7 +44,7 @@ function userRole(dName){
             <td width="46%" valign="middle"><table width="100%">
               <tr>
                 <td width="5%"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/tb.gif" width="16" height="16" /></div></td>
-                <td width="95%" class="STYLE1"><span class="STYLE3">你当前的位置</span>：系统管理-部门列表</td>
+                <td width="95%" class="STYLE1"><span class="STYLE3">你当前的位置</span>：系统管理-分组列表</td>
               </tr>
             </table></td>
             <td width="54%"><table align="right" >
@@ -89,6 +89,14 @@ function userRole(dName){
   <td align="center">
   <!-- 这里的表单 name 必须是fenye -->
   	<div class="search_k" align="left">
+  		<fieldset class="search">
+			<legend><img src="${pageContext.servletContext.contextPath }/images/search_btn.gif" align="middle"/>&nbsp;<span class="STYLE1" style="color: blue;">高级查找</span></legend>
+			<div class="search_content">
+				分组名：<input type="text" name="dName" value="${param.dName}" style="height: 20px"/>　　
+				<input type="submit" value="开始查询" class="input_btn_style1"/>&nbsp;&nbsp;
+				<input type="reset" value="重置" class="input_btn_style1"/>
+			</div>
+		</fieldset>
 	</div>
   </td>
   </tr>
@@ -102,8 +110,9 @@ function userRole(dName){
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">部门名称</span></td>
-            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">部门属性</span></td>
+            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">分组名称</span></td>
+            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">分组属性</span></td>
+            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">隶属科室</span></td>
             <td  height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
@@ -122,6 +131,8 @@ function userRole(dName){
             <c:if test="${key.departType eq 1}">
             <font color="blue">真实部门</font>
             </c:if></span></td>
+            
+            <td height="20" ><span class="STYLE1"></span></td>
             
             <td height="20" ><span class="STYLE4">
              <%-- <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">

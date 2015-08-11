@@ -4,6 +4,7 @@ package com.erp.entity;
 public class BusProjectProduct implements java.io.Serializable {
     private int ppid;
     private int projectId;
+    private String projectName;
     private String productNo;
     private String productName;
     private String status;
@@ -46,5 +47,12 @@ public class BusProjectProduct implements java.io.Serializable {
     public void setBak(String bak) {
         this.bak =bak;
     }
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+    
 }
 

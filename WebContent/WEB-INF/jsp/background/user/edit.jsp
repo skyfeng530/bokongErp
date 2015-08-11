@@ -57,7 +57,8 @@
 						<div align="right" class="STYLE1">性别：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userSex" value="${user.userSex }"/>
+							<input type="radio" name="userSex" value="男" <c:if test="${user.userSex eq '男'}">checked="checked"</c:if>/>男
+							<input type="radio" name="userSex" value="女" <c:if test="${user.userSex eq '女'}">checked="checked"</c:if>/>女
 						</div>
 					</td>
 					<td height="30" width="10%">

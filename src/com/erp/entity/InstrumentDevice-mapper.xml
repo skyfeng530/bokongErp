@@ -17,7 +17,6 @@
         enableDate,
         tagNumber,
         verifyCycle,
-        verifyCycleUnit,
         validDate,
         equipmentPosition,
         calibrationVerify,
@@ -65,7 +64,6 @@
         enableDate,
         tagNumber,
         verifyCycle,
-        verifyCycleUnit,
         validDate,
         equipmentPosition,
         calibrationVerify,
@@ -85,7 +83,6 @@
         #{enableDate},
         #{tagNumber},
         #{verifyCycle},
-        #{verifyCycleUnit},
         #{validDate},
         #{equipmentPosition},
         #{calibrationVerify},
@@ -93,8 +90,7 @@
         #{bak})
     </insert>
     <update id="update" parameterType="InstrumentDevice">
-        update InstrumentDevice
-        <set>
+        update InstrumentDevice set
             name=#{name},
             specifications=#{specifications},
             instrumentNumber=#{instrumentNumber},
@@ -108,17 +104,11 @@
             enableDate=#{enableDate},
             tagNumber=#{tagNumber},
             verifyCycle=#{verifyCycle},
-            verifyCycleUnit=#{verifyCycleUnit},
             validDate=#{validDate},
             equipmentPosition=#{equipmentPosition},
             calibrationVerify=#{calibrationVerify},
             hintVerifyDays=#{hintVerifyDays},
             bak=#{bak}
-        </set>
-        <where>
-            <if test="t.id != null and t.id != ''">
-                id=#{id}
-            </if>
-        </where>
+        where  id=#{id}
     </update>
 </mapper>

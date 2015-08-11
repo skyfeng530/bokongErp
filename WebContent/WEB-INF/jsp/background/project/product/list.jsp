@@ -88,7 +88,7 @@
               <input type="checkbox" name="check" value="${key.ppid}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/product/getById.html?id=${key.ppid}&&type=0">${key.projectId}</a></span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/product/getById.html?id=${key.ppid}&&type=0">${key.projectName}</a></span></td>
             <td height="20" ><span class="STYLE1">${key.productNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.productName}</span></td>
 			<td height="20" ><span class="STYLE1">${key.status}</span></td>

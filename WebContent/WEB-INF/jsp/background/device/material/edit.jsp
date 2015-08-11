@@ -11,7 +11,7 @@
 <br/>
 <br/>  
 <form action="${pageContext.servletContext.contextPath }/background/device/material/update.html" method="post">
-<input type="hidden" name="id" value="${busMaterialInfo.id}">
+<input type="hidden" name="id" value="${omInstorage.id}">
 		<table class="ttab" height="100" width="85%" border="0" cellpadding="0" cellspacing="1" align="center">
 				<tr>
 					<td height="30" colspan="4">
@@ -22,76 +22,90 @@
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">资产名称：</div></td>
+						<div align="right" class="STYLE1">器件编号：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="name" value="${busMaterialInfo.name}"/>
+							<input style="height: 20px;width: 200px" name="devBatchNo" value="${omInstorage.devBatchNo}"/>
 						</div>
 					</td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">标签号：</div></td>
+						<div align="right" class="STYLE1">总个数：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="tagNumber" value="${busMaterialInfo.tagNumber}"/>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">规格型号：</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="specifications" value="${busMaterialInfo.specifications}"/>
-						</div>
-					</td>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">序列号：</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="serialNumber" value="${busMaterialInfo.serialNumber}"/>
+							<input style="height: 20px;width: 200px" name="totalNumber" value="${omInstorage.totalNumber}"/>
 						</div>
 					</td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">状态：</div></td>
+						<div align="right" class="STYLE1">生产产家：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="status" value="${busMaterialInfo.status}"/>
+							<input style="height: 20px;width: 200px" name="vendorNo" value="${omInstorage.vendorNo}"/>
+						</div>
+					</td>
+					<td height="30" width="10%">
+						<div align="right" class="STYLE1">检测结果：</div></td>
+					<td>
+						<div align="left" class="STYLE1" style="padding-left:10px;">
+							<input style="height: 20px;width: 200px" name="checkRst" value="${omInstorage.checkRst}"/>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td height="30" width="10%">
+						<div align="right" class="STYLE1">检测数量：</div></td>
+					<td>
+						<div align="left" class="STYLE1" style="padding-left:10px;">
+							<input style="height: 20px;width: 200px" name="checkNum" value="${omInstorage.checkNum}"/>
 						</div></td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">责任人：</div></td>
+						<div align="right" class="STYLE1">合格数量：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="responsiblePerson" value="${busMaterialInfo.responsiblePerson}"/>
+							<input style="height: 20px;width: 200px" name="qualifiedNum" value="${omInstorage.qualifiedNum}"/>
 						</div></td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">使用人：</div></td>
+						<div align="right" class="STYLE1">不合格数量：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="usePerson" value="${busMaterialInfo.usePerson}"/>
+							<input style="height: 20px;width: 200px" name="unqualifiedNum" value="${omInstorage.unqualifiedNum}"/>
 						</div></td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">设备位置：</div></td>
+						<div align="right" class="STYLE1">不合格等级：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="equipmentPosition" value="${busMaterialInfo.equipmentPosition}"/>
+							<input style="height: 20px;width: 200px" name="unqualifiedGrade" value="${omInstorage.unqualifiedGrade}"/>
 						</div></td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">资产类别：</div></td>
+						<div align="right" class="STYLE1">不合格原因：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="assetClass" value="${busMaterialInfo.assetClass}"/>
+							<input style="height: 20px;width: 200px" name="unqualifiedReason" value="${omInstorage.unqualifiedReason}"/>
 						</div></td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">厂商信息：</div></td>
+						<div align="right" class="STYLE1">审核结果：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="vendorInfo" value="${busMaterialInfo.vendorInfo}"/>
+							<input style="height: 20px;width: 200px" name="reviewRst" value="${omInstorage.reviewRst}"/>
+						</div></td>
+				</tr>
+				<tr>
+					<td height="30" width="10%">
+						<div align="right" class="STYLE1">审核小组：</div></td>
+					<td>
+						<div align="left" class="STYLE1" style="padding-left:10px;">
+							<input style="height: 20px;width: 200px" name="reviewGrp" value="${omInstorage.reviewGrp}"/>
+						</div></td>
+					<td height="30" width="10%">
+						<div align="right" class="STYLE1">审理单号：</div></td>
+					<td>
+						<div align="left" class="STYLE1" style="padding-left:10px;">
+							<input style="height: 20px;width: 200px" name="reviewNo" value="${omInstorage.reviewNo}"/>
 						</div></td>
 				</tr>
 				

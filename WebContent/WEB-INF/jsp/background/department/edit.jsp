@@ -16,24 +16,24 @@
 				<tr>
 					<td height="30" colspan="4">
 						<div align="center">
-							<font color="blue" size="12"><b>修改部门信息</b>
+							<font color="blue" size="12"><b>修改分组信息</b>
 							</font>
 						</div></td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">部门名称：</div></td>
+						<div align="right" class="STYLE1">分组名称：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="dName" value="${department.dName}"/>
 						</select>
 						</div></td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">部门类型：</div></td>
+						<div align="right" class="STYLE1">分组类型：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input type="radio" name="departType" value="0" <c:if test="${department.departType eq 0}">checked="checked"</c:if>/>：虚拟部门
-							<input type="radio" name="departType" value="1" <c:if test="${department.departType eq 1}">checked="checked"</c:if>/>：真实部门
+							<input type="radio" name="departType" value="0" <c:if test="${department.departType eq 0}">checked="checked"</c:if>/>虚拟部门
+							<input type="radio" name="departType" value="1" <c:if test="${department.departType eq 1}">checked="checked"</c:if>/>真实部门
 						</div></td>
 				</tr>
 				<tr>

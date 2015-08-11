@@ -4,6 +4,10 @@ package com.erp.entity;
 public class BusProjectFigure implements java.io.Serializable {
     private int pfid;
     private int ppid;
+    private String projectName;
+    private String productName;
+    private String productNo;
+    private String status;
     private String figureLib;
     private String figureNo;
     private String figureName;
@@ -68,5 +72,30 @@ public class BusProjectFigure implements java.io.Serializable {
     public void setDescribe(String describe) {
         this.describe =describe;
     }
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(String productNo) {
+		this.productNo = productNo;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
 }
 

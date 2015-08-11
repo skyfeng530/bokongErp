@@ -10,7 +10,7 @@
   <div style="height: 100%;overflow-y: auto;">
 <br/>
 <br/>  
-<form action="${pageContext.servletContext.contextPath }/background/product/task/update.html" method="post">
+<form action="${pageContext.servletContext.contextPath }/background/project/task/update.html" method="post">
 <input type="hidden" name="id" value="${busTask.taskId}">
 		<table class="ttab" height="100" width="85%" border="0" cellpadding="0" cellspacing="1" align="center">
 				<tr>
@@ -19,22 +19,6 @@
 							<font color="blue" size="12"><b>修改任务信息</b>
 							</font>
 						</div></td>
-				</tr>
-				<tr>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">项目名称：</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="pid" value="${busTask.ppid}"/>
-						</div>
-					</td>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">产品名称:</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="ppid" value="${busTask.ppid}"/>
-						</div>
-					</td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">

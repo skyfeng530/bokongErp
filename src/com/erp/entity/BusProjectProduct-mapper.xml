@@ -3,19 +3,20 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="busprojectproduct">
     <sql id="selectId">
-        ppid,
-        projectId,
-        productNo,
-        productName,
-        status,
-        bak
+        a.ppid,
+        a.projectId,
+        b.projectName,
+        a.productNo,
+        a.productName,
+        a.status,
+        a.bak
     </sql>
 
     <select id="query" resultType="BusProjectProduct" parameterType="java.util.HashMap">
 
         select
         <include refid="selectId" />
-        from BusProjectProduct
+        from BusProjectProduct a, busproject b where a.projectId = b.pid
         <where>
             <if test="t.ppid != null and t.ppid != ''">
                 ppid=#{ppid}
@@ -61,18 +62,13 @@
     </insert>
     <update id="update" parameterType="BusProjectProduct">
         update BusProjectProduct
-        <set>
-            projectId=#{projectId},
+        set
             productNo=#{productNo},
             productName=#{productName},
             status=#{status},
             bak=#{bak}
-        </set>
-        <where>
-            <if test="t.ppid != null and t.ppid != ''">
-                ppid=#{ppid}
-            </if>
-        </where>
+        where  ppid=#{ppid}            
+
     </update>
     <delete id="deleteById" parameterType="String">
      delete from BusProjectProduct where projectId =#{id}

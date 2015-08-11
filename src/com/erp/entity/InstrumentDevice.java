@@ -16,7 +16,6 @@ public class InstrumentDevice implements java.io.Serializable {
     private String enableDate;
     private String tagNumber;
     private Integer verifyCycle;
-    private int verifyCycleUnit;
     private String validDate;
     private String equipmentPosition;
     private String calibrationVerify;
@@ -107,12 +106,6 @@ public class InstrumentDevice implements java.io.Serializable {
     }
     public void setVerifyCycle(Integer verifyCycle) {
         this.verifyCycle =verifyCycle;
-    }
-    public int getVerifyCycleUnit() {
-        return verifyCycleUnit;
-    }
-    public void setVerifyCycleUnit(int verifyCycleUnit) {
-        this.verifyCycleUnit =verifyCycleUnit;
     }
     public String getValidDate() {
         return validDate;

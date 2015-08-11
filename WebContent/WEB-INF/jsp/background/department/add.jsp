@@ -17,24 +17,24 @@
 				<tr>
 					<td height="30" colspan="4">
 						<div align="center">
-							<font color="blue" size="8"><b>添加部门信息</b>
+							<font color="blue" size="8"><b>添加分组信息</b>
 							</font>
 						</div></td>
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">部门名称：</div></td>
+						<div align="right" class="STYLE1">分组名称：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="dName" />
 						</select>
 						</div></td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">部门类型：</div></td>
+						<div align="right" class="STYLE1">分组类型：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input type="radio" name="departType" value="0" checked="checked"/>：虚拟部门
-							<input type="radio" name="departType" value="1"/>：真实部门
+							<input type="radio" name="departType" value="0" checked="checked"/>：虚拟分组
+							<input type="radio" name="departType" value="1"/>：真实分组
 						</div></td>
 				</tr>
 				<tr>

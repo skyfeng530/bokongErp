@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ominstorage">
+    <sql id="selectId">
+        a.id,
+        a.taskId,
+        a.pfid,
+        d.projectName,
+        c.productName,
+        c.productNo,
+        c.`status`,
+        b.taskNo,
+        e.figureLib,
+        e.figureName,
+        e.figureNo,
+        e.type,
+        a.devBatchNo,
+        a.totalNumber,
+        a.vendorNo,
+        a.checkRst,
+        a.checkNum,
+        a.qualifiedNum,
+        a.unqualifiedNum,
+        a.unqualifiedGrade,
+        a.unqualifiedReason,
+        a.reviewRst,
+        a.reviewGrp,
+        a.reviewNo,
+        a.graphicPath,
+        a.bak
+    </sql>
+
+    <select id="query" resultType="OmInstorage" parameterType="java.util.HashMap">
+
+        select
+        <include refid="selectId" />
+        from ominstorage a,bustask b,busprojectproduct c, busproject d, busprojectfigure e where 
+        a.taskId=b.taskId and b.ppid=c.ppid and c.projectId=d.pid and a.pfid=e.pfid 
+        
+        <if test="t.type != null and t.type != ''">
+            and e.type=#{t.type}
+        </if>
+        
+    </select>
+
+    <!-- total count -->
+    <select id="count" parameterType="OmInstorage" resultType="int">
+        select count(0) from OmInstorage
+        <where>
+            <if test="t.id != null and t.id != ''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="String" resultType="OmInstorage">
+        select
+        <include refid="selectId" />
+        from ominstorage a,bustask b,busprojectproduct c, busproject d, busprojectfigure e where 
+        a.taskId=b.taskId and b.ppid=c.ppid and c.projectId=d.pid and a.pfid=e.pfid and a.id=#{id}
+    </select>
+    <insert id="add" parameterType="OmInstorage">
+        insert into OmInstorage(
+        id,
+        taskId,
+        pfid,
+        devBatchNo,
+        totalNumber,
+        vendorNo,
+        checkRst,
+        checkNum,
+        qualifiedNum,
+        unqualifiedNum,
+        unqualifiedGrade,
+        unqualifiedReason,
+        reviewRst,
+        reviewGrp,
+        reviewNo,
+        graphicPath,
+        bak )
+        values (
+        #{id},
+        #{taskId},
+        #{pfid},
+        #{devBatchNo},
+        #{totalNumber},
+        #{vendorNo},
+        #{checkRst},
+        #{checkNum},
+        #{qualifiedNum},
+        #{unqualifiedNum},
+        #{unqualifiedGrade},
+        #{unqualifiedReason},
+        #{reviewRst},
+        #{reviewGrp},
+        #{reviewNo},
+        #{graphicPath},
+        #{bak})
+    </insert>
+    <update id="update" parameterType="OmInstorage">
+        update OmInstorage set
+            devBatchNo=#{devBatchNo},
+            totalNumber=#{totalNumber},
+            vendorNo=#{vendorNo},
+            checkRst=#{checkRst},
+            checkNum=#{checkNum},
+            qualifiedNum=#{qualifiedNum},
+            unqualifiedNum=#{unqualifiedNum},
+            unqualifiedGrade=#{unqualifiedGrade},
+            unqualifiedReason=#{unqualifiedReason},
+            reviewRst=#{reviewRst},
+            reviewGrp=#{reviewGrp},
+            reviewNo=#{reviewNo},
+            graphicPath=#{graphicPath},
+            bak=#{bak}
+        where id=#{id}
+    </update>
+</mapper>

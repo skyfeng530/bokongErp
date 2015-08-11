@@ -208,7 +208,7 @@ function addOrUpdate(type,objRow) {
 			 url : '../project/figure/add.html',
 			 timeout : 300000,
 			 params : {
-				 flowId,flowId,
+				 flowId:flowId,
 				 figureNo:picidVal,
 				 figureName : picNameVal,
 				 figureRequest : picRequireVal,
@@ -260,7 +260,7 @@ function addOrUpdate(type,objRow) {
 			 url : '../project/figure/update.html',
 			 timeout : 300000,
 			 params : {
-				 flowId,flowId,
+				 flowId:flowId,
 				 figureNo:picidVal,
 				 figureName : picNameVal,
 				 figureRequest : picRequireVal,

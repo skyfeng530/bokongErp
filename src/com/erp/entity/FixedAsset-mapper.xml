@@ -77,8 +77,7 @@
         #{remark})
     </insert>
     <update id="update" parameterType="FixedAsset">
-        update FixedAsset
-        <set>
+        update FixedAsset set
             name=#{name},
             tagNumber=#{tagNumber},
             specifications=#{specifications},
@@ -92,11 +91,6 @@
             assetClass=#{assetClass},
             vendorInfo=#{vendorInfo},
             remark=#{remark}
-        </set>
-        <where>
-            <if test="t.id != null and t.id != ''">
-                id=#{id}
-            </if>
-        </where>
+        where id=#{id}
     </update>
 </mapper>

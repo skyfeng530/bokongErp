@@ -10,7 +10,7 @@
   <div style="height: 100%;overflow-y: auto;">
 <br/>
 <br/>  
-<form action="${pageContext.servletContext.contextPath }/background/product/figure/update.html" method="post">
+<form action="${pageContext.servletContext.contextPath }/background/project/figureLib/update.html" method="post">
 <input type="hidden" name="id" value="${busProjectFigure.pfid}">
 		<table class="ttab" height="100" width="85%" border="0" cellpadding="0" cellspacing="1" align="center">
 				<tr>

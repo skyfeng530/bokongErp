@@ -38,5 +38,6 @@
 		<typeAlias type="com.erp.entity.BusProjectProductProjectFlow" alias="BusProjectProductProjectFlow"/>
 		<typeAlias type="com.erp.entity.BusProjectProductFlowVo" alias="BusProjectProductFlowVo"/>
 		<typeAlias type="com.erp.entity.BusProjectFigureFlowVo" alias="BusProjectFigureFlowVo"/>
+		<typeAlias type="com.erp.entity.OmInstorage" alias="OmInstorage"/>
 	</typeAliases>
 </configuration>

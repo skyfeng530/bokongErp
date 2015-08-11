@@ -22,21 +22,12 @@
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">项目名称：</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="projectId" value="${busProjectProduct.projectId}"/>
-						</div>
-					</td>
-					<td height="30" width="10%">
 						<div align="right" class="STYLE1">产品代号:</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="productNo" value="${busProjectProduct.productNo}"/>
 						</div>
 					</td>
-				</tr>
-				<tr>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">产品名称：</div></td>
 					<td>
@@ -44,6 +35,8 @@
 							<input style="height: 20px;width: 200px" name="productName" value="${busProjectProduct.productName}"/>
 						</div>
 					</td>
+				</tr>
+				<tr>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">产品状态:</div></td>
 					<td>
@@ -51,8 +44,6 @@
 							<input style="height: 20px;width: 200px" name="status" value="${busProjectProduct.status}"/>
 						</div>
 					</td>
-				</tr>
-				<tr>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">备注：</div></td>
 					<td>
@@ -60,8 +51,7 @@
 							<input style="height: 20px;width: 200px" name="bak" value="${busProjectProduct.bak}"/>
 						</div>
 					</td>
-				</tr>
-				
+				</tr>			
 				
 				<tr>
 					<td colspan="4" style="padding: 10px">

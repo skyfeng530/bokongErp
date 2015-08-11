@@ -39,7 +39,7 @@ public class BusProjectFigureController {
         }
         pageView = busProjectFigureService.query(pageView, busProjectFigure);
         model.addAttribute("pageView", pageView);
-        return "/background/project/figure/list";
+        return "/background/project/figureLib/list";
     }
 
     /**
@@ -63,7 +63,7 @@ public class BusProjectFigureController {
      */
     @RequestMapping("addUI")
     public String addUI() {
-        return "/background/project/figure/add";
+        return "/background/project/figureLib/add";
     }
 
     /**
@@ -98,7 +98,7 @@ public class BusProjectFigureController {
         strId = new String(b, "utf-8");
         BusProjectFigure busProjectFigure = busProjectFigureService.getById(strId);
         model.addAttribute("busProjectFigure", busProjectFigure);
-        return "/background/project/figure/edit";
+        return "/background/project/figureLib/edit";
     }
 
     /**

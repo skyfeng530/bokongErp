@@ -6,6 +6,7 @@
 <%@include file="../../common/common-css.jsp"%>
 <script src="${pageContext.servletContext.contextPath }/js/jquery_1_7_2_min.js" type="text/javascript"></script>
   <script type="text/javascript">
+  var flag = false;
   function validateUserName(uname){
 	  $.ajax({
     		async:false, //请勿改成异步，下面有些程序依赖此请数据
@@ -16,8 +17,10 @@
     		success: function(json){
     			if(json == "1000"){
     				$("span[name='uname_tips']").html("");
+    				flag = true;
             	}else if(json == "1001"){
             		$("span[name='uname_tips']").html("用户名已存在！");
+            		flag = false;
               };
      		}
     	});
@@ -29,8 +32,7 @@
 	  var userBirthday = $('input[name="userBirthday"]').val();
 	  var idCard = $('input[name="idCard"]').val();
 	  var userPhone = $('input[name="userPhone"]').val();
-	  var uname_tips = $('span[name="uname_tips"]').val();
-	  if(uname_tips != ""){
+	  if(!flag){
 		  alert("用户名已存在！");
 		  return false;
 	  }
@@ -132,8 +134,8 @@
 						<div align="right" class="STYLE1">性别：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input type="radio" name="userSex" value="男" checked="checked"/>：男
-							<input type="radio" name="userSex" value="女"/>：女
+							<input type="radio" name="userSex" value="男" checked="checked"/>男
+							<input type="radio" name="userSex" value="女"/>女
 						</div>
 					</td>
 					<td height="30" width="10%">

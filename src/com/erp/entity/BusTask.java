@@ -5,6 +5,10 @@ public class BusTask implements java.io.Serializable {
     private int taskId;
     private String taskNo;
     private int ppid;
+    private String projectName;
+    private String productName;
+    private String productNo;
+    private String status;
     private int totalSetNo;
     private String taskSource;
     private String bak;
@@ -46,5 +50,30 @@ public class BusTask implements java.io.Serializable {
     public void setBak(String bak) {
         this.bak =bak;
     }
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(String productNo) {
+		this.productNo = productNo;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
 }
 

@@ -9,7 +9,7 @@
 	href="${pageContext.servletContext.contextPath }/css/fenyecss.css" />
 </head>
 <body>
-<form id="fenye" name="fenye" action="${pageContext.servletContext.contextPath }/background/project/figure/query.html" method="post">
+<form id="fenye" name="fenye" action="${pageContext.servletContext.contextPath }/background/project/figureLib/query.html" method="post">
 <table width="100%">
   <tr>
     <td height="30" background="${pageContext.servletContext.contextPath }/images/tab_05.gif"><table width="100%">
@@ -46,7 +46,7 @@
                 <td width="60"><table width="90%">
                   <tr>
                     <td class="STYLE1"><div align="center"><img src="${pageContext.servletContext.contextPath }/images/22.gif" width="14" height="14" /></div></td>
-                    <td class="STYLE1"><div align="center"><a href="${pageContext.servletContext.contextPath }/background/project/figure/addUI.html">新增</a></div></td>
+                    <td class="STYLE1"><div align="center"><a href="${pageContext.servletContext.contextPath }/background/project/figureLib/addUI.html">新增</a></div></td>
                   </tr>
                 </table></td>
               </tr>
@@ -92,7 +92,7 @@
               <input type="checkbox" name="check" value="${key.pfid}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/figure/getById.html?id=${key.pfid}&&type=0">${key.ppid}</a></span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/figureLib/getById.html?id=${key.pfid}&&type=0">${key.ppid}</a></span></td>
             <td height="20" ><span class="STYLE1">${key.ppid}</span></td>
 			<td height="20" ><span class="STYLE1">${key.figureNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.figureName}</span></td>
@@ -104,7 +104,7 @@
             
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
             <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
-            <a href="${pageContext.servletContext.contextPath }/background/project/figure/getById.html?id=${key.pfid}&&type=1">
+            <a href="${pageContext.servletContext.contextPath }/background/project/figureLib/getById.html?id=${key.pfid}&&type=1">
                                      编辑
             </a>
             &nbsp; &nbsp;

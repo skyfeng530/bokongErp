@@ -3,24 +3,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bustask">
     <sql id="selectId">
-        taskId,
-        taskNo,
-        ppid,
+        a.taskId,
+        a.taskNo,
+        a.ppid,
+        b.projectName,
+        c.productName,
+        c.productNo,
+        c.`status`,
         totalSetNum,
         taskSource,
-        bak
+        a.bak
     </sql>
 
     <select id="query" resultType="BusTask" parameterType="java.util.HashMap">
 
         select
         <include refid="selectId" />
-        from BusTask
-        <where>
-            <if test="t.taskId != null and t.taskId != ''">
-                taskId=#{taskId}
-            </if>
-        </where>
+        from bustask a, busproject b,busprojectproduct c where a.ppid=c.ppid and c.projectId = b.pid
     </select>
 
     <!-- total count -->
@@ -54,17 +53,11 @@
     </insert>
     <update id="update" parameterType="BusTask">
         update BusTask
-        <set>
+        set
             taskNo=#{taskNo},
-            ppid=#{ppid},
             totalSetNo=#{totalSetNum},
             taskSource=#{taskSource},
             bak=#{bak}
-        </set>
-        <where>
-            <if test="t.taskId != null and t.taskId != ''">
-                taskId=#{taskId}
-            </if>
-        </where>
+        where  taskId=#{taskId}
     </update>
 </mapper>

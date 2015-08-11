@@ -13,10 +13,12 @@
 	<select id="query" resultType="Department" parameterType="java.util.HashMap">
 		select
 		<include refid="selectId" />
-		from departmentinfo where DepartType != 2
-		<if test="dName != null and dName != ''">
-			dName = #{dName}
-		</if>
+		from departmentinfo 
+		<where>
+			<if test="t.dName != null and t.dName != ''">
+				dName like '%${t.dName}%'
+			</if>
+		</where>
 	</select>
 	<!-- 总记录数 -->
 	<select id="count" parameterType="Department" resultType="int">

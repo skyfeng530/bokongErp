@@ -74,14 +74,16 @@
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">项目名称</span></td>
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品名称</span></td>
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务编号</span></td>
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">总套数</span></td>
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务来源</span></td>
-            <td width="13%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">备注</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">项目名称</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品名称</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品编号</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品状态</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务编号</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">总套数</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务来源</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">备注</span></td>
 			
-            <td  height="22%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
+            <td  height="20%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
           <c:forEach var="key" items="${pageView.records}">
@@ -90,8 +92,10 @@
               <input type="checkbox" name="check" value="${key.taskId}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/task/getById.html?id=${key.taskId}&&type=0">${key.ppid}</a></span></td>
-            <td height="20" ><span class="STYLE1">${key.ppid}</span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/task/getById.html?id=${key.taskId}&&type=0">${key.projectName}</a></span></td>
+            <td height="20" ><span class="STYLE1">${key.productName}</span></td>
+			<td height="20" ><span class="STYLE1">${key.productNo}</span></td>
+			<td height="20" ><span class="STYLE1">${key.status}</span></td>
 			<td height="20" ><span class="STYLE1">${key.taskNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.totalSetNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.taskSource}</span></td>

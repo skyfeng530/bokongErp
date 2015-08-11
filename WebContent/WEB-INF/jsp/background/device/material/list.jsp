@@ -74,24 +74,17 @@
               <input id="chose" type="checkbox" name="checkbox" onclick="selectAllCheckBox()" />
             </td>
  
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">项目名称</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品名称</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务编号</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图库编号</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图库名称</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">总个数</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">生产产家</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">检测结果</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">检测数量</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">合格数量</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">不合格数量</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">不合格等级</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">不合格原因</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">审核结果</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">审核小组</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">审理单号</span></td>
-            <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图片路径名称</span></td>
-            <td  height="15%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">项目名称</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品名称</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品编号</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品状态</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">任务编号</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">归属图库</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">器件名称</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图号</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">器件编号</span></td>
+            <td width="8%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">总个数</span></td>
+            <td  height="20%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
           
           <c:forEach var="key" items="${pageView.records}">
@@ -100,23 +93,16 @@
               <input type="checkbox" name="check" value="${key.id}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/device/material/getById.html?id=${key.id}&&type=0">${key.taskId}</a></span></td>
-            <td height="20" ><span class="STYLE1">${key.taskId}</span></td>
-            <td height="20" ><span class="STYLE1">${key.taskId}</span></td>
-            <td height="20" ><span class="STYLE1">${key.pfid}</span></td>
-            <td height="20" ><span class="STYLE1">${key.pfid}</span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/device/material/getById.html?id=${key.id}&&type=0">${key.projectName}</a></span></td>
+            <td height="20" ><span class="STYLE1">${key.productName}</span></td>
+            <td height="20" ><span class="STYLE1">${key.productNo}</span></td>
+            <td height="20" ><span class="STYLE1">${key.status}</span></td>
+            <td height="20" ><span class="STYLE1">${key.taskNo}</span></td>
+            <td height="20" ><span class="STYLE1">${key.figureLib}</span></td>
+            <td height="20" ><span class="STYLE1">${key.figureName}</span></td>
+            <td height="20" ><span class="STYLE1">${key.figureNo}</span></td>
+            <td height="20" ><span class="STYLE1">${key.devBatchNo}</span></td>
             <td height="20" ><span class="STYLE1">${key.totalNumber}</span></td>
-            <td height="20" ><span class="STYLE1">${key.vendorNo}</span></td>
-            <td height="20" ><span class="STYLE1">${key.checkRst}</span></td>
-            <td height="20" ><span class="STYLE1">${key.checkNum}</span></td>
-            <td height="20" ><span class="STYLE1">${key.qualifiedNum}</span></td>
-            <td height="20" ><span class="STYLE1">${key.unqualifiedNum}</span></td>
-            <td height="20" ><span class="STYLE1">${key.unqualifiedGrade}</span></td>
-            <td height="20" ><span class="STYLE1">${key.unqualifiedReason}</span></td>
-            <td height="20" ><span class="STYLE1">${key.reviewRst}</span></td>
-            <td height="20" ><span class="STYLE1">${key.reviewGrp}</span></td>
-            <td height="20" ><span class="STYLE1">${key.reviewNo}</span></td>
-            <td height="20" ><span class="STYLE1">${key.graphicPath}</span></td>
             <td height="20" ><span class="STYLE4">
             
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
