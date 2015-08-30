@@ -22,58 +22,42 @@
 				</tr>
 				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">项目名称：</div></td>
+						<div align="right" class="STYLE1">图库名称：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="pid" value="${busProjectFigure.ppid}"/>
+							<input style="height: 20px;width: 200px" name="figureLib" value="${busProjectFigure.figureLib}"/>
 						</div>
 					</td>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">产品名称:</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="ppid" value="${busProjectFigure.ppid}"/>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">图库编号：</div></td>
+						<div align="right" class="STYLE1">图库编号:</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="figureNo" value="${busProjectFigure.figureNo}"/>
 						</div>
 					</td>
+				</tr>
+				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">图库名称:</div></td>
+						<div align="right" class="STYLE1">器件名称：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="figureName" value="${busProjectFigure.figureName}"/>
 						</div>
 					</td>
-				</tr>
-				<tr>
 					<td height="30" width="10%">
-						<div align="right" class="STYLE1">图纸要求：</div></td>
+						<div align="right" class="STYLE1">图纸要求:</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="figureRequest" value="${busProjectFigure.figureRequest}"/>
 						</div>
 					</td>
+				</tr>
+				<tr>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">生产数量:</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
 							<input style="height: 20px;width: 200px" name="batchNum" value="${busProjectFigure.batchNum}"/>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td height="30" width="10%">
-						<div align="right" class="STYLE1">器件类型：</div></td>
-					<td>
-						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="type" value="${busProjectFigure.type}"/>
 						</div>
 					</td>
 					<td height="30" width="10%">
@@ -83,8 +67,7 @@
 							<input style="height: 20px;width: 200px" name="describe" value="${busProjectFigure.describe}"/>
 						</div>
 					</td>
-				</tr>
-				
+				</tr>				
 				
 				<tr>
 					<td colspan="4" style="padding: 10px">

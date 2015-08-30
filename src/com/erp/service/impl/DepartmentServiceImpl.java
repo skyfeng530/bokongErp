@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.erp.dao.DepartmentInfoDao;
 import com.erp.entity.Department;
+import com.erp.entity.DepartmentUser;
 import com.erp.entity.Roles;
 import com.erp.service.DepartmentService;
 import com.erp.util.PageView;
@@ -54,4 +55,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDao.findAll();
 	}
 
+	@Override
+	public void saveDepartmentUser(DepartmentUser departmentUser) {
+		departmentDao.saveDepartmentUser(departmentUser);
+	}
+	
 }

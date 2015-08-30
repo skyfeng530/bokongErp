@@ -26,7 +26,6 @@ insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`
 		(21,'部门管理',1,'sys_department_find','1','/background/department/query.html',2,'部门增加、权限……操作'),
 		(22,'用户管理',1,'sys_user_find','1','/background/user/query.html',4,'用户管理'),
 		(23,'角色管理',1,'sys_role_find','1','/background/role/query.html',5,'角色增删改、权限设置'),
-		(24,'资源管理',1,'sys_resc_find','1','/background/resources/query.html',7,'资源列表'),
 		(25,'新增部门',21,'sys_department_add','2','/background/department/addUI.html',22,'新增部门'),
 		(26,'编辑部门',21,'sys_department_edit','2','/background/department/getById.html',22,'编辑部门'),
 		(27,'删除部门',21,'sys_department_delete','2','/background/department/deleteById.html',22,'删除部门'),
@@ -51,18 +50,19 @@ insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`
 		(74,'填写申请',2,'task_apply','1','/background/workflow/formTemplateList.html',73,'填写申请任务'),
 		(75,'申请查询',2,'task_manager','1','/background/workflow/myApplyList.html',74,'归档任务'),
 		(76,'抄送我的',2,'task_copyperson','1','/background/workflow/copyPersonUI.html',75,'抄送我的'),
-		(80,'工装设备',3,'statistics_manager','1','/background/noDevelop.html',4,'工装设备'),
-		(81,'仪表设备',3,'statistics_manager','1','/background/device/instrument/query.html',4,'仪表设备'),
-		(82,'固定资产',3,'statistics_manager','1','/background/device/fixedasset/query.html',4,'固定资产'),
 		(83,'项目查询',7,'statistics_manager','1','/background/project/query.html',4,'项目查询'),
 		(84,'生产查询',8,'statistics_manager','1','/background/noDevelop.html',4,'生产查询'),
 		(85,'产品查询',7,'statistics_manager','1','/background/project/product/query.html',4,'产品查询'),
 		(86,'报表分析',4,'statistics_manager','1','/background/noDevelop.html',4,'设备列表'),
-		(87,'任务查询',7,'statistics_manager','1','/background/project/task/query.html',4,'任务查询'),
-		(88,'机械器件',3,'statistics_manager','1','/background/device/material/mechanicsquery.html',4,'机械器件'),
-		(89,'光学器件',3,'statistics_manager','1','/background/device/material/opticalquery.html',4,'光学器件');
+		(87,'任务查询',7,'statistics_manager','1','/background/project/task/query.html',4,'任务查询');
 
 
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(77,'机械器件',3,'statistics_manager','1','/background/device/material/mechanicsquery.html',4,'机械器件');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(78,'光学器件',3,'statistics_manager','1','/background/device/material/opticalquery.html',4,'光学器件');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(79,'工装设备',3,'statistics_manager','1','/background/noDevelop.html',4,'工装设备');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(80,'固定资产',3,'statistics_manager','1','/background/device/fixedasset/query.html',4,'固定资产');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(81,'仪表设备',3,'statistics_manager','1','/background/device/instrument/query.html',4,'仪表设备');
+insert  into `resources`(`id`,`name`,`parentId`,`resKey`,`type`,`resUrl`,`level`,`description`) values(88,'图库查询',7,'statistics_manager','1','/background/project/figureLib/query.html',4,'图库查询');
 
 #增加角色控制，可以和部门对应
 #一个用户可以属于多个部门，一个具体的用户，其角色权限=其所属所有部门权限+自己的权限（初始化资源显示)
@@ -104,6 +104,12 @@ insert  into `resources_role`(`resc_id`,`role_id`) values
 				(75,1),(75,5),(76,1),(77,1),(78,1),(79,1),
 				(80,1),(81,1),(82,1),(83,1),(84,1),(85,1),
 				(86,1),(86,5),(1010,1),(1010,3),(1010,5);
+
+				
+insert  into `resources_role`(`resc_id`,`role_id`) values (87,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (87,5);
+insert  into `resources_role`(`resc_id`,`role_id`) values (88,1);
+insert  into `resources_role`(`resc_id`,`role_id`) values (88,5);
 
 insert  into `user_role`(`user_id`,`role_id`) values (1,1),(2,1),(5,1),(7,10),(8,10);
 

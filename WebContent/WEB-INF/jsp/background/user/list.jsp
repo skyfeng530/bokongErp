@@ -30,6 +30,17 @@ function userRole(id){
 	 window.showModalDialog(url, window, params);
 	 //location.href=url;
 }
+function userSetGroup(id){
+	 var url = "${pageContext.servletContext.contextPath }/background/user/userSetGroup.html?userId="+id;
+	 var h_sp1 = 420;
+	 var w_sp1 = 600;
+	//兼容IE，firefox,google.模态窗口居中问题
+	 var iTop2 = (window.screen.availHeight - 20 - h_sp1) / 2;
+	 var iLeft2 = (window.screen.availWidth - 10 - w_sp1) / 2;
+	 var params = 'menubar:no;dialogHeight=' + h_sp1 + 'px;dialogWidth=' + w_sp1 + 'px;dialogLeft=' + iLeft2 + 'px;dialogTop=' + iTop2 + 'px;resizable=yes;scrollbars=0;resizeable=0;center=yes;location:no;status:no;scroll:no'
+	 window.showModalDialog(url, window, params);
+	 //location.href=url;
+}
 </script>
 </head>
 <body>
@@ -113,7 +124,6 @@ function userRole(id){
             </td>
  
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">用户名</span></td>
-            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">所属部门</span></td>
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">拥有角色</span></td>
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">姓名</td>
             <td width="5%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">性别</td>
@@ -129,11 +139,6 @@ function userRole(id){
             </td>
             
             <td height="20" ><span class="STYLE1">${key.userName}</span></td>
-            <td height="20" ><span class="STYLE1" style="color: blue;">
-            <%-- <c:forEach var="de" items="${key.departments}">
-              	${de.dName }&nbsp;
-              </c:forEach> --%>
-            </span></td>
             <td height="20" ><span class="STYLE1">${key.roleName}</span></td>
             <td height="20" ><span class="STYLE1">${key.userRealname}</span></td>
             <td height="20" ><span class="STYLE1">${key.userSex}</span></td>
@@ -144,28 +149,34 @@ function userRole(id){
             <td height="20" ><span class="STYLE1">${key.userPhone}</span></td>
             
             <td height="20" ><span class="STYLE4">
-             <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
-             <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="userRole('${key.userId}')">
-            	分配角色</a>
-            </sec:authorize>
-            <sec:authorize ifAnyGranted="ROLE_sys_user_permissions">
-            <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="permissio('${key.userId}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            </sec:authorize>
-            <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
-            <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
-            <a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userId=${key.userId}&type=1">
-                                     编辑
-            </a>
-            &nbsp; &nbsp;
-           </sec:authorize>
-           <sec:authorize ifAnyGranted="ROLE_sys_user_delete">
-            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
-            	<a href="javascript:void(0);" onclick="deleteId('${pageContext.servletContext.contextPath }/background/user/deleteById.html?userId=${key.userId}');">
-            	删除</a>
-            	</sec:authorize>
-            	</span></td>
+            	<c:if test="${key.userName ne 'admin'}">
+            	 <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
+	            	<a href="javascript:void(0);" onclick="userSetGroup('${key.userId}')">
+	            	分配分组</a>
+	             <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
+	             <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
+	            	<a href="javascript:void(0);" onclick="userRole('${key.userId}')">
+	            	分配角色</a>
+	            </sec:authorize>
+	            <%-- <sec:authorize ifAnyGranted="ROLE_sys_user_permissions">
+	            <img src="${pageContext.servletContext.contextPath }/images/resc.png" width="16" height="16" />
+	            	<a href="javascript:void(0);" onclick="permissio('${key.userId}')">分配权限</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	            </sec:authorize> --%>
+	            <sec:authorize ifAnyGranted="ROLE_sys_user_edit">
+	            <img src="${pageContext.servletContext.contextPath }/images/edt.gif" width="16" height="16" />
+	            <a href="${pageContext.servletContext.contextPath }/background/user/getById.html?userId=${key.userId}&type=1">
+	                                     编辑
+	            </a>
+	            &nbsp; &nbsp;
+	           </sec:authorize>
+	           <sec:authorize ifAnyGranted="ROLE_sys_user_delete">
+	            <img src="${pageContext.servletContext.contextPath }/images/del.gif" width="16" height="16" />
+	            	<a href="javascript:void(0);" onclick="deleteId('${pageContext.servletContext.contextPath }/background/user/deleteById.html?userId=${key.userId}');">
+	            	删除</a>
+	            	</sec:authorize>
+	            	</span>
+	            </c:if>
+            </td>
           </tr>
           </c:forEach>
         </table></td>

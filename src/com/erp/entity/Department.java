@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class Department implements Serializable{
 	private int DepartId;
 	private String dName;
+	private String membership;//隶属科室
 	private int DepartType;
 	private String Discribe;
 	public Department() {
@@ -22,6 +23,12 @@ public class Department implements Serializable{
 	}
 	public void setdName(String dName) {
 		this.dName = dName;
+	}
+	public String getMembership() {
+		return membership;
+	}
+	public void setMembership(String membership) {
+		this.membership = membership;
 	}
 	public int getDepartType() {
 		return DepartType;

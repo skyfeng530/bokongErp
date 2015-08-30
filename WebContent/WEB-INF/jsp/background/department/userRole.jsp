@@ -44,7 +44,7 @@
 			<tr>	
 					<td height="30"width="20%" >
 						<div align="right" class="STYLE1" >
-								部门：
+								分组：
 						</div>
 					</td>
 					<td >

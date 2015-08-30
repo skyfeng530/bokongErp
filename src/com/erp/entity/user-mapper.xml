@@ -110,4 +110,13 @@
 	  <include refid="selectId"/>
 	  from user
 	</select>
+	
+	<select id="getUsersByDepartmentName" parameterType="String" resultType="java.util.HashMap">
+		select
+	  	<include refid="selectId"/>
+	  	FROM USER WHERE userid  IN (
+			SELECT user_id FROM department_user WHERE department_id IN 
+			(SELECT departId FROM departmentinfo WHERE dName = #{dName})
+		)
+	</select>
 </mapper>

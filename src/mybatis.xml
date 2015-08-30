@@ -11,6 +11,8 @@
 		<typeAlias type="com.erp.entity.ResourceRoles" alias="ResourceRoles"/>
 		<typeAlias type="com.erp.entity.UserRoles" alias="UserRoles"/>
 		<typeAlias type="com.erp.entity.ServerInfo" alias="ServerInfo"/>
+		<typeAlias type="com.erp.entity.DepartmentUser" alias="DepartmentUser"/>
+		<typeAlias type="com.erp.entity.RuTask" alias="RuTask"/>
 		
 		<typeAlias type="com.erp.entity.Log" alias="Log"/>
 		<typeAlias type="com.erp.entity.Device" alias="Device"/>

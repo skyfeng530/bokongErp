@@ -97,7 +97,7 @@ function topView() {
 			dataIndex : 'FIGURENO',
 			menuDisabled : true
 		}, {
-			header : "对应厂商编号",
+			header : "厂商名称",
 			align : 'center',
 			width : 120,
 			sortable : false,
@@ -151,12 +151,42 @@ function topView() {
 				Align : 'center',
 				handler : function(grid, rowIndex, colIndex) {
 
-					if (mNumber == 0) {
-						return;
+					store.removeAt(rowIndex);
+					
+					var clearAllFlag = false;
+					
+					if(store.getCount() == 0)
+					{
+						clearAllFlag = true;
 					}
 
-					mNumber = mNmber - 1;
-					store.removeAt(rowIndex);
+					var _girdData = getGridData();
+
+					Ext.Ajax.request({
+						url : '../omInStorage/saveGridData.html',
+						params : {
+							data : _girdData,
+							clearall : clearAllFlag,
+							flowId : flowId
+						},
+						method : 'POST',
+						success : function(response) {
+							var result = Ext.decode(response.responseText);
+
+							store.reload({
+								params : {
+									start : 0,
+									limit : 10,
+									flowId : flowId
+								}
+							});
+							
+							loadMaxNoValue(flowId);
+						},
+						failure : function() {
+							Ext.Msg.alert("提示", "添加失败");
+						}
+					});
 				}
 			} ]
 		} ],
@@ -245,7 +275,7 @@ function topView() {
 				{
 					columnWidth : .5,
 					layout : 'form',
-					labelWidth : 100,
+					labelWidth : 80,
 					labelAlign : "left",
 					baseCls : "x-plain",
 					labelAlign : "left",
@@ -274,7 +304,8 @@ function topView() {
 										method : 'POST'
 									}),
 									baseParams : {
-										bustaskId : bustaskId
+										bustaskId : bustaskId,
+										deviceType : ideviceType
 									},
 									reader : new Ext.data.JsonReader({
 										root : "data",
@@ -306,111 +337,67 @@ function topView() {
 								readOnly : true
 							},
 							{
-								id : 'addComponNo_id',
-								fieldLabel : '零件编号配置方式',
-								anchor : '85%',
-								xtype : 'combo',
-								allowBlank : false,
-								editable : false,
-								blankText : '不能为空',
-								emptyText : '请选择...',
-								selectOnFocus : true,
-								forceSelection : true,
-								triggerAction : 'all',
-								valueNotFoundText : '',
-								value : '1',
-								valueField : 'value',
-								displayField : 'text',
-								enableKeyEvents : true,
-								mode : "local",
-								store : workflow.states.addComponTypeStore,
-								listeners : {
-									'select' : function(i, r) {
-
-										if (this.getValue() == "1") {
-											Ext.getCmp("add_batch_id")
-													.setVisible(false);
-											Ext.getCmp("componentNo_id")
-													.setVisible(true);
-											Ext.getCmp("componentNo_id")
-													.reset();
-										} else {
-											Ext.getCmp("add_batch_id")
-													.setVisible(true);
-											Ext.getCmp("componentNo_id")
-													.setVisible(false);
-											Ext.getCmp("batchNo_id").reset();
-											Ext.getCmp("batch_start_id")
-													.reset();
-											Ext.getCmp("batch_end_id").reset();
-										}
-									}
-								}
-							}, {
-								id : 'componentNo_id',
-								fieldLabel : '零件编号',
-								anchor : '85%',
-								xtype : 'textfield',
-								allowBlank : false,
-								blankText : '不能为空',
-								disable : false,
-								hidden : false
-							}, {
 								id : 'add_batch_id',
-								disable : true,
-								hidden : true,
-								fieldLabel : '批量输入',
+								fieldLabel : '批量添加',
 								anchor : '85%',
 								xtype : 'panel',
 								layout : 'column',
-								items : [ {
-									columnWidth : .3,
-									layout : 'form',
-									labelWidth : 35,
-									labelAlign : "left",
-									baseCls : "x-plain",
-									labelAlign : "left",
-									items : [ {
-										id : 'batchNo_id',
-										fieldLabel : '批号',
-										xtype : 'textfield',
-										width : 70
-									} ]
-								}, {
-									columnWidth : .35,
-									layout : 'form',
-									labelWidth : 60,
-									labelAlign : "left",
-									baseCls : "x-plain",
-									labelAlign : "left",
-									items : [ {
-										id : 'batch_start_id',
-										fieldLabel : '起始序号',
-										xtype : 'numberfield',
-										width : 65,
-										decimalPrecision : 0,
-										allowNegative : false,
-										minValue : 1,
-										minText : '只能输入大于1的整数'
-									} ]
-								}, {
-									columnWidth : .35,
-									layout : 'form',
-									labelWidth : 60,
-									labelAlign : "left",
-									baseCls : "x-plain",
-									labelAlign : "left",
-									items : [ {
-										id : 'batch_end_id',
-										fieldLabel : '结束序号',
-										xtype : 'numberfield',
-										width : 70,
-										decimalPrecision : 0,
-										allowNegative : false,
-										minValue : 1,
-										minText : '只能输入大于1的整数'
-									} ]
-								} ]
+								items : [
+										{
+											columnWidth : .2,
+											layout : 'form',
+											labelWidth : 35,
+											labelAlign : "left",
+											baseCls : "x-plain",
+											labelAlign : "left",
+											items : [ {
+												id : 'batchNo_id',
+												fieldLabel : '批号',
+												xtype : 'label',
+												html : '<div style="padding-top:3px">'
+														+ "P"
+														+ batchno
+														+ '</div>'
+											} ]
+										},
+										{
+											columnWidth : .23,
+											layout : 'form',
+											labelWidth : 60,
+											labelAlign : "left",
+											baseCls : "x-plain",
+											labelAlign : "left",
+											items : [ {
+												id : 'batch_start_id',
+												fieldLabel : '起始序号',
+												xtype : 'label',
+												html : '<div id="deviceMaxValue_id" style="padding-top:3px">'
+														+ deviceMaxValue
+														+ '</div>'
+											} ]
+										}, {
+											columnWidth : .35,
+											layout : 'form',
+											labelWidth : 60,
+											labelAlign : "left",
+											baseCls : "x-plain",
+											labelAlign : "left",
+											items : [ {
+												id : 'batch_end_id',
+												fieldLabel : '结束序号',
+												xtype : 'numberfield',
+												width : 70,
+												decimalPrecision : 0,
+												allowNegative : false,
+												minValue : 1,
+												minText : '只能输入大于1的整数'
+											} ]
+										} ]
+							}, {
+								id : 'remark_id',
+								fieldLabel : '备注',
+								anchor : '85%',
+								xtype : 'textfield'
 							}, {
 								xtype : 'button',
 								text : '增加',
@@ -430,9 +417,12 @@ function topView() {
 					labelAlign : "left",
 					items : [ {
 						id : 'factoryCode',
-						fieldLabel : '对应厂商编号',
+						fieldLabel : '厂商名称',
 						anchor : '85%',
-						xtype : 'textfield'
+						xtype : 'textfield',
+						maxLength : 64,
+						allowBlank : false,
+						blankText : '不能为空'
 					}, {
 						id : 'Drawingreq_id',
 						fieldLabel : '图纸要求',
@@ -472,19 +462,11 @@ function topView() {
 						xtype : 'numberfield',
 						allowBlank : false,
 						blankText : '不能为空',
+						maxLength : 10,
 						decimalPrecision : 0,
 						allowNegative : false,
 						minValue : 1,
 						minText : '只能输入大于1的整数'
-					}, {
-						id : 'remark_id',
-						fieldLabel : '备注',
-						anchor : '85%',
-						xtype : 'textfield'
-					}, {
-						xtype : 'label',
-						html : '&nbsp;',
-						style : 'margin-bottom : 20px;',
 					} ]
 				} ]
 	};
@@ -575,6 +557,25 @@ function mainView() {
 		Ext.getCmp("total_id").reset();
 		Ext.getCmp("total_id").setDisabled(false);
 	}
+}
+
+function loadMaxNoValue(flowId)
+{
+	Ext.Ajax.request({
+		url : '../omInStorage/queryDevStart.html',
+		params : {
+			flowId : flowId
+		},
+		method : 'POST',
+		success : function(response) {
+			var result = Ext.decode(response.responseText);
+
+			document.getElementById("deviceMaxValue_id").innerHTML = result.data;
+			deviceMaxValue = result.data;
+		},
+		failure : function() {
+		}
+	});
 }
 
 function initview() {

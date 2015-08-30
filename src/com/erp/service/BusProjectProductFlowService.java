@@ -24,6 +24,8 @@ public interface BusProjectProductFlowService{
     
     public List<BusProjectProductFlow> getByFlowId(String flowid);
     
+    public List<BusProjectProductFlow> getByproductNo(BusProjectProductFlowVo busProjectProductFlowVo);
+    
     public int conditionSelect(BusProjectProductFlowVo busProjectProductFlowVo);
     
     public int modifyProductFlow(BusProjectProductFlowVo busProjectProductFlowVo );

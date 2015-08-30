@@ -108,8 +108,12 @@ function changepwd(){
             <td valign="bottom">&nbsp;</td>
           </tr>
         </table></td>
-        <td width="120"><img src="${pageContext.servletContext.contextPath }/images/user.gif" width="10" height="10" /> <span class="STYLE1">欢迎您:
-        ${userSession.userName}</span></td>
+        <td width="300">
+        <div align="right">
+        <img src="${pageContext.servletContext.contextPath }/images/user.gif" width="10" height="10" /> 
+        <span class="STYLE1">欢迎您:${userSession.userRealname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        </td>
       </tr>
     </table></td>
   </tr>

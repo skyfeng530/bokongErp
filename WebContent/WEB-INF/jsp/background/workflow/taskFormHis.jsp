@@ -35,10 +35,10 @@
 <div id=MainArea>
     <form action="${pageContext.servletContext.contextPath }/background/workflow/submitTask.html" method="post">
 		<div class="ItemBlock_Title1"><!-- 信息说明 --><div class="ItemBlock_Title1">
-        	<img border="0" width="4" height="7" src="${pageContext.servletContext.contextPath }/style/blue/images/item_point.gif" /> 请假流程审批 </div> 
+        	<img border="0" width="4" height="7" src="${pageContext.servletContext.contextPath }/style/blue/images/item_point.gif" />  </div> 
         </div>
         <div class="ItemBlockBorder">
-        	<jsp:include page="page/${url}.jsp"/>
+        	<%-- <jsp:include page="page/${url}.jsp"/> --%>
 		</div>
         <!-- 表单操作 -->
         <div id="InputDetailBar">

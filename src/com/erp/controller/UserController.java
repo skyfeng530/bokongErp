@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.entity.Department;
 import com.erp.entity.DepartmentMember;
+import com.erp.entity.DepartmentUser;
 import com.erp.entity.Roles;
 import com.erp.entity.User;
 import com.erp.entity.UserRoles;
@@ -69,11 +70,20 @@ public class UserController {
 	 */
 	@RequestMapping("add")
 	public String add(Model model, User user) {
-		String pwd = user.getUserPassword();
-		pwd = CiphertextUtil.passAlgorithmsCiphering(pwd, CiphertextUtil.MD5);
-		user.setUserPassword(pwd);
-		userService.add(user);
-		return "redirect:query.html";
+		User u = userService.querySingleUser(user.getUserName());
+		if (null == u) {
+			String pwd = user.getUserPassword();
+			pwd = CiphertextUtil.passAlgorithmsCiphering(pwd, CiphertextUtil.MD5);
+			user.setUserPassword(pwd);
+			userService.add(user);
+			return "redirect:query.html";
+		}
+		else
+		{
+			model.addAttribute("errorMsg", "1");
+			model.addAttribute("user", user);
+			return "/background/user/add";
+		}
 	}
 
 	/**
@@ -300,4 +310,35 @@ public class UserController {
 		}
 		return userNames;
 	}
+	
+	/**
+	 * 给用户分配角色界面
+	 * @return
+	 */
+	@RequestMapping("userSetGroup")
+	public String userSetGroup(Model model,String userId){
+		User user = userService.getById(userId);
+		model.addAttribute("user", user);
+		List<Department> departments = departmentService.findAll();
+		model.addAttribute("departments", departments);
+		return "/background/user/userGroup";
+	}
+	
+	/**
+	 * 保存用户分配角色
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("setGroup")
+	public String setGroup(Model model,DepartmentUser departmentUser){
+		String errorCode = "1000";
+		try {
+			departmentService.saveDepartmentUser(departmentUser);
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorCode="1001";
+		}
+		return errorCode;
+	}
+	
 }

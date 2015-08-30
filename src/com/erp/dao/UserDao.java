@@ -1,6 +1,8 @@
 package com.erp.dao;
 
 
+import java.util.List;
+
 import com.erp.base.BaseDao;
 import com.erp.entity.Roles;
 import com.erp.entity.User;
@@ -16,4 +18,6 @@ public interface UserDao extends BaseDao<User>{
 	public User getByUsername(String userName);
 	
 	public void deleteByUsername(String userName);
+
+	public List<User> getUsersByDepartmentName(String dName);
 }

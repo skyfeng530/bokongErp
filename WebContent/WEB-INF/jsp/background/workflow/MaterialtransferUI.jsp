@@ -15,9 +15,12 @@
 	var projectName = '${projectName}';
 	var taskName = '${taskName}';
 	var deviceType = '${deviceType}';
+	var ideviceType = '${ideviceType}';
 	var taskId = '${taskId}';
 	var bustaskId = '${bustaskId}';
 	var flowId = '${flowId}';
+	var batchno = '${batchno}';
+	var deviceMaxValue = ${deviceMaxValue};
 </script>
 </head>
 <body>

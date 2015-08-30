@@ -3,24 +3,31 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="busprojectfigure">
     <sql id="selectId">
-        pfid,
-        ppid,
-        figureNo,
-        figureName,
-        figureRequest,
-        type,
-        batchNum,
-        `describe`
+        a.pfid,
+        a.ppid,
+        c.projectName,
+        b.productName,
+        b.productNo,
+        b.`status`,
+        a.figureLib,
+        a.figureNo,
+        a.figureName,
+        a.figureRequest,
+        a.type,
+        d.devName,
+        a.batchNum,
+        a.`describe`
     </sql>
 
     <select id="query" resultType="BusProjectFigure" parameterType="java.util.HashMap">
 
         select
         <include refid="selectId" />
-        from BusProjectFigure
+        from BusProjectFigure a, busprojectproduct b, busproject c,devicetype d 
+         where a.ppid = b.ppid and b.projectId=c.pid and a.type=d.devid
         <where>
             <if test="t.pfid != null and t.pfid != ''">
-                pfid=#{pfid}
+                and pfid=#{pfid}
             </if>
         </where>
     </select>
@@ -40,7 +47,10 @@
     </select>
 
     <select id="getById" parameterType="String" resultType="BusProjectFigure">
-        select * from BusProjectFigure where pfid=#{id}
+        select
+        <include refid="selectId" />
+        from BusProjectFigure a, busprojectproduct b, busproject c,devicetype d 
+         where a.ppid = b.ppid and b.projectId=c.pid and a.type=d.devid and pfid=#{id}
     </select>
     <select id="getFigureLibByPpid" parameterType="String" resultType="java.util.HashMap">
         select distinct figureLib  from BusProjectFigure where ppid=#{ppid}
@@ -49,6 +59,7 @@
         insert into BusProjectFigure(
         pfid,
         ppid,
+        figureLib,
         figureNo,
         figureName,
         figureRequest,
@@ -58,6 +69,7 @@
         values (
         #{pfid},
         #{ppid},
+        #{figureLib},
         #{figureNo},
         #{figureName},
         #{figureRequest},
@@ -66,20 +78,13 @@
         #{describe})
     </insert>
     <update id="update" parameterType="BusProjectFigure">
-        update BusProjectFigure
-        <set>
-            ppid=#{ppid},
+        update BusProjectFigure set
+            figureLib=#{figureLib},
             figureNo=#{figureNo},
             figureName=#{figureName},
             figureRequest=#{figureRequest},
-            type=#{type},
             batchNum=#{batchNum},
             `describe`=#{describe}
-        </set>
-        <where>
-            <if test="t.pfid != null and t.pfid != ''">
-                pfid=#{pfid}
-            </if>
-        </where>
+        where pfid=#{pfid}
     </update>
 </mapper>

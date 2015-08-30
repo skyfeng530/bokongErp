@@ -18,4 +18,6 @@ public interface BusProjectProductFlowDao extends BaseDao<BusProjectProductFlow>
 	int delete(BusProjectProductFlow busProjectProductFlow);
 	
 	int modifyProductFlow(BusProjectProductFlowVo bpfv);
+	
+	List<BusProjectProductFlow> getByproductNo(BusProjectProductFlowVo busProjectProductFlowVo);
 }

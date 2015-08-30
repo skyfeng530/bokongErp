@@ -3,6 +3,7 @@
  */
 package com.erp.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -15,21 +16,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.erp.entity.FlowRecordInfo;
 import com.erp.entity.FlowTaskInfo;
+import com.erp.entity.OmInStorageAssistance;
 import com.erp.entity.OmInStorageTaskFlow;
 import com.erp.service.IWorkflowService;
 import com.erp.service.OmInStorageFlow;
 import com.erp.service.OmInStorageFlowService;
 import com.erp.util.Const;
+import com.erp.util.FileUploadUtil;
+import com.erp.util.FileUtil;
 import com.erp.util.JsonUtil;
 import com.erp.util.Log4jUtils;
 import com.erp.util.Log4jUtils.LogLevel;
 import com.erp.util.SessionContext;
+import com.erp.util.UploadFileCommon;
 
 /**
  * @author jason_000
@@ -59,6 +65,7 @@ public class OmInStorageFlowController {
 			HttpServletResponse response) {
 		logger.log(LogLevel.INFO, "[OmInStorageFlowController] startOminStorageFlowProcess() start");
 
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 
 		if (null == omInStorageTaskFlow) {
@@ -67,8 +74,19 @@ public class OmInStorageFlowController {
 			return;
 		}
 
+		UploadFileCommon fileCommon = new UploadFileCommon("omInStorage", ".jpg",
+				FileUtil.getUploadImageFilePath(request, Const.OMINSTORAGE_PIC_PATH));
+
+		File uploadFile = FileUploadUtil.getUploadFile(request, fileCommon);
+
+		if (null == uploadFile) {
+			JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(false));
+			logger.log(LogLevel.ERROR, "[OmInStorageFlowController] startOminStorageFlowProcess() file is null");
+			return;
+		}
+
 		if (null == omInStorageTaskFlow.getProjectid() || null == omInStorageTaskFlow.getTaskId()
-				|| null == omInStorageTaskFlow.getDevtypeid() || StringUtils.isEmpty(omInStorageTaskFlow.getBak())) {
+				|| null == omInStorageTaskFlow.getDevtypeid()) {
 			JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(false));
 			logger.log(LogLevel.ERROR,
 					"[OmInStorageFlowController] startOminStorageFlowProcess() someone param is null");
@@ -85,6 +103,10 @@ public class OmInStorageFlowController {
 		flowTaskInfo.setFlowRecordInfo(recordInfo);
 		flowTaskInfo.setPdid("BusStorage");
 
+		OmInStorageAssistance assistance = new OmInStorageAssistance();
+		assistance.setTaskId(omInStorageTaskFlow.getTaskId());
+		assistance.setGraphicPath(uploadFile.getName());
+
 		int flowResult = workflowService.saveFlow(flowTaskInfo, "BusStorage");
 
 		if (0 != flowResult) {
@@ -99,6 +121,7 @@ public class OmInStorageFlowController {
 
 		omInStorageTaskFlow.setFlowId(flowTaskInfo.getFlowRecordInfo().getFlowId());
 
+		omInstorageFlowService.saveOmInStorageAssistance(assistance);
 		int addResult = omInstorageFlowService.saveOmInstorageTaskFlow(omInStorageTaskFlow);
 
 		JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(addResult > 0));
@@ -116,12 +139,14 @@ public class OmInStorageFlowController {
 	public void loadFigureInfo(HttpServletRequest request, HttpServletResponse response) {
 		String bustaskId = request.getParameter("bustaskId");
 
+		String deviceType = request.getParameter("deviceType");
+
 		if (StringUtils.isEmpty(bustaskId)) {
 			JsonUtil.outJson(response, Const.JSON_NULL);
 			return;
 		}
 
-		List<Map<String, Object>> figureList = omInstorageFlowService.queryFigureInfo(bustaskId);
+		List<Map<String, Object>> figureList = omInstorageFlowService.queryFigureInfo(bustaskId, deviceType);
 
 		JsonUtil.outJson(response, JsonUtil.getJsonStr(figureList));
 	}
@@ -173,9 +198,28 @@ public class OmInStorageFlowController {
 
 		String gridData = request.getParameter("data");
 
+		String clearAll = request.getParameter("clearall");
+
+		String flowId = null;
+
+		boolean clearAllFlag = false;
+
+		if (null == clearAll) {
+			clearAllFlag = false;
+		} else {
+			clearAllFlag = Boolean.valueOf(clearAll);
+			flowId = request.getParameter("flowId");
+		}
+
 		List<OmInStorageFlow> flowResults = JsonUtil.parseJsonToList(gridData, OmInStorageFlow.class);
 
-		if (CollectionUtils.isEmpty(flowResults)) {
+		if (clearAllFlag) {
+			int removeResult = omInstorageFlowService.removeAllRecord(flowId);
+			JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(removeResult > 0));
+			return;
+		}
+
+		if (!clearAllFlag && CollectionUtils.isEmpty(flowResults)) {
 
 			JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(false));
 			return;
@@ -216,5 +260,53 @@ public class OmInStorageFlowController {
 		JsonUtil.outJson(response, JsonUtil.getJsonResultMessage(result));
 
 		logger.log(LogLevel.INFO, "[OmInStorageFlowController] submitForm_storage end");
+	}
+
+	@RequestMapping(value = "queryDevStart")
+	public void queryDevStartNumber(HttpServletRequest request, HttpServletResponse response) {
+		String flowId = request.getParameter("flowId");
+
+		int maxNoValue = omInstorageFlowService.getMaxNo(flowId);
+
+		JsonUtil.outJson(response, JsonUtil.getJsonStr(maxNoValue));
+	}
+	
+	/**
+	 * 打印页面预览
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "printpage_084_1E")
+	public String printViewPage0841e(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo) {
+
+		String taskId = request.getParameter("taskId");
+		
+		String projectName = request.getParameter("projectName");
+		String taskName = request.getParameter("taskName");
+		String figurename = request.getParameter("figurename");
+		String figureno = request.getParameter("figureno");
+		String checknum = request.getParameter("checknum");
+		String totalnumber = request.getParameter("totalnumber");
+		String unqualifiednum = request.getParameter("unqualifiednum");
+		String unqualifiedgrade = request.getParameter("unqualifiedgrade");
+		String reviewrst = request.getParameter("reviewrst");
+		String reviewgrp = request.getParameter("reviewgrp");
+		String reviewno = request.getParameter("reviewno");
+		
+		model.addAttribute("taskId", taskId);
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("taskName", taskName);
+		model.addAttribute("figurename", figurename);
+		model.addAttribute("figureno", figureno);
+		model.addAttribute("checknum", checknum);
+		model.addAttribute("totalnumber", totalnumber);
+		model.addAttribute("unqualifiednum", unqualifiednum);
+		model.addAttribute("unqualifiedgrade", unqualifiedgrade);
+		model.addAttribute("reviewrst", reviewrst);
+		model.addAttribute("reviewgrp", reviewgrp);
+		model.addAttribute("reviewno", reviewno);
+		
+
+		return "/background/workflow/printpage_084-1E";
 	}
 }

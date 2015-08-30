@@ -142,45 +142,30 @@ function addFormDataToGrid_handler() {
 	var _girdForm_Total = Ext.getCmp("total_id").getValue();
 	// 备注
 	var _girdForm_remark = Ext.getCmp("remark_id").getValue();
-	// 零件编号配置方式
-	var _gridForm_AddCompNoType = Ext.getCmp("addComponNo_id").getValue();
 
 	var batchNum = 0;
 
 	var _devNo = new Array();
 
-	if (_gridForm_AddCompNoType == "1") {
-		if (!Ext.getCmp("componentNo_id").isValid()) {
-			return "";
-		}
-
-		batchNum = 1;
-		_devNo.push(Ext.getCmp("componentNo_id").getValue());
-	} else {
-		if (!Ext.getCmp("batchNo_id").isValid()
-				|| !Ext.getCmp("batch_start_id").isValid()
-				|| !Ext.getCmp("batch_end_id").isValid()) {
-			return "";
-		}
-
-		batchNum = (Ext.getCmp("batch_end_id").getValue() - Ext.getCmp(
-				"batch_start_id").getValue()) + 1;
-
-		var _batchNoValue = Ext.getCmp("batchNo_id").getValue();
-		var _startValue = Ext.getCmp("batch_start_id").getValue();
-		var _endValue = Ext.getCmp("batch_end_id").getValue();
-
-		for (var i = 0; i < batchNum; i++) {
-			_devNo.push(_batchNoValue + "-"
-					+ pad(_startValue + i, _endValue.length));
-		}
+	if (!Ext.getCmp("batch_end_id").isValid()) {
+		return "";
 	}
 
+	var endValue = Ext.getCmp("batch_end_id").getValue();
+	
+	if(endValue < deviceMaxValue)
+	{
+		Ext.getCmp("batch_end_id").markInvalid("结束序号只能大于开始序号");
+		return;
+	}
+	
 	var _gridStore = Ext.getCmp("_gridPanel_id").getStore();
 
 	var component = _gridStore.recordType;
+	
+	var devCount = endValue - deviceMaxValue + 1;
 
-	for (var m = 0; m < _devNo.length; m++) {
+	for (var m = 0; m < devCount; m++) {
 		_gridStore.insert(0, new component({
 			FLOWID : flowId,
 			PFID : _girdForm_DrawingReq,
@@ -189,7 +174,7 @@ function addFormDataToGrid_handler() {
 			FIGURENAME : _girdForm_ComponentName,
 			FIGUREREQUEST : _girdForm_DrawingReq_RawValue,
 			TOTALNUMBER : _girdForm_Total,
-			DEVBATCHNO : _devNo[m],
+			DEVBATCHNO : "P" + batchno + "-" + (deviceMaxValue + m),
 			BAK : _girdForm_remark
 		}));
 	}
@@ -212,6 +197,8 @@ function addFormDataToGrid_handler() {
 					flowId : flowId
 				}
 			});
+			
+			loadMaxNoValue(flowId);
 		},
 		failure : function() {
 			Ext.Msg.alert("提示", "添加失败");
@@ -222,16 +209,12 @@ function addFormDataToGrid_handler() {
 	Ext.getCmp("factoryCode").reset();
 	Ext.getCmp("componentName_id").reset();
 	Ext.getCmp("Drawingreq_id").reset();
-	Ext.getCmp("total_id").reset();
-	Ext.getCmp("remark_id").reset();
-
-	if (_gridForm_AddCompNoType == "1") {
-		Ext.getCmp("componentNo_id").reset();
-	} else {
-		Ext.getCmp("batchNo_id").reset();
-		Ext.getCmp("batch_start_id").reset();
-		Ext.getCmp("batch_end_id").reset();
+	if("机械" == deviceType)
+	{
+		Ext.getCmp("total_id").reset();
 	}
+	Ext.getCmp("remark_id").reset();
+	Ext.getCmp("batch_end_id").reset();
 };
 
 function pad(num, n) {
@@ -403,7 +386,7 @@ function forWardToNextPage() {
 }
 
 function forWordPraPage() {
-	window.location.href = "../workflow/myTaskList.html?taskId=" + taskId;
+	window.location.href = "../workflow/myTaskList.html";
 }
 
 function omDiscardProcess_discardTypeDispaly(value) {

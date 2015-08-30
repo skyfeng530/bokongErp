@@ -1,6 +1,8 @@
 package com.erp.service;
 
 
+import java.util.List;
+
 import com.erp.entity.InstrumentDevice;
 import com.erp.util.PageView;
 
@@ -15,4 +17,6 @@ public interface InstrumentDeviceService{
 
     public InstrumentDevice getById(String id);
 
+    public List<InstrumentDevice> queryAll(InstrumentDevice instrumentDevice);
+    
 }

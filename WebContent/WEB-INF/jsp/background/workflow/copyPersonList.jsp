@@ -55,7 +55,7 @@
 				<c:if test="${key.state eq 2}">审核完成</c:if>
 			</td>
 			<td>
-				<a href="${pageContext.request.contextPath }/background/workflow/hisComment.html?id=${key.taskid}">查看审核记录</a>
+				<a href="${pageContext.request.contextPath }/background/workflow/hisComment_Copy.html?title=${key.businesskey}">查看审核记录</a>
 			</td>
 		  </tr> 
         </c:forEach>

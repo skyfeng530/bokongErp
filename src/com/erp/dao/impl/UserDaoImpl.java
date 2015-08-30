@@ -2,6 +2,7 @@ package com.erp.dao.impl;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao
 	public void deleteByUsername(String userName)
 	{
 		getSqlSession().selectOne("user.deleteByUsername",userName);
+	}
+
+	@Override
+	public List<User> getUsersByDepartmentName(String dName) {
+		return getSqlSession().selectList("user.getUsersByDepartmentName", dName);
 	}
 	
 }

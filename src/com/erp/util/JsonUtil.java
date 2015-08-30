@@ -76,9 +76,6 @@ public class JsonUtil {
 	 */
 	public static void outJson(HttpServletResponse response, String jsonReuslt) {
 
-		response.setContentType("application/x-json");
-		response.setCharacterEncoding("UTF-8");
-
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();

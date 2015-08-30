@@ -158,7 +158,10 @@ function mainView() {
 
 					}
 				}, {
-					text : "取消"
+					text : "返回",
+					handler:function(){
+		            	history.go(-1);
+					}
 				} ]
 	});
 

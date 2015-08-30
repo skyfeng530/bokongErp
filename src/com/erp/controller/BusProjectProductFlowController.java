@@ -1,5 +1,6 @@
 package com.erp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +40,17 @@ public class BusProjectProductFlowController {
     public void add(HttpServletResponse response, 
     		BusProjectProductFlowVo busProjectProductFlowVo,
     		BusProjectProductFlow busProjectProductFlow) {
-    	int isExist = busProjectProductFlowService.conditionSelect(busProjectProductFlowVo);
-    	if (isExist > 0)
-    	{
-    		JsonUtil.outJson(response, "{success:false,msg:'exist'}");
-        	return;
-    	}
+    	int exsit = isExist(busProjectProductFlowService.getByproductNo(busProjectProductFlowVo),busProjectProductFlowVo);
+ 		if (exsit == 1)
+ 		{
+ 			JsonUtil.outJson(response, "{success:false,msg:'productNo'}");
+ 			return;
+ 		}
+ 		if (exsit == 2)
+ 		{
+ 			JsonUtil.outJson(response, "{success:false,msg:'exsit'}");
+ 			return;
+ 		}
     	
         int addResult = busProjectProductFlowService.add(busProjectProductFlow);
         if (addResult <= 0)
@@ -78,12 +84,19 @@ public class BusProjectProductFlowController {
      @RequestMapping("update")
      public void update(HttpServletResponse response, BusProjectProductFlowVo busProjectProductFlowVo)
      {
-    	 int isExist = busProjectProductFlowService.conditionSelect(busProjectProductFlowVo);
-    	 if (isExist > 0)
-    	 {
-    		JsonUtil.outJson(response, "{success:false,msg:'exist'}");
-         	return;
-    	 }
+    	// int isExist = busProjectProductFlowService.conditionSelect(busProjectProductFlowVo);
+    	List<BusProjectProductFlow> list = getList(busProjectProductFlowService.getByproductNo(busProjectProductFlowVo),busProjectProductFlowVo);
+    	int exsit = isExist(list,busProjectProductFlowVo);
+ 		if (exsit == 1)
+ 		{
+ 			JsonUtil.outJson(response, "{success:false,msg:'productNo'}");
+ 			return;
+ 		}
+ 		if (exsit == 2)
+ 		{
+ 			JsonUtil.outJson(response, "{success:false,msg:'exsit'}");
+ 			return;
+ 		}
          int result = busProjectProductFlowService.modifyProductFlow(busProjectProductFlowVo);
          if (result <= 0)
          {
@@ -116,5 +129,47 @@ public class BusProjectProductFlowController {
     		  JsonUtil.outJson(response, "{success:false}");
     	  }
           
+      }
+      
+      private List<BusProjectProductFlow> getList(List<BusProjectProductFlow> list,BusProjectProductFlowVo busProjectProductFlowVo)
+      {
+     	 List<BusProjectProductFlow> lists = new ArrayList<BusProjectProductFlow>();
+     	 String productNoOld = busProjectProductFlowVo.getProductNoOld();
+     	 String productNameOld = busProjectProductFlowVo.getProductNameOld();
+     	 String statusOld = busProjectProductFlowVo.getStatusOld();
+     	 for (BusProjectProductFlow busProjectProductFlow : list)
+ 		 {
+ 			if (!(busProjectProductFlow.getProductNo().equals(productNoOld) 
+ 					&& busProjectProductFlow.getProductName().equals(productNameOld) 
+ 					&& busProjectProductFlow.getStatus().equals(statusOld)))
+ 			{
+ 				lists.add(busProjectProductFlow);
+ 			}
+ 		 }
+     	 return lists;
+      } 
+      
+      private int isExist(List<BusProjectProductFlow> list,BusProjectProductFlowVo busProjectProductFlowVo)
+      {
+    	  int exsit = 0;
+    	  if (list != null && list.size() > 0)
+  		  {
+  			String productName = busProjectProductFlowVo.getProductName();
+  			String status = busProjectProductFlowVo.getStatus();
+  			for (BusProjectProductFlow busProjectProductFlow : list)
+  			{
+  				if(!busProjectProductFlow.getProductName().equals(productName))
+  				{
+  					exsit = 1;
+  					break;
+  				}
+  				if (busProjectProductFlow.getStatus().equals(status))
+  				{
+  					exsit = 2;
+  					break;
+  				}
+  			}
+  		  }
+    	  return exsit;
       }
 }

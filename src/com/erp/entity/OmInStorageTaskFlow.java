@@ -10,6 +10,8 @@ package com.erp.entity;
 public class OmInStorageTaskFlow {
 
 	private Long flowId;
+	
+	private Long isaId;
 
 	private Long projectid;
 
@@ -59,4 +61,11 @@ public class OmInStorageTaskFlow {
 		this.bak = bak;
 	}
 
+	public Long getIsaId() {
+		return isaId;
+	}
+
+	public void setIsaId(Long isaId) {
+		this.isaId = isaId;
+	}
 }

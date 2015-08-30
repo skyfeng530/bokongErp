@@ -52,8 +52,8 @@
 					</td>
 					<td >
 						<div align="left" class="STYLE1"  style="padding-left:10px;">
-						<input name="enable" type="radio" value="0"/>:禁用　　
-						<input name="enable" type="radio" value="1"/>:正常
+						<input name="enable" type="radio" value="0"/>禁用　　
+						<input name="enable" type="radio" value="1"/>正常
 						</div>
 					</td>
 				</tr>

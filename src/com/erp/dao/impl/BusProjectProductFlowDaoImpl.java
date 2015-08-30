@@ -47,4 +47,10 @@ public class BusProjectProductFlowDaoImpl extends BaseDaoImpl<BusProjectProductF
 		// TODO Auto-generated method stub
 		return this.getSqlSession().update(this.getClassName() + ".update", bpfv);
 	}
+
+	@Override
+	public List<BusProjectProductFlow> getByproductNo(BusProjectProductFlowVo busProjectProductFlowVo) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectList(this.getClassName() + ".getByProductNo", busProjectProductFlowVo);
+	}
 }

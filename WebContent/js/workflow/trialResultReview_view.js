@@ -97,137 +97,178 @@ function topView() {
 		anchor : '104%',
 		style : 'margin-left:102px; margin-top:10px; margin-bottom:10px',
 		store : store,
-		columns : [ sm, {
-			header : "图号",
-			width : 55,
-			align : 'center',
-			sortable : false,
-			dataIndex : 'FIGURENO',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "对应厂商编号",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'VENDORNO',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "零件名称",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'FIGURENAME',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "图纸要求",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'FIGUREREQUEST',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "数量",
-			align : 'center',
-			align : 'center',
-			width : 40,
-			sortable : false,
-			dataIndex : 'TOTALNUMBER',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "零件编号",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'DEVBATCHNO',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "检验结果",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'CHECKRST',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "检验数量",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'CHECKNUM',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "不合格数量",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'UNQUALIFIEDNUM',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "合格等级",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'UNQUALIFIEDGRADE',
-			renderer : unqualifiedgrade_display,
-			menuDisabled : true
-		}, {
-			header : "不合格原因",
-			align : 'center',
-			width : 60,
-			sortable : false,
-			dataIndex : 'UNQUALIFIEDREASON',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "审理单号",
-			align : 'center',
-			width : 90,
-			sortable : false,
-			dataIndex : 'REVIEWNO',
-			renderer : renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "审理结果",
-			align : 'center',
-			width : 60,
-			sortable : false,
-			dataIndex : 'REVIEWRST',
-			renderer : reviewrst_renderer_handler,
-			menuDisabled : true
-		}, {
-			header : "审理组织",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'REVIEWGRP',
-			renderer : reviewgroup_renderer_handler,
-			menuDisabled : true
-		},
-		// {
-		// header : "图片",
-		// width : 55,
-		// sortable : false,
-		// dataIndex : 'GRAPHICPATH',
-		// renderer : renderer_handler,
-		// menuDisabled : true
-		// },
-		{
-			header : "备注",
-			align : 'center',
-			width : 55,
-			sortable : false,
-			dataIndex : 'BAK',
-			renderer : renderer_handler,
-			menuDisabled : true
-		} ],
+		columns : [
+				sm,
+				{
+					header : "图号",
+					width : 55,
+					align : 'center',
+					sortable : false,
+					dataIndex : 'FIGURENO',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "厂商名称",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'VENDORNO',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "零件名称",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'FIGURENAME',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "图纸要求",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'FIGUREREQUEST',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "数量",
+					align : 'center',
+					align : 'center',
+					width : 40,
+					sortable : false,
+					dataIndex : 'TOTALNUMBER',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "零件编号",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'DEVBATCHNO',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "检验结果",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'CHECKRST',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "检验数量",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'CHECKNUM',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "不合格数量",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'UNQUALIFIEDNUM',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "合格等级",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'UNQUALIFIEDGRADE',
+					renderer : unqualifiedgrade_display,
+					menuDisabled : true
+				},
+				{
+					header : "不合格原因",
+					align : 'center',
+					width : 60,
+					sortable : false,
+					dataIndex : 'UNQUALIFIEDREASON',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "审理单号",
+					align : 'center',
+					width : 90,
+					sortable : false,
+					dataIndex : 'REVIEWNO',
+					renderer : renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "审理结果",
+					align : 'center',
+					width : 60,
+					sortable : false,
+					dataIndex : 'REVIEWRST',
+					renderer : reviewrst_renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "审理组织",
+					align : 'center',
+					width : 55,
+					sortable : false,
+					dataIndex : 'REVIEWGRP',
+					renderer : reviewgroup_renderer_handler,
+					menuDisabled : true
+				},
+				{
+					header : "打印",
+					align : 'center',
+					text : '打印',
+					xtype : 'actioncolumn',
+					menuDisabled : true,
+					width : 50,
+					items : [ {
+						icon : '../../style/images/print-blue.png',
+						iconStyle : 'width : 20px;height : 20px;',
+						width : 20,
+						height : 20,
+						tooltip : '打印预览',
+						Align : 'center',
+						handler : function(grid, rowIndex, colIndex) {
+
+							var record = grid.getStore().getAt(rowIndex).data;
+							window
+									.open("../omInStorage/printpage_084_1E.html?taskId="
+											+ taskId
+											+ "&projectName="
+											+ projectName
+											+ "&taskName="
+											+ taskName
+											+ "&figurename="
+											+ record.FIGURENAME
+											+ "&figureno="
+											+ record.FIGURENO
+											+ "&checknum="
+											+ record.CHECKNUM
+											+ "&totalnumber="
+											+ record.TOTALNUMBER
+											+ "&unqualifiednum="
+											+ record.UNQUALIFIEDNUM
+											+ "&unqualifiedgrade="
+											+ record.UNQUALIFIEDGRADE
+											+ "&reviewrst="
+											+ record.REVIEWRST
+											+ "&reviewgrp=" + record.REVIEWGRP
+											+ "&reviewno=" + record.REVIEWNO);
+						}
+					} ]
+				} ],
 		viewConfig : {
 			forceFit : true
 		},

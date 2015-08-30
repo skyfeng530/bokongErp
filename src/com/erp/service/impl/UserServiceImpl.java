@@ -53,6 +53,10 @@ public class UserServiceImpl implements UserService {
 	public Roles findbyUserRole(String userId) {
 		return userDao.findbyUserRole(userId);
 	}
+	
+	public List<User> getUsersByDepartmentName(String dName){
+		return userDao.getUsersByDepartmentName(dName);
+	}
 
 	@Override
 	public List<User> queryAll(User user) {

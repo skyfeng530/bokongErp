@@ -17,6 +17,7 @@ import com.erp.entity.BusStorage;
 import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
+import com.erp.entity.RuTask;
 import com.erp.util.PageView;
 
 public interface IWorkflowService {
@@ -40,9 +41,11 @@ public interface IWorkflowService {
 	/**启动流程**/
 	public void saveStartProcess(String pdid);
 
-	/**根据用户名获取任务列表
-	 * @param pageView */
+	/**根据用户名获取任务列表 */
 	public List<Task> findTaskListByName(PageView pageView, String name);
+	
+	/**根据用户名获取任务列表*/
+	public List<RuTask> findTaskListByTaskId(PageView pageView, RuTask task);
 
 	/**使用任务ID，获取当前任务节点中对应的Form key中的连接的值*/
 	public String findTaskFormKeyByTaskId(String taskId);
@@ -76,11 +79,16 @@ public interface IWorkflowService {
 	
 	public void addStorage(String strUserName, FlowTaskInfo flowTaskInfo, BusStorage storage);
 
-	BusProject findProjectBillByTaskId(String taskId);
+	public BusProject findProjectBillByTaskId(String taskId);
 
-	BusProjectFigure findProjectFigureByTaskId(String taskId);
+	public BusProjectFigure findProjectFigureByTaskId(String taskId);
 	
 	public int saveFlow(FlowTaskInfo flowTaskInfo, String flowPrefix);
 	
 	public int nextWorkFlow(String handlePerson, FlowTaskInfo flowTaskInfo);
+
+	public List<RuTask> findTaskListByName2(PageView pageView, RuTask task);
+
+	/**根据businesskey查看审批历史**/
+	public List<Comment> findCommentByBusinessKey(String businesskey);
 }

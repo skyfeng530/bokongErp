@@ -30,6 +30,17 @@ function userRole(dName){
 	 window.showModalDialog(url, window, params);
 	 //location.href=url;
 }
+function userGroup(dName){
+	 var url = "${pageContext.servletContext.contextPath }/background/department/departmentGroup.html?dName="+dName;
+	 var h_sp1 = 420;
+	 var w_sp1 = 600;
+	//兼容IE，firefox,google.模态窗口居中问题
+	 var iTop2 = (window.screen.availHeight - 20 - h_sp1) / 2;
+	 var iLeft2 = (window.screen.availWidth - 10 - w_sp1) / 2;
+	 var params = 'menubar:no;dialogHeight=' + h_sp1 + 'px;dialogWidth=' + w_sp1 + 'px;dialogLeft=' + iLeft2 + 'px;dialogTop=' + iTop2 + 'px;resizable=yes;scrollbars=0;resizeable=0;center=yes;location:no;status:no;scroll:no'
+	 window.showModalDialog(url, window, params);
+	 //location.href=url;
+}
 </script>
 </head>
 <body>
@@ -111,7 +122,7 @@ function userRole(dName){
             </td>
  
             <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">分组名称</span></td>
-            <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">分组属性</span></td>
+            <%-- <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">分组属性</span></td> --%>
             <td width="20%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">隶属科室</span></td>
             <td  height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
@@ -124,17 +135,20 @@ function userRole(dName){
             
             <td height="20" ><span class="STYLE1">${key.dName}</span></td>
             
-            <td height="20" ><span class="STYLE1">
+            <%-- <td height="20" ><span class="STYLE1">
              <c:if test="${key.departType eq 0}">
             <font color="red">虚拟部门</font>
             </c:if>
             <c:if test="${key.departType eq 1}">
             <font color="blue">真实部门</font>
-            </c:if></span></td>
+            </c:if></span></td> --%>
             
-            <td height="20" ><span class="STYLE1"></span></td>
+            <td height="20" ><span class="STYLE1">${key.membership}</span></td>
             
             <td height="20" ><span class="STYLE4">
+             <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
+            	<a href="javascript:void(0);" onclick="userGroup('${key.dName}')">
+            	查看分组成员</a>
              <%-- <sec:authorize ifAnyGranted="ROLE_sys_user_fenpeirole">
              <img src="${pageContext.servletContext.contextPath }/images/role.png" width="16" height="16" />
             	<a href="javascript:void(0);" onclick="userRole('${key.dName}')">
@@ -156,7 +170,8 @@ function userRole(dName){
             	<a href="javascript:void(0);" onclick="deleteId('${pageContext.servletContext.contextPath }/background/department/deleteById.html?dName=${key.dName}');">
             	删除</a>
             	</sec:authorize>
-            	</span></td>
+            	</span>
+           </td>
           </tr>
           </c:forEach>
         </table></td>

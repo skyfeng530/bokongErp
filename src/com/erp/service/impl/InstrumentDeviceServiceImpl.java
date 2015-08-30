@@ -44,5 +44,9 @@ public class InstrumentDeviceServiceImpl implements InstrumentDeviceService {
         // TODO Auto-generated method stub
         return instrumentDeviceDao.getById(id);
     }
-
+    
+    @Override
+    public List<InstrumentDevice> queryAll(InstrumentDevice instrumentDevice){
+    	return instrumentDeviceDao.queryAll(instrumentDevice);
+    }
 }

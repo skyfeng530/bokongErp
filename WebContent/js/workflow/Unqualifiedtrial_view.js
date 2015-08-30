@@ -106,7 +106,7 @@ function topView() {
 			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
-			header : "对应厂商编号",
+			header : "厂商名称",
 			align : 'center',
 			width : 55,
 			sortable : false,

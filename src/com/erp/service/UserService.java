@@ -24,5 +24,7 @@ public interface UserService{
 	
 	public Roles findbyUserRole(String userId);
 	
+	public List<User> getUsersByDepartmentName(String dName);
+	
 	public List<User> queryAll(User user);
 }

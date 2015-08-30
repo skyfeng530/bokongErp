@@ -36,6 +36,8 @@
 	       	<font color="#999999">${userSession.userName}</font>
 	       </div></td>
 	       <td width="20%" align="left" valign="middle"> <div align="center">
+	       	<fmt:parseDate value="${key.enableDate}" var="date" pattern="yyyy-MM-dd HH:mm:ss.S" />
+			<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />
 	       </div></td>
 	   </tr>
 	</c:forEach>

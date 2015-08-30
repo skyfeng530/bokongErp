@@ -123,7 +123,7 @@ public class OmDiscardStorageFlowServiceImpl implements OmDiscardStorageFlowServ
 	@Override
 	public List<Map<String, Object>> queryTaskInfo(String projectId) {
 		
-		String querySql = "SELECT TASKID, TASKNO FROM BUSTASK WHERE PPID = ?";
+		String querySql = "SELECT TASKID, TASKNO FROM BUSTASK T LEFT JOIN BUSPROJECTPRODUCT P ON P.PPID = T.PPID WHERE P.PROJECTID = ?";
 		
 		return commonDao.queryToList(querySql, projectId);
 	}

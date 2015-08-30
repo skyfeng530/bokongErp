@@ -26,6 +26,12 @@
         select * from BusProjectProductFlow where flowId=${flowid}
     </select>
     
+    <select id="getByProductNo" parameterType="BusProjectProductFlowVo" resultType="BusProjectProductFlow">
+         select productNo,productName,`status`  from (
+			select productNo,productName,`status` from  busprojectproduct where projectId = (select projectId from busprojectproductprojectflow where  flowid= #{flowId})
+			UNION ALL 
+			select productNo,productName,`status` from busprojectproductflow where  flowid= #{flowId}) as t where productNo = #{productNo}
+    </select>
     <select id="conditionSelect" parameterType="BusProjectProductFlowVo" resultType="int">
         select sum(a.countt) from (
         select count(*)  as countt from BusProjectProductFlow where productNo = #{productNo} and productName= #{productName} and status= #{status} and flowId = #{flowId}

@@ -20,6 +20,11 @@
 	    	 var params = 'menubar:no;dialogHeight=' + h_sp1 + 'px;dialogWidth=' + w_sp1 + 'px;dialogLeft=' + iLeft2 + 'px;dialogTop=' + iTop2 + 'px;resizable=yes;scrollbars=0;resizeable=0;center=yes;location:no;status:no;scroll:no'
 	    	 window.showModalDialog(url, window, params);
 	    }
+	    $(document).ready(function() {
+			$(document).bind("contextmenu",function(e) {
+				return false;
+			}); 
+	    });
     </script> 
 </head>
 <body>
@@ -58,14 +63,15 @@
 		</tr>
           <c:forEach var="key" items="${pageView.records}">
           <tr>
-            <td><a href="#">${key.id }</a></td>
-			<td>${key.name }</td>
+            <td><a href="#">${key.id_ }</a></td>
+			<td>${key.name_ }</td>
 			<td>
-				<fmt:formatDate value="${key.createTime}" pattern="yyyy-MM-dd HH:mm"/>
+				<%-- <fmt:formatDate value="${key.createTime}" pattern="yyyy-MM-dd HH:mm"/> --%>
+				<fmt:formatDate value="${key.create_Time_}" pattern="yyyy-MM-dd HH:mm"/>
 			</td>
-			<td>${key.assignee}</td>
-			<td><a href="${pageContext.servletContext.contextPath }/background/workflow/viewTaskForm.html?taskId=${key.id}">办理任务</a>
-				<a href="javascript:void(0);" onclick="showProcessImage('${key.id}');">查看当前流程图</a>
+			<td>${key.assignee_}</td>
+			<td><a href="${pageContext.servletContext.contextPath }/background/workflow/viewTaskForm.html?taskId=${key.id_}">办理任务</a>
+				<a href="javascript:void(0);" onclick="showProcessImage('${key.id_}');">查看当前流程图</a>
 			</td>
 		  </tr> 
           </c:forEach>

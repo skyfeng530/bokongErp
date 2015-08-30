@@ -13,7 +13,7 @@ public class BusProjectProductDaoImpl extends BaseDaoImpl<BusProjectProduct>impl
 
 	@Override
 	public List<BusProjectProduct> queryByProjectId(BusProjectProduct product) {
-		return getSqlSession().selectList(this.getClassName() + ".queryByProjectId", product.getProjectId());
+		return getSqlSession().selectList(this.getClassName() + ".queryByProjectId", product);
 	}
 
 	@Override

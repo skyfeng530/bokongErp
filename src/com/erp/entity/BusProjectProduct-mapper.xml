@@ -24,11 +24,15 @@
         </where>
     </select>
     
-        <select id="queryByProjectId" resultType="BusProjectProduct" parameterType="String">
+        <select id="queryByProjectId" resultType="BusProjectProduct" parameterType="BusProjectProduct">
 
         select
         <include refid="selectId" />
-        from BusProjectProduct where projectId=#{projectId}
+        from BusProjectProduct a, busproject b where a.projectId = b.pid
+        <if test="projectId != null">
+              and   projectId=${projectId}
+        </if>
+        
     </select>
 
     <!-- total count -->

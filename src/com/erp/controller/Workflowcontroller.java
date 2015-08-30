@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
-import org.activiti.engine.task.Task;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,7 @@ import com.erp.entity.FlowRecordInfo;
 import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
+import com.erp.entity.RuTask;
 import com.erp.entity.StorageFlowResult;
 import com.erp.entity.TaskCopyPerson;
 import com.erp.entity.User;
@@ -452,16 +452,14 @@ public class Workflowcontroller {
 	/**
 	 * 保存立项
 	 */
-	@RequestMapping(value="save_project")
-	public void save_project(HttpServletRequest request,
-			HttpServletResponse response, BusProjectFlow busProjectFlow){
-        response.setCharacterEncoding("UTF-8");
-        BusProject busProject = busProjectService.getByProjectName(busProjectFlow.getProjectName());
-        if (busProject != null)
-        {
-        	JsonUtil.outJson(response, "{success:false,msg:'exist'}");
-        	return;
-        }
+	@RequestMapping(value = "save_project")
+	public void save_project(HttpServletRequest request, HttpServletResponse response, BusProjectFlow busProjectFlow) {
+		response.setCharacterEncoding("UTF-8");
+		BusProject busProject = busProjectService.getByProjectName(busProjectFlow.getProjectName());
+		if (busProject != null) {
+			JsonUtil.outJson(response, "{success:false,msg:'exist'}");
+			return;
+		}
 		boolean result = false;
 		String pdkey = request.getParameter("pdkey");
 		FlowRecordInfo recordInfo = new FlowRecordInfo();
@@ -526,14 +524,12 @@ public class Workflowcontroller {
 			busProject.setProjectDescribe(busProjectFlow.getProjectDescribe());
 			result = busProjectService.add(busProject) > 0;
 		}
-		if (flowResult == 2 || result)
-		{
-			result=true;
+		if (flowResult == 2 || result) {
+			result = true;
 			busProjectFlowService.delete(flowId + "");
 		}
-		if (flowResult == 1)
-		{
-			result=true;
+		if (flowResult == 1) {
+			result = true;
 		}
 		JsonUtil.outJson(response, "{success:" + result + "}");
 		logger.log(LogLevel.INFO, "[Workflowcontroller] ubmit_project end");
@@ -617,19 +613,16 @@ public class Workflowcontroller {
 		String strUser = request.getParameter("nextName");
 		String flowId = request.getParameter("flowId");
 		int flowResult = workflowService.nextWorkFlow(strUser, flowTaskInfo);
-		if (flowResult == 0)
-		{
-			//插入前缺少重复校验
-			result = busProjectProductService.addAll(flowId)>0;
+		if (flowResult == 0) {
+			// 插入前缺少重复校验
+			result = busProjectProductService.addAll(flowId) > 0;
 		}
-		if (flowResult == 2 || result)
-		{
-			result=true;
+		if (flowResult == 2 || result) {
+			result = true;
 			busprojectproductprojectflowService.delete(flowId);
 			busprojectproductflowService.delete(flowId);
 		}
-		if (flowResult == 1)
-		{
+		if (flowResult == 1) {
 			result = true;
 		}
 		JsonUtil.outJson(response, "{success:" + result + "}");
@@ -720,7 +713,9 @@ public class Workflowcontroller {
 		// 从Session中获取当前用户名
 		String name = SessionContext.get(request).getUserName();
 		// 使用当前用户名查询正在执行的任务表，获取当前任务的集合List<Task>
-		List<Task> tasks = workflowService.findTaskListByName(pageView, name);
+		RuTask task = new RuTask();
+		task.setAssignee_(name);
+		List<RuTask> tasks = workflowService.findTaskListByName2(pageView, task);
 		pageView.setRecords(tasks);
 		model.addAttribute("pageView", pageView);
 		return "/background/workflow/myTaskList";
@@ -843,8 +838,18 @@ public class Workflowcontroller {
 		model.addAttribute("url", "storage");
 
 		initModel(model, flowTaskInfo);
-
+		initBatchNoModel(model, flowTaskInfo);
+		
 		return "/background/workflow/MaterialtransferUI";
+	}
+
+	private void initBatchNoModel(Model model, FlowTaskInfo flowTaskInfo) {
+
+		int flowId = flowproejctinfoDao.getFlowIdByTask(NumberUtils.toInt(flowTaskInfo.getTaskId()));
+
+		int maxValue = omInstorageFlowService.getMaxNo(flowId + "");
+
+		model.addAttribute("deviceMaxValue", maxValue);
 	}
 
 	/**
@@ -856,13 +861,13 @@ public class Workflowcontroller {
 	public String printViewPage0841e(HttpServletRequest request, Model model, FlowTaskInfo flowTaskInfo) {
 
 		String taskId = request.getParameter("taskId");
-		
+
 		String discardType = switchToApprovalpage(taskId);
-		
+
 		if ("1".equals(discardType)) {
 			return "/background/workflow/printpage_084-1E";
 		}
-		
+
 		return "/background/workflow/printpage_084-1E_1";
 	}
 
@@ -940,7 +945,9 @@ public class Workflowcontroller {
 		model.addAttribute("taskName", omInstorageFlowList.get(0).get("TASKNO"));
 		model.addAttribute("flowId", omInstorageFlowList.get(0).get("FLOWID"));
 		model.addAttribute("deviceType", omInstorageFlowList.get(0).get("DEVNAME"));
+		model.addAttribute("ideviceType", omInstorageFlowList.get(0).get("DEVID"));
 		model.addAttribute("bustaskId", omInstorageFlowList.get(0).get("TASKID"));
+		model.addAttribute("batchno", omInstorageFlowList.get(0).get("BATCHNO"));
 		model.addAttribute("taskId", taskId);
 	}
 
@@ -1025,6 +1032,21 @@ public class Workflowcontroller {
 		}
 		return "/background/workflow/taskFormHis";
 	}
+	
+	/**
+	 * 查看流转记录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "hisComment_Copy")
+	public String hisComment_Copy(Model model, MyTask task) {
+		// 获取清单businesskey
+		String businesskey = task.getTitle();
+		// 使用请假单ID，查询历史的批注信息
+		List<Comment> commentList = workflowService.findCommentByBusinessKey(businesskey);
+		model.addAttribute("commentList", commentList);
+		return "/background/workflow/taskFormHis";
+	}
 
 	/**
 	 * 获取项目名称
@@ -1054,7 +1076,7 @@ public class Workflowcontroller {
 		response.setCharacterEncoding("UTF-8");
 
 		String projectName = request.getParameter("projectName");
-		
+
 		if (StringUtils.isEmpty(projectName)) {
 			JsonUtil.outJson(response, Const.JSON_NULL);
 			return;
@@ -1162,49 +1184,60 @@ public class Workflowcontroller {
 
 		model.addAttribute("flowId", flowId);
 	}
-	
+
 	/**
 	 * 保存抄送人
+	 * 
 	 * @param copyPerson
 	 */
-	public void saveCopyPerson(TaskCopyPerson copyPerson){
+	public void saveCopyPerson(TaskCopyPerson copyPerson) {
 		taskCopyPersonService.add(copyPerson);
 	}
-	
+
 	/**
 	 * 跳转至抄送人页面
+	 * 
 	 * @param model
 	 * @param copyPerson
 	 * @param pageNow
 	 * @return
 	 */
-	@RequestMapping(value="copyPersonUI")
-	public String copyPersonUI(Model model, TaskCopyPerson copyPerson, String pageNow, HttpServletRequest request){
+	@RequestMapping(value = "copyPersonUI")
+	public String copyPersonUI(Model model, TaskCopyPerson copyPerson, String pageNow, HttpServletRequest request) {
 		copyPerson.setCopyperson(SessionContext.get(request).getUserName());
 		PageView pageView = null;
-		if(Common.isEmpty(pageNow)){
+		if (Common.isEmpty(pageNow)) {
 			pageView = new PageView(1);
-		}else{
+		} else {
 			pageView = new PageView(Integer.parseInt(pageNow));
 		}
 		pageView = taskCopyPersonService.query(pageView, copyPerson);
 		model.addAttribute("pageView", pageView);
+		
+//		//先查出抄送我的任务List<RuTask>
+//		
+//		// 从Session中获取当前用户名
+//		String name = SessionContext.get(request).getUserName();
+//		// 使用当前用户名查询正在执行的任务表，获取当前任务的集合List<Task>
+//		RuTask task = new RuTask();
+//		task.setAssignee_(name);
+//		List<RuTask> tasks = workflowService.findTaskListByTaskId(pageView, task);
+//		pageView.setRecords(tasks);
+//		model.addAttribute("pageView", pageView);
 		return "/background/workflow/copyPersonList";
 	}
-	
-	@RequestMapping(value="loadProject")
-	public void loadProjectInfo(HttpServletRequest request, HttpServletResponse response)
-	{
+
+	@RequestMapping(value = "loadProject")
+	public void loadProjectInfo(HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
-		
+
 		List<Map<String, Object>> projectInfoList = omdiscardstorageflowService.queryProjectInfo();
-		
+
 		JsonUtil.outJson(response, JsonUtil.getJsonStr(projectInfoList));
 	}
-	
-	@RequestMapping(value="loadTask")
-	public void loadTaskInfo(HttpServletRequest request, HttpServletResponse response)
- {
+
+	@RequestMapping(value = "loadTask")
+	public void loadTaskInfo(HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 
 		String projectId = request.getParameter("projectId");

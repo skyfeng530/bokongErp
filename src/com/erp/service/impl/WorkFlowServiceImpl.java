@@ -35,6 +35,7 @@ import com.erp.dao.FlowProejctInfoDao;
 import com.erp.dao.FlowRecordInfoDao;
 import com.erp.dao.LeaveDao;
 import com.erp.dao.ProjectInfoDao;
+import com.erp.dao.RuTaskDao;
 import com.erp.dao.StorageFlowResultDao;
 import com.erp.entity.BusLeave;
 import com.erp.entity.BusProject;
@@ -44,6 +45,7 @@ import com.erp.entity.FlowRecordInfo;
 import com.erp.entity.FlowTaskInfo;
 import com.erp.entity.MyTask;
 import com.erp.entity.ProjectInfo;
+import com.erp.entity.RuTask;
 import com.erp.service.IWorkflowService;
 import com.erp.util.Log4jUtils;
 import com.erp.util.PageView;
@@ -66,6 +68,8 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 	private FormService formService;
 	@Autowired
 	private HistoryService historyService;
+	@Autowired
+	private RuTaskDao ruTaskDao;
 	
 	@Autowired
 	private LeaveDao leaveDao;
@@ -190,6 +194,18 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 						.taskAssignee(name)
 						.orderByTaskCreateTime().asc()
 						.listPage(pageView.getStartPage(), pageView.getStartPage() + pageView.getPageSize());
+	}
+	
+	/**根据用户名获取任务列表*/
+	@Override
+	public List<RuTask> findTaskListByName2(PageView pageView, RuTask task) {
+		return ruTaskDao.query(pageView, task);
+	}
+	
+	/**根据用户名获取任务列表*/
+	@Override
+	public List<RuTask> findTaskListByTaskId(PageView pageView, RuTask task) {
+		return ruTaskDao.query(pageView, task);
 	}
 
 	/**使用任务ID，获取当前任务节点中对应的Form key中的连接的值*/
@@ -403,6 +419,23 @@ public class WorkFlowServiceImpl implements IWorkflowService {
 		List<Comment> list = taskService.getProcessInstanceComments(processInstanceId);
 		return list;
 	}
+	
+	/**根据businesskey查看审批历史**/
+	@Override
+	public List<Comment> findCommentByBusinessKey(String businesskey) {
+		if (StringUtils.isEmpty(businesskey)) {
+			return null;
+		}
+		
+		HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery()//对应历史的流程变量表
+						.variableValueEquals("objId", businesskey)//使用流程变量的名称和流程变量的值查询
+						.singleResult();
+		//流程实例ID
+		String processInstanceId = hvi.getProcessInstanceId();
+		List<Comment> list = taskService.getProcessInstanceComments(processInstanceId);
+		return list;
+	}
+	
 	/**使用任务对象获取流程定义ID，查询流程定义对象*/
 	@Override
 	public ProcessDefinition findProcessDefinitionByTaskId(String taskId) {

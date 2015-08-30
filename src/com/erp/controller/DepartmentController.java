@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.erp.entity.Department;
 import com.erp.entity.Roles;
+import com.erp.entity.User;
 import com.erp.entity.UserRoles;
 import com.erp.service.DepartmentService;
 import com.erp.service.RolesService;
+import com.erp.service.UserService;
 import com.erp.util.Common;
 import com.erp.util.PageView;
 
@@ -29,6 +31,8 @@ public class DepartmentController {
 	private DepartmentService departmentService;
 	@Autowired
 	private RolesService rolesService;
+	@Autowired
+	private UserService userService;
 	/**
 	 * @param model
 	 * 存放返回界面的model
@@ -169,5 +173,21 @@ public class DepartmentController {
 			errorCode="1001";
 		}
 		return errorCode;
+	}
+	
+	/**
+	 * 给用户分配角色界面
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@RequestMapping("departmentGroup")
+	public String departmentGroup(HttpServletRequest request, Model model) throws UnsupportedEncodingException{
+		String dName =request.getParameter("dName");  
+		byte b[] =dName.getBytes("ISO-8859-1");  
+		dName = new String(b, "utf-8");  
+		List<User> users = userService.getUsersByDepartmentName(dName);
+		model.addAttribute("users", users);
+		model.addAttribute("dName", dName);
+		return "/background/department/userGroup";
 	}
 }

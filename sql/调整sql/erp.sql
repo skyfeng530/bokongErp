@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS role (
 	description VARCHAR ( 200 ) NOT NULL,
 	enable INTEGER NOT NULL,
 	CONSTRAINT PK_ROLE PRIMARY KEY (id)
-	)ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+	)ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS user;	
 CREATE TABLE user (
   userId int(11) NOT NULL AUTO_INCREMENT,
-  userName varchar(20) NOT NULL,
+  userName varchar(30) NOT NULL,
   userPassword varchar(100) NOT NULL,
   userRealname varchar(20) DEFAULT NULL,
   userBirthday varchar(20) DEFAULT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE user (
   idCard varchar(100) DEFAULT NULL,
   userPhone varchar(30) DEFAULT NULL,
   PRIMARY KEY (userId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS user_role;	
 CREATE TABLE user_role (
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS resources_role (
 	resc_id INTEGER NOT NULL,
 	role_id INTEGER NOT NULL,
 	CONSTRAINT PK_RESOURE_ROLE PRIMARY KEY (resc_id, role_id)
-	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	)ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS DepartmentMember;	
 CREATE TABLE IF NOT EXISTS DepartmentMember (
@@ -63,16 +63,17 @@ CREATE TABLE IF NOT EXISTS DepartmentInfo (
 	DepartId INTEGER NOT NULL AUTO_INCREMENT,
 	dName VARCHAR ( 51 ) NOT NULL,
 	DepartType INTEGER,
+	Membership VARCHAR ( 51 ) NOT NULL, 
 	Discribe VARCHAR ( 101 ),
 	CONSTRAINT PK_DepartInfo PRIMARY KEY (DepartId)
-	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	)ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS department_user;
 CREATE TABLE IF NOT EXISTS department_user (
     department_id bigint(20) NOT NULL DEFAULT '0',
     user_id bigint(20) NOT NULL DEFAULT '0',
-    PRIMARY KEY (department_id,user_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    PRIMARY KEY (department_id, user_id)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS userloginlist;
 CREATE TABLE userloginlist (
@@ -392,14 +393,25 @@ CREATE TABLE IF NOT EXISTS ProcessRule (
 	context VARCHAR ( 201 ) NOT NULL,
 	CONSTRAINT PK_ProcessRule PRIMARY KEY (ProcessId, PeriodId, ParentPeriodId, RuleId)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	
+
+DROP TABLE IF EXISTS omInStorageAssistance;	
+CREATE TABLE IF NOT EXISTS omInStorageAssistance (
+	id INTEGER NOT NULL AUTO_INCREMENT,
+	taskid INTEGER NOT NULL,
+	batchno INT(11),
+	graphicPath VARCHAR(128) NOT NULL,
+	reserved INT(11),
+	CONSTRAINT omInStorageAssistance PRIMARY KEY (id)
+	)ENGINE=INNODB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS omInStorage;	
 CREATE TABLE IF NOT EXISTS omInStorage (
 	id INTEGER NOT NULL AUTO_INCREMENT,
+	isaId INTEGER NOT NULL,
 	taskId INT(11) NOT NULL,
 	pfid INT(11) NOT NULL,
-	devBatchNo VARCHAR(21) NOT NULL,
+	devNo INT(11),
+	devBatchNo VARCHAR(21),
 	totalNumber INTEGER DEFAULT 1 NOT NULL,
 	vendorNo VARCHAR(64) DEFAULT NULL,
 	checkRst VARCHAR(256) DEFAULT NULL,
@@ -418,9 +430,10 @@ CREATE TABLE IF NOT EXISTS omInStorage (
 	
 DROP TABLE IF EXISTS omInStorageFlow;	
 CREATE TABLE IF NOT EXISTS omInStorageFlow (
-   flowId bigint NOT NULL,
+    flowId bigint NOT NULL,
 	pfid INT(11) NOT NULL,
-	devBatchNo VARCHAR(21) NOT NULL,
+	devNo INT(11),
+	devBatchNo VARCHAR(21),
 	totalNumber INTEGER DEFAULT 1 NOT NULL,
 	vendorNo VARCHAR(64) DEFAULT NULL,
 	checkRst VARCHAR(256) DEFAULT NULL,
@@ -439,7 +452,8 @@ CREATE TABLE IF NOT EXISTS omInStorageFlow (
 
 DROP TABLE IF EXISTS omInStorageTaskFlow;	
 CREATE TABLE IF NOT EXISTS omInStorageTaskFlow (
-    `flowId`   bigint NOT NULL,
+    `flowId`  bigint NOT NULL,
+	`isaId`  INTEGER NOT NULL,
 	`projectid` INT(11) NOT NULL,
 	`taskId`   INT(11) NOT NULL,
 	`devtypeid`  INT(11) NOT NULL,
@@ -563,7 +577,10 @@ CREATE TABLE omOutStorageFlow (
 DROP TABLE IF EXISTS omOutStorageTastFlow;
 CREATE TABLE omOutStorageTastFlow (
     `flowId` bigint(20) NOT NULL,
-	`taskId` INT(11) NOT NULL
+	`taskId` INT(11) NOT NULL,
+	`componentType` INT(11) NOT NULL,
+	`setNum` INT(11) DEFAULT NULL,
+	`fetchType` INT(11) NOT NULL
 	)ENGINE=INNODB  DEFAULT CHARSET=utf8;
 	
 DROP TABLE IF EXISTS omDiscardStorage;
@@ -657,6 +674,7 @@ CREATE TABLE fixedAsset (
 DROP TABLE IF EXISTS busStorageAssistance;
 CREATE TABLE busStorageAssistance (
     `id` SMALLINT NOT NULL,
+	`type` SMALLINT NOT NULL, 
     `name` VARCHAR(64) NOT NULL,
     `describe` VARCHAR(64) NOT NULL
 	)ENGINE=INNODB DEFAULT CHARSET=utf8;

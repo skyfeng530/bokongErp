@@ -6,6 +6,7 @@
 	<sql id="selectId">
 		departId,
   		dName,
+  		membership,
   		DepartType,
   		Discribe
 	</sql>
@@ -15,6 +16,9 @@
 		<include refid="selectId" />
 		from departmentinfo 
 		<where>
+			<if test="t.DepartType == 0">
+				DepartType != 2
+			</if>
 			<if test="t.dName != null and t.dName != ''">
 				dName like '%${t.dName}%'
 			</if>
@@ -33,10 +37,12 @@
 	<insert id="add" parameterType="Department">
 		insert into departmentinfo( 
   		dName,
+  		membership,
   		DepartType,
   		Discribe )
 		values (
 		#{dName},
+		#{membership},
 		#{DepartType}, 
 		#{Discribe})
 	</insert>
@@ -51,6 +57,9 @@
 		<set>
 			<if test="DepartId != null and DepartId != ''">
 				DepartId=#{DepartId},
+			</if>
+			<if test="membership != null and membership != ''">
+				membership=#{membership},
 			</if>
 			<if test="DepartType != null and DepartType != ''">
 				DepartType=#{DepartType},
@@ -68,7 +77,7 @@
 	<select id="findAll" resultType="Department">
 		select
 		<include refid="selectId" />
-		from departmentinfo
+		from departmentinfo where DepartType != 2
 	</select>
 	
 	<!-- 根据用户名查出userId -->
@@ -86,4 +95,9 @@
 		(SELECT dm.departid FROM departmentmember dm 
 		WHERE dm.username = #{uname})
 	</select>
+	
+	<!-- 增加分组和用户 -->
+	<insert id="saveDepartmentUser" parameterType="DepartmentUser">
+		INSERT INTO department_user(department_id,user_id)VALUES (#{departmentId},#{userId})
+	</insert>
 </mapper>

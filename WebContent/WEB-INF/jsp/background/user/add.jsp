@@ -79,10 +79,15 @@
     	  return true;
       }
    }
+   $(function(){
+	   if ("${errorMsg}" == "1") {
+		   $("span[name='uname_tips']").html("用户名已存在！");
+	   }
+   })
   </script>
 </head>
 
-<body>
+<body >
 	<div style="height: 100%;overflow-y: auto;">
 		<br /> <br />
 		<form
@@ -102,7 +107,7 @@
 						<div align="right" class="STYLE1">用户名：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userName" onblur="validateUserName(this.value)"/>
+							<input style="height: 20px;width: 200px" name="userName" value="${user.userName }" onblur="validateUserName(this.value)"/>
 							<span name="uname_tips" style="color: red;"></span>
 						</div>
 					</td>
@@ -120,13 +125,13 @@
 						<div align="right" class="STYLE1">姓名：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userRealname" />
+							<input style="height: 20px;width: 200px" name="userRealname" value="${user.userRealname }"/>
 						</div></td>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">生日：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userBirthday" />
+							<input style="height: 20px;width: 200px" name="userBirthday" value="${user.userBirthday }"/>
 						</div></td>
 				</tr>
 				<tr>
@@ -134,15 +139,15 @@
 						<div align="right" class="STYLE1">性别：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input type="radio" name="userSex" value="男" checked="checked"/>男
-							<input type="radio" name="userSex" value="女"/>女
+							<input type="radio" name="userSex" value="男" <c:if test="${user.userSex eq '男'}">checked="checked"</c:if>/>男
+							<input type="radio" name="userSex" value="女" <c:if test="${user.userSex eq '女'}">checked="checked"</c:if>/>女
 						</div>
 					</td>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1">身份证号：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="idCard" />
+							<input style="height: 20px;width: 200px" name="idCard" value="${user.idCard }"/>
 						</div></td>
 				</tr>
 				<tr>
@@ -150,7 +155,7 @@
 						<div align="right" class="STYLE1">联系方式：</div></td>
 					<td>
 						<div align="left" class="STYLE1" style="padding-left:10px;">
-							<input style="height: 20px;width: 200px" name="userPhone" />
+							<input style="height: 20px;width: 200px" name="userPhone" value="${user.userPhone }"/>
 						</div></td>
 					<td height="30" width="10%">
 						<div align="right" class="STYLE1"></div></td>

@@ -1,10 +1,12 @@
 package com.erp.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.task.Task;
@@ -152,18 +154,18 @@ public class BackgroundController
 		pageView.setRecords(tasks);
 		model.addAttribute("pageView", pageView);
 		
-		PageView pageView1 =  new PageView(1);
-		pageView1 = instrumentdeviceService.query(pageView1, new InstrumentDevice());
-		List<InstrumentDevice> list1 = pageView1.getRecords();
+		List<InstrumentDevice> list1 = instrumentdeviceService.queryAll(new InstrumentDevice());
 		List<InstrumentDevice> list2 = new ArrayList<InstrumentDevice>();
 		int temp = 0;
-		for (int i = list1.size() - 1; i > 0; i--) {
-			InstrumentDevice device = list1.get(i);
-			Date enableDate = DateUtil.parse(device.getEnableDate(), DateUtil.FORMAT_LONG);
-			Date disableTime = DateUtil.addDay(enableDate, -device.getHintVerifyDays());
-			if (DateUtil.getMillis(new Date()) > disableTime.getTime() && temp < 5) {
-				list2.add(device);
-				temp++;
+		for (int i = list1.size() - 1; i >= 0; i--) {
+			if (temp < 5) {
+				InstrumentDevice device = list1.get(i);
+				Date enableDate = DateUtil.parse(device.getEnableDate(), DateUtil.FORMAT_LONG);
+				Date disableTime = DateUtil.addDay(enableDate, -device.getHintVerifyDays());
+				if (DateUtil.getMillis(new Date()) > disableTime.getTime()) {
+					list2.add(device);
+					temp++;
+				}
 			}
 		}
 		model.addAttribute("deviceTips", list2);
@@ -181,4 +183,55 @@ public class BackgroundController
 		return "/background/noDevelop";
 	}
 	
+	@RequestMapping(value="tree")
+	public String query(){
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return "/background/tree";
+	}
+	
+	@RequestMapping(value="href")
+	public void navigatejson(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("Href---------------请求到来!");
+		try {
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+			
+			// 获取单击的节点id
+			String node = request.getParameter("node");
+			System.out.println("获取的节点ID: " + node);
+			String json = "";
+			
+			if("0".equals(node)) {	// 全部分组
+				json += "[{id:'1', text: '我的好友'}, {id:'2', text: '我的同学'}, {id:'3', text: '陌生人', leaf: true}]";
+			} else if("1".equals(node)) {
+				json += "[{id:'11', text: '张三', leaf: true, qtip: '路人甲'}, {id:'12', text: '李四', leaf: true, qtip: '炮灰乙'}, {id:'13', text: '王五', leaf: true, qtip: '士兵丁'}]";
+			} else if("2".equals(node)) {
+				json += "[{id:'21', text: '刘备', leaf: true, qtip: '蜀国霸主', href: '../01_CreateTree/TreePanel.html', hrefTarget: '_blank'}, {id:'22', text: '曹操', leaf: true, qtip: '一家三杰'}, {id:'23', text: '孙尚香', leaf: true, qtip: '哥哥威武霸气'}]";
+			}
+		
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Href---------------请求结束!");
+	}
+	
+	@RequestMapping(value="getUserById")
+	public void getUserById(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("getUserById---------------请求到来!");
+		try {
+			request.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding("utf-8");
+			
+			// 获取单击的节点id
+			String node = request.getParameter("id");
+			System.out.println("获取的节点ID: " + node);
+			String json = "";
+			json += "[{id:'1', text: '我的好友'}]";
+			response.getWriter().write(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("getUserById---------------请求结束!");
+	}
 }

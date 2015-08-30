@@ -70,4 +70,10 @@ public class BusProjectProductFlowServiceImpl implements BusProjectProductFlowSe
 	{
 		return busProjectProductFlowDao.modifyProductFlow(busProjectProductFlowVo);
 	}
+
+	@Override
+	public List<BusProjectProductFlow> getByproductNo(BusProjectProductFlowVo busProjectProductFlowVo) {
+		// TODO Auto-generated method stub
+		return busProjectProductFlowDao.getByproductNo(busProjectProductFlowVo);
+	}
 }

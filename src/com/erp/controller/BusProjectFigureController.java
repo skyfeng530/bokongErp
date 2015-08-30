@@ -108,8 +108,11 @@ public class BusProjectFigureController {
     * @return
     */
     @RequestMapping("update")
-    public String update(Model model, BusProjectFigure busProjectFigure) {
-        busProjectFigureService.modify(busProjectFigure);
+    public String update(Model model, HttpServletRequest request,BusProjectFigure busProjectFigure) {
+    	String strId =request.getParameter("id");
+    	int pfid = Integer.parseInt(strId);
+        busProjectFigure.setPfid(pfid);
+    	busProjectFigureService.modify(busProjectFigure);
         return "redirect:query.html";
     }
 }

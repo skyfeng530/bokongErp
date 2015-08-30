@@ -111,4 +111,9 @@
             bak=#{bak}
         where  id=#{id}
     </update>
+    <select id="queryAll" resultType="InstrumentDevice">
+	  select
+	  <include refid="selectId"/>
+	  from InstrumentDevice
+	</select>
 </mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rutask">
+	<!--resultType="RuTask" 每返回一条结果封装到User里 -->
+	<select id="query" resultType="RuTask" parameterType="RuTask">
+		select
+		ID_,NAME_,CREATE_TIME_,ASSIGNEE_
+		FROM ACT_RU_TASK RES 
+		<where>
+			<if test="t.assignee_ != null and t.assignee_ != ''">
+				ASSIGNEE_ = '${t.assignee_}'
+			</if>
+			<if test="t.id_ != null and t.id_ != ''">
+				ID_ = '${t.id_}'
+			</if>
+		</where>
+		ORDER BY CREATE_TIME_ ASC
+	</select>
+</mapper>

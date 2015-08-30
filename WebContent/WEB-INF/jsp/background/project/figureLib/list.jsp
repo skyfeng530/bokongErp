@@ -76,12 +76,12 @@
  
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">项目名称</span></td>
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品名称</span></td>
-            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图库编号</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品编号</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">产品状态</span></td>
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图库名称</span></td>
-            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图纸要求</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">图库编号</span></td>
+            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">器件名称</span></td>
             <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">生产数量</span></td>
-            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">器件类型</span></td>
-            <td width="10%" height="22" background="${pageContext.servletContext.contextPath }/images/bg.gif" ><span class="STYLE1">描述</span></td>
 			
             <td  height="20%" background="${pageContext.servletContext.contextPath }/images/bg.gif"  class="STYLE1">基本操作</td>
           </tr>
@@ -92,14 +92,14 @@
               <input type="checkbox" name="check" value="${key.pfid}" />
             </td>
             
-            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/figureLib/getById.html?id=${key.pfid}&&type=0">${key.ppid}</a></span></td>
-            <td height="20" ><span class="STYLE1">${key.ppid}</span></td>
+            <td height="20" ><span class="STYLE1"><a href="${pageContext.servletContext.contextPath }/background/project/figureLib/getById.html?id=${key.pfid}&&type=0">${key.projectName}</a></span></td>
+            <td height="20" ><span class="STYLE1">${key.productName}</span></td>
+			<td height="20" ><span class="STYLE1">${key.productNo}</span></td>
+			<td height="20" ><span class="STYLE1">${key.status}</span></td>
+			<td height="20" ><span class="STYLE1">${key.figureLib}</span></td>
 			<td height="20" ><span class="STYLE1">${key.figureNo}</span></td>
 			<td height="20" ><span class="STYLE1">${key.figureName}</span></td>
-			<td height="20" ><span class="STYLE1">${key.figureRequest}</span></td>
 			<td height="20" ><span class="STYLE1">${key.batchNum}</span></td>
-			<td height="20" ><span class="STYLE1">${key.type}</span></td>
-			<td height="20" ><span class="STYLE1">${key.describe}</span></td>
             <td height="20" ><span class="STYLE4">
             
             <sec:authorize ifAnyGranted="ROLE_sys_user_edit">

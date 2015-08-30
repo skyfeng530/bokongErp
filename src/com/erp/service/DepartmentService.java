@@ -4,6 +4,7 @@ package com.erp.service;
 import java.util.List;
 
 import com.erp.entity.Department;
+import com.erp.entity.DepartmentUser;
 import com.erp.entity.Roles;
 import com.erp.util.PageView;
 
@@ -21,5 +22,7 @@ public interface DepartmentService{
 	public Roles findbyDepartmentRole(String dName);
 	
 	public List<Department> findAll();
-	
+
+	public void saveDepartmentUser(DepartmentUser departmentUser);
+
 }

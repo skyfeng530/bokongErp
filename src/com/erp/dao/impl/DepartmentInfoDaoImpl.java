@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.erp.base.impl.BaseDaoImpl;
 import com.erp.dao.DepartmentInfoDao;
 import com.erp.entity.Department;
+import com.erp.entity.DepartmentUser;
 import com.erp.entity.Roles;
 
 @Repository("departmentDao")
@@ -36,6 +37,11 @@ public class DepartmentInfoDaoImpl extends BaseDaoImpl<Department> implements De
 	@Override
 	public List<Department> getDepartmentByUserName(String uname) {
 		return getSqlSession().selectList("department.getDepartmentByUserName",uname);
+	}
+
+	@Override
+	public void saveDepartmentUser(DepartmentUser departmentUser) {
+		getSqlSession().insert("department.saveDepartmentUser", departmentUser);
 	}
 	
 }

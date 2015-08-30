@@ -13,6 +13,7 @@ public class BusProjectFigure implements java.io.Serializable {
     private String figureName;
     private String figureRequest;
     private int type;
+    private String devName;
     private int batchNum;
     private String describe;
     
@@ -95,6 +96,12 @@ public class BusProjectFigure implements java.io.Serializable {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getDevName() {
+		return devName;
+	}
+	public void setDevName(String devName) {
+		this.devName = devName;
 	}
     
 }

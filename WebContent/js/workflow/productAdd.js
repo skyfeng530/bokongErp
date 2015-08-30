@@ -448,7 +448,11 @@ function addGalleryWindow(titleStr,objRow) {
        					 }
        					 else 
        					 {
-       						 if (result.msg==="exist")
+       						 if (result.msg==="productNo")
+     						 {
+     							Ext.Msg.alert("错误", "该产品编号已经被其它产品使用。");
+     						 }
+       						 else if (result.msg==="exsit")
        						 {
        							 Ext.Msg.alert("错误", "该产品已经存在。");
        						 }
@@ -497,7 +501,11 @@ function addGalleryWindow(titleStr,objRow) {
           							galleryWindow.close();
           						 });
           					 } else {
-          						 if (result.msg==="exist")
+          						 if (result.msg==="productNo")
+          						 {
+          							Ext.Msg.alert("错误", "该产品编号已经被其它产品使用。");
+          						 }
+          						 else if (result.msg==="exsit")
           						 {
           							 Ext.Msg.alert("错误", "该产品已经存在。");
           						 }

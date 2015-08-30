@@ -90,6 +90,23 @@ function topView() {
 		singleSelect : false
 	});
 
+	function unqualifiednum_renderer_handler(value) {
+		if (value != "1") {
+			var firstValue = Ext.getCmp("processId").store.getRange()[0].data.value;
+			Ext.getCmp("processId").setValue(firstValue);
+		}
+
+		if (value == "1") {
+			return '<div ext:qtitle="" ext:qtip="合格">合格</div>';
+		} else if (value == "2") {
+			return '<div ext:qtitle="" ext:qtip="一般不合格">一般不合格</div>';
+		} else if (value == "3") {
+			return '<div ext:qtitle="" ext:qtip="严重不合格">严重不合格</div>';
+		} else {
+			return "";
+		}
+	}
+
 	var _gridPanel = {
 		id : '_gridPanel_id',
 		xtype : 'grid',
@@ -105,7 +122,7 @@ function topView() {
 			renderer : renderer_handler,
 			menuDisabled : true
 		}, {
-			header : "对应厂商编号",
+			header : "厂商名称",
 			align : 'center',
 			width : 90,
 			sortable : false,
@@ -177,7 +194,7 @@ function topView() {
 			width : 65,
 			sortable : false,
 			dataIndex : 'UNQUALIFIEDGRADE',
-			renderer : renderer_handler,
+			renderer : unqualifiednum_renderer_handler,
 			menuDisabled : true
 		}, {
 			header : "不合格原因",
@@ -260,7 +277,7 @@ function topView() {
 						anchor : '85%',
 						xtype : 'label',
 						html : '<div style="padding-top:3px">' + deviceType
-						+ '</div>'
+								+ '</div>'
 					} ]
 				},
 				{
@@ -460,7 +477,7 @@ function mainView() {
 
 	var _processInfoStore = loadProcessInfo(taskId);
 	var _processUser = loadProcessUser();
-	
+
 	var _flowCommonComp = getFlowCommonComp(taskId);
 
 	var mainPanel = new Ext.form.FormPanel({
@@ -476,13 +493,15 @@ function mainView() {
 			xtype : "textfield",
 			width : 600
 		},
-		items : [ _topPanel, _flowCommonComp],
+		items : [ _topPanel, _flowCommonComp ],
 		buttons : [
 				{
 					text : "提交",
 					handler : function() {
 
-						var _gridData = getGridData();
+						if (!checkGrid()) {
+							return;
+						}
 
 						if (!Ext.getCmp("processId").isValid()) {
 							return;
@@ -506,7 +525,6 @@ function mainView() {
 							params : {
 								taskId : taskId,
 								comment : commonRemarkValue,
-								data : _gridData,
 								projectName : projectName,
 								taskName : taskName,
 								outcome : outcome,
@@ -535,6 +553,26 @@ function mainView() {
 	});
 
 	mainPanel.render("main_id");
+}
+
+function checkGrid() {
+	var _gridPanel = Ext.getCmp("_gridPanel_id");
+
+	var _gridStore = _gridPanel.getStore();
+
+	var localCount = _gridStore.getCount();
+
+	for (var i = 0; i < localCount; i++) {
+
+		var record = _gridStore.getAt(i).data;
+
+		if (Ext.isEmpty(record.UNQUALIFIEDGRADE)) {
+			Ext.Msg.alert("提示", "请先检验零件");
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function initview() {
